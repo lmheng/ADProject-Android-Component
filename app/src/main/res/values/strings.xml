@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MindMatters</string>
+    <string name="next_quiz_header">Your next quiz is <br></br> scheduled on: </string>
+    <string name="next_quiz_date"><u>Placeholder</u></string>
+    <string name="quiz_submitted">Click the button to be redirected back to <br></br> the home screen. </string>
+    <string name="settings">Settings</string>
+    <string name="oops">Oops!</string>
+    <string name="connection_error">Seems like you are not connected to the <br></br> internet. <br></br><br></br>Please give it another try once you have <br></br>connected to the internet.</string>
+    <string name="title_activity_get_help">GetHelp</string>
+    <string name="call">Call</string>
+    <string name="visit">Visit</string>
+</resources>
