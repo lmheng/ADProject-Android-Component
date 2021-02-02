@@ -27,6 +27,7 @@ public class GetHelpView extends AppCompatActivity {
         Intent intent = getIntent();
         mUrl = intent.getStringExtra(GetHelp.EXTERNAL_URL);
 
+
         // Initialize webview and launch the url
         mWebView = findViewById(R.id.web_view);
 
@@ -43,7 +44,9 @@ public class GetHelpView extends AppCompatActivity {
             mWebView.goBack();
             return true;
         }
-
+        else{
+            finish();
+        }
         return super.onKeyDown(keyCode, event);
     }
 

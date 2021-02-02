@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,8 +29,9 @@ import java.util.Map;
 public class QuizActivity extends AppCompatActivity {
 
     private final String mUrl = "http://10.0.2.2:8080/quiz/landing";
-    private WebView mWebView;
     private final String DONE_URL = "http://10.0.2.2:8080/quiz/redirect";
+    private WebView mWebView;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

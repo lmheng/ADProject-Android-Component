@@ -14,6 +14,7 @@ import android.view.View;
 public class GetHelp extends AppCompatActivity implements View.OnClickListener{
 
     public static final String EXTERNAL_URL = "externalUrl";
+    public final int buttonArr[] = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,28 +22,40 @@ public class GetHelp extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_get_help);
         callCustomActionBar();
 
-        View btn1 = findViewById(R.id.button1);
-        btn1.setOnClickListener(this);
-        View btn3 = findViewById(R.id.button3);
-        btn3.setOnClickListener(this);
-        View btn5 = findViewById(R.id.button5);
-        btn5.setOnClickListener(this);
-        View btn7 = findViewById(R.id.button7);
-        btn7.setOnClickListener(this);
-        View btn9 = findViewById(R.id.button9);
-        btn9.setOnClickListener(this);
+        for(int id : buttonArr) {
+            findViewById(id).setVisibility(View.VISIBLE);
+            findViewById(id).setOnClickListener(this);
+        }
 
-        View btn2 = findViewById(R.id.button2);
-        btn2.setOnClickListener(this);
-        View btn4 = findViewById(R.id.button4);
-        btn4.setOnClickListener(this);
-        View btn6 = findViewById(R.id.button6);
-        btn6.setOnClickListener(this);
-        View btn8 = findViewById(R.id.button8);
-        btn8.setOnClickListener(this);
-        View btn10 = findViewById(R.id.button10);
-        btn10.setOnClickListener(this);
+//        View btn1 = findViewById(R.id.button1);
+//        btn1.setOnClickListener(this);
+//        View btn3 = findViewById(R.id.button3);
+//        btn3.setOnClickListener(this);
+//        View btn5 = findViewById(R.id.button5);
+//        btn5.setOnClickListener(this);
+//        View btn7 = findViewById(R.id.button7);
+//        btn7.setOnClickListener(this);
+//        View btn9 = findViewById(R.id.button9);
+//        btn9.setOnClickListener(this);
+//
+//        View btn2 = findViewById(R.id.button2);
+//        btn2.setOnClickListener(this);
+//        View btn4 = findViewById(R.id.button4);
+//        btn4.setOnClickListener(this);
+//        View btn6 = findViewById(R.id.button6);
+//        btn6.setOnClickListener(this);
+//        View btn8 = findViewById(R.id.button8);
+//        btn8.setOnClickListener(this);
+//        View btn10 = findViewById(R.id.button10);
+//        btn10.setOnClickListener(this);
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        for(int id : buttonArr) {
+            findViewById(id).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
