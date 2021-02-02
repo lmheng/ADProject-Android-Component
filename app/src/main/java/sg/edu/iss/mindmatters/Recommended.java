@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-public class Recommended extends AppCompatActivity {
+public class Recommended extends ParentActivity {
 public static final String EXTERNAL_URL="externalUrl";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +54,4 @@ public static final String EXTERNAL_URL="externalUrl";
     }
 
 
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
 }

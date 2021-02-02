@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends ParentActivity {
 
     private EditText etUsername, etPassword,etPhone,etEmail,etFirstName,etLastName;
     @Override
@@ -104,10 +104,4 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
-    }
 }

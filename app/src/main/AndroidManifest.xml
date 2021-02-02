@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GetHelpView"></activity>
+        <activity android:name=".ParentActivity"></activity>
+        <activity android:name=".GetHelpView" />
         <activity android:name=".GetHelp" />
         <activity android:name=".VerifyAccountActivity" />
         <activity android:name=".NoNetwork" />
@@ -27,11 +28,12 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".Education" />
         <activity android:name=".Mindfulness" />
         <activity android:name=".MindfulnessList" />
-        <activity android:name=".Resources"/>
-        <activity android:name=".Recommended"/>
+        <activity android:name=".Resources" />
+        <activity android:name=".Recommended" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />

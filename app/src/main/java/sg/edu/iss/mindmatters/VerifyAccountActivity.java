@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class VerifyAccountActivity extends AppCompatActivity {
+public class VerifyAccountActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +25,4 @@ public class VerifyAccountActivity extends AppCompatActivity {
         });
     }
 
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
-    }
 }

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class NoNetwork extends AppCompatActivity implements View.OnClickListener {
+public class NoNetwork extends ParentActivity implements View.OnClickListener {
 
 
     @Override
@@ -43,28 +43,4 @@ public class NoNetwork extends AppCompatActivity implements View.OnClickListener
             }
     }
 
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.settings) {
-            Intent intent = new Intent();
-            startActivity(intent);
-        }
-        return true;
-    }
 }

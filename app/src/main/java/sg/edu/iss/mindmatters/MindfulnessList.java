@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MindfulnessList extends AppCompatActivity {
+public class MindfulnessList extends ParentActivity {
 private WebView mindfullist;
 private String mUrl;
 private TextView title;
@@ -28,9 +28,5 @@ private TextView title;
         mindfullist.setWebViewClient(new WebViewClient());
         mindfullist.loadUrl(mUrl);
     }
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
+
 }

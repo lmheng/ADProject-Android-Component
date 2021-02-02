@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-public class Mindfulness extends AppCompatActivity implements View.OnClickListener {
+public class Mindfulness extends ParentActivity implements View.OnClickListener {
 ImageView afraid;
 ImageView anxious;
 ImageView sleep;
@@ -107,9 +107,5 @@ public static final String EXTERNAL_URL="externalUrl";
         intent.putExtra(EXTERNAL_URL,externalurl);
         startActivity(intent);
     }
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
+
 }

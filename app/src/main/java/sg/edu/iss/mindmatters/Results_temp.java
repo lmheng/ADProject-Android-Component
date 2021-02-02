@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class Results_temp extends AppCompatActivity
+public class Results_temp extends ParentActivity
         implements View.OnClickListener  {
 public static final String EXTERNAL_URL_1="externalUrl1";
 public static final String EXTERNAL_URL_2="externalUrl2";
@@ -98,12 +98,6 @@ private String[]Panic=new String[]{"8vkYJf8DOsc", "sz-cNBAK7Qs"};
         intent.putExtra(EXTERNAL_URL_2,externalurl2);
         intent.putExtra("title",title);
         startActivity(intent);
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
     }
 
     static int RandomNo(String[]arr)

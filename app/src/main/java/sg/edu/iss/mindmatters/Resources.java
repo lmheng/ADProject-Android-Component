@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class Resources extends AppCompatActivity implements View.OnClickListener {
+public class Resources extends ParentActivity implements View.OnClickListener {
 
     RelativeLayout mindfulness;
     RelativeLayout education;
@@ -91,11 +91,7 @@ public class Resources extends AppCompatActivity implements View.OnClickListener
         Random rd=new Random();
         return rd.nextInt(arr.length);
     }
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
+
     public void recommendation(String outcome) {
         if (outcome == "anxiety") {
             String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";

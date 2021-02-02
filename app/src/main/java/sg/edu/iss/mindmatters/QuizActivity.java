@@ -36,7 +36,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        callCustomActionBar();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
         MyApplication.setCurrentActivity("QuizActivity");
 
         SharedPreferences pref = getSharedPreferences(
@@ -64,10 +64,6 @@ public class QuizActivity extends AppCompatActivity {
         String data = "Authorization=" + pref.getString("token", null);
         mWebView.postUrl(mUrl,data.getBytes());
 
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
     }
 
     public void saveNextDate(SharedPreferences pref){

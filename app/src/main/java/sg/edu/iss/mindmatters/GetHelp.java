@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class GetHelp extends AppCompatActivity implements View.OnClickListener{
+public class GetHelp extends ParentActivity implements View.OnClickListener{
 
     public static final String EXTERNAL_URL = "externalUrl";
     public final int buttonArr[] = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10};
@@ -109,31 +109,6 @@ public class GetHelp extends AppCompatActivity implements View.OnClickListener{
         intent.putExtra(EXTERNAL_URL, externalUrl);
         startActivity(intent);
 
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.settings) {
-            Intent intent = new Intent();
-            startActivity(intent);
-        }
-        return true;
     }
 
 }
