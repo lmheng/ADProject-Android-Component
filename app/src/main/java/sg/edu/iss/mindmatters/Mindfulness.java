@@ -86,7 +86,7 @@ public static final String EXTERNAL_URL="externalUrl";
         }
         else if(id==R.id.depressedbtn)
         {
-            String externalurl="http://10.0.2.2:8080/resource/list/Depressed";
+            String externalurl="http://10.0.2.2:8080/resource/list/Depression";
             launchExternalPage(externalurl,"Feeling down?");
         }
       else if(id==R.id.recommended1)

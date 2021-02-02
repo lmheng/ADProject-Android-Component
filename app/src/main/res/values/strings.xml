@@ -8,9 +8,9 @@
     <string name="connection_error">Seems like you are not connected to the <br></br> internet. <br></br><br></br>Please give it another try once you have <br></br>connected to the internet.</string>
     <string name="title_activity_get_help">Get Help</string>
     <string name="resources">Resources</string>
-    <string name="Mindfulness"><u>MINDFULNESS</u></string>
+    <string name="Mindfulness">MINDFULNESS</string>
     <string name="Mindfultext">Here are some resources to help you to focus your awareness on the present and center your thoughts on now</string>
-    <string name="education"><u>EDUCATION</u></string>
+    <string name="education">EDUCATION</string>
     <string name="educationtxt">Here are some interesting reads that might be helpful for your journey to better mental health</string>
     <string name="recommended">Here are some recommended resources based on your profile.</string>
     <string name="recommend">Here are some recommended resources based in your profile</string>

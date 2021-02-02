@@ -100,7 +100,7 @@ public class MainActivity extends ParentActivity implements View.OnClickListener
         else {
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR_OF_DAY, 0);
-            DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             nextDate.setText(sdf.format(today.getTime()));
         }
