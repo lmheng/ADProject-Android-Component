@@ -13,15 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class NoNetwork extends AppCompatActivity implements View.OnClickListener {
+public class NoNetwork extends BaseActivity implements View.OnClickListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_network);
-        callCustomActionBar();
-
+        callCustomActionBar(NoNetwork.this,false);
         MyApplication.setCurrentActivity("NoNetwork");
 
         Button button = findViewById(R.id.retry_button);
@@ -41,30 +40,5 @@ public class NoNetwork extends AppCompatActivity implements View.OnClickListener
                     Toast.makeText(this, "Please check if you are connected to the internet", Toast.LENGTH_LONG).show();
                 }
             }
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.settings) {
-            Intent intent = new Intent();
-            startActivity(intent);
-        }
-        return true;
     }
 }

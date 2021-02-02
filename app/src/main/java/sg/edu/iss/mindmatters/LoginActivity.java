@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private EditText etUsername, etPassword;
     SharedPreferences pref;
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        callCustomActionBar();
+        callCustomActionBar(LoginActivity.this,false);
 
         etUsername = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
@@ -97,10 +97,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d("rcode", String.valueOf(response.code()));
                 if(response.code()==200){
+                    String email="";
+                    try {
+                        email = response.body().string();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    if(email==null || email==""){
+                        email= "example@example.com";
+                    }
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("username",userName);
                     editor.putString("password",password);
                     editor.putString("token",response.headers().get("Authorization"));
+                    editor.putString("email",email);
                     editor.commit();
 
                     Toast.makeText(LoginActivity.this, "User logged in!", Toast.LENGTH_LONG).show();
@@ -118,12 +129,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-
     }
 }

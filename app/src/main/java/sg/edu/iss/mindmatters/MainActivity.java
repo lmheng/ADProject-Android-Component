@@ -19,7 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     SharedPreferences pref;
     @Override
@@ -31,17 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 "user_credentials", MODE_PRIVATE);
         TextView tv = (TextView)findViewById(R.id.userNametv);
         tv.setText("Welcome, "+pref.getString("username","user"));
-        if(!pref.contains("token")){
-            findViewById(R.id.btnToLogout).setVisibility(View.GONE);
-        }
 
-        callCustomActionBar();
+        callCustomActionBar(MainActivity.this,true);
         loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
 
         findViewById(R.id.test_button).setOnClickListener(this);
         findViewById(R.id.gethelp_button).setOnClickListener(this);
-        findViewById(R.id.btnToLogout).setOnClickListener(this);
     }
 
     @Override
@@ -59,15 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(view.getId() == R.id.gethelp_button){
             Intent intent = new Intent(this, GetHelp.class);
             startActivity(intent);
-        }
-        else if(view.getId() == R.id.btnToLogout) {
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent =new Intent(MainActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            MainActivity.this.finish();
         }
     }
 
@@ -89,29 +76,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             nextDate.setText(sdf.format(today.getTime()));
         }
     }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.settings) {
-            Intent intent = new Intent();
-            startActivity(intent);
-        }
-        return true;
-    }
-
 }

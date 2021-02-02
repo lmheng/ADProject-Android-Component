@@ -9,20 +9,17 @@ import retrofit2.http.POST;
 
 public interface API {
     @POST("users/register")
-    Call<ResponseBody> createUser (
+    Call<ResponseBody> createUser(
             @Body User user
     );
 
     @POST("users/edit")
-    Call<ResponseBody> editUser (
-            @Header("Authorization") String authorization,@Body User user
+    Call<ResponseBody> editUser(
+            @Header("Authorization") String authorization, @Body User user
     );
 
     @POST("login")
-    Call<ResponseBody> checkUser (
+    Call<ResponseBody> checkUser(
             @Body User user
     );
-
-    @GET("users/success")
-    Call<ResponseBody> getSuccess(@Header("Authorization") String authorization);
 }
