@@ -31,7 +31,6 @@ public class QuizActivity extends AppCompatActivity {
     private final String mUrl = "http://10.0.2.2:8080/quiz/landing";
     private final String DONE_URL = "http://10.0.2.2:8080/quiz/redirect";
     private WebView mWebView;
-    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
         //String data = "json="+"3";
         //mWebView.postUrl(mUrl, data.getBytes());
 
-        String data = "Authorization" + pref.getString("token", null);
+        String data = "Authorization=" + pref.getString("token", null);
         mWebView.postUrl(mUrl,data.getBytes());
 
     }
