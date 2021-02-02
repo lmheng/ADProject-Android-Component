@@ -43,7 +43,7 @@ public static final String EXTERNAL_URL="externalUrl";
         depressed.setOnClickListener(this);
         Intent intent=getIntent();
         String url_1=intent.getStringExtra(Results_temp.EXTERNAL_URL_1);
-        Url_code=url_1.substring(26,url_1.length()-6);
+        Url_code=url_1.substring(27,url_1.length()-6);
         title=intent.getStringExtra("title");
         launchBtn = (ImageView)findViewById(R.id.recommended1);
         Picasso.get().load(url_1).placeholder(R.drawable.ic_launcher_background).into(launchBtn);
@@ -51,7 +51,7 @@ public static final String EXTERNAL_URL="externalUrl";
         String url_2=intent.getStringExtra(Results_temp.EXTERNAL_URL_2);
         launchBtn2 =(ImageView)findViewById(R.id.recommended2);
         Picasso.get().load(url_2).placeholder(R.drawable.ic_launcher_background).into(launchBtn2);
-        Url_code2=url_2.substring(26,url_2.length()-6);
+        Url_code2=url_2.substring(27,url_2.length()-6);
         launchBtn2.setOnClickListener(this);
     }
 

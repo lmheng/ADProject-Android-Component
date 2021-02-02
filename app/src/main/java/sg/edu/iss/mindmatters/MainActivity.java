@@ -22,6 +22,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +32,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 "user_credentials", MODE_PRIVATE);
         TextView tv = (TextView)findViewById(R.id.userNametv);
         tv.setText("Welcome, "+pref.getString("username","user"));
+
         if(!pref.contains("token")){
             findViewById(R.id.btnToLogout).setVisibility(View.GONE);
+            findViewById(R.id.next_date).setVisibility(View.GONE);
+            TextView header = findViewById(R.id.header);
+            header.setText("Please log in if you want to view full details");
+        }
+        else{
+            loadNextDate();
         }
 
         callCustomActionBar();
-        loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
         findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
@@ -47,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume(){
         super.onResume();
-        loadNextDate();
+        if(pref.contains("token"))
+            loadNextDate();
     }
 
     @Override
@@ -76,11 +84,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void loadNextDate(){
-        SharedPreferences pref = getSharedPreferences("QuizActivity", Context.MODE_PRIVATE);
-        String getNextDate = pref.getString("nextDate", null);
+        SharedPreferences pref1 = getSharedPreferences("QuizActivity", Context.MODE_PRIVATE);
+        String getNextDate = pref1.getString(pref.getString("username","user"), null);
+
+        System.out.println("nextDate" + getNextDate);
 
         TextView nextDate = findViewById(R.id.next_date);
-        System.out.println("getNextDate data" + getNextDate);
+        nextDate.setVisibility(View.VISIBLE);
+        TextView header = findViewById(R.id.header);
+        header.setText(R.string.next_quiz_header);
 
         if(getNextDate != null) {
             nextDate.setText(getNextDate);

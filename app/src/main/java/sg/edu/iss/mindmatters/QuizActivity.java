@@ -52,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 if(url.contains(DONE_URL)) {
                     finish();
-                    saveNextDate();
+                    saveNextDate(pref);
                     //clearCache();
                 }
             }
@@ -70,14 +70,14 @@ public class QuizActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
     }
 
-    public void saveNextDate(){
+    public void saveNextDate(SharedPreferences pref){
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.add(Calendar.MONTH, 3);
         DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        editor.putString("nextDate", sdf.format(today.getTime()));
+        editor.putString(pref.getString("username","user"), sdf.format(today.getTime()));
         editor.commit();
     }
 
