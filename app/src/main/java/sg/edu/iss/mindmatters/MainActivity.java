@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         callCustomActionBar();
         loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
-
+        findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
         findViewById(R.id.gethelp_button).setOnClickListener(this);
         findViewById(R.id.btnToLogout).setOnClickListener(this);
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             MainActivity.this.finish();
+        }
+        else if(view.getId()==R.id.resource_btn){
+            Intent intent = new Intent(this,Resources.class);
+            startActivity(intent);
         }
     }
 

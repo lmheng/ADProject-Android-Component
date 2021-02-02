@@ -27,7 +27,11 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
+        <activity android:name=".Education" />
+        <activity android:name=".Mindfulness" />
+        <activity android:name=".MindfulnessList" />
+        <activity android:name=".Resources"/>
+        <activity android:name=".Recommended"/>
         <activity android:name=".QuizActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
