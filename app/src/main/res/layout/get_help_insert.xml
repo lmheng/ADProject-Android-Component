@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:padding="10dp"
     tools:context=".GetHelp">
 
     <androidx.constraintlayout.widget.Guideline
@@ -140,7 +140,7 @@
         app:layout_constraintStart_toStartOf="@id/guideV0"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintBottom_toTopOf="@id/guide5"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:translationZ="3dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -192,7 +192,7 @@
         app:layout_constraintStart_toStartOf="@id/guideV0"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintBottom_toTopOf="@+id/guide4"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:translationZ="3dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -240,7 +240,7 @@
         app:layout_constraintStart_toStartOf="@id/guideV0"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintBottom_toTopOf="@id/guide3"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:translationZ="3dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -296,7 +296,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="@id/guideV1"
         app:layout_constraintStart_toStartOf="@id/guideV0"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:translationZ="3dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -327,7 +327,7 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Get Help"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:translationZ="3dp"
         app:layout_constraintBottom_toTopOf="@+id/guide0"
         app:layout_constraintStart_toStartOf="@id/guideV0"
@@ -382,7 +382,7 @@
         app:layout_constraintStart_toStartOf="@id/guideV0"
         app:layout_constraintBottom_toTopOf="@+id/guide1"
         app:layout_constraintTop_toBottomOf="@id/textView1"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:translationZ="3dp"/>
 
     <ImageView

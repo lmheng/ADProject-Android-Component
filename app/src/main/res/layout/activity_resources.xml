@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:padding="10dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/curved"
-        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/dialogbox"
+        android:elevation="3dp"
+        android:paddingLeft="10dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="@string/resources"
         android:textColor="#3A3131"
         android:textSize="35sp"
@@ -81,11 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="15dp"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:text="@string/Mindfultext"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

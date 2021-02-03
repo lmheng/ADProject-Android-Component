@@ -22,11 +22,12 @@
         android:layout_weight="1"
         android:background="@drawable/dialogbox"
         android:elevation="3dp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/roboto_medium"
         android:text="null"
         android:textColor="#3A3131"
         android:textSize="35sp"
         android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
     />
 
     <WebView
