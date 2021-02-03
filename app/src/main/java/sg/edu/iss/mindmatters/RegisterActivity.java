@@ -7,30 +7,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
-    private EditText etUsername, etPassword,etPhone,etEmail,etFirstName,etLastName;
+    private EditText etUsername, etPassword,etPhone,etEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        callCustomActionBar();
+        callCustomActionBar(RegisterActivity.this,false);
 
         etUsername = findViewById(R.id.etRUserName);
         etPassword = findViewById(R.id.etRPassword);
         etPhone = findViewById(R.id.etRPhone);
         etEmail = findViewById(R.id.etREmail);
-        etFirstName = findViewById(R.id.etRFirstName);
-        etLastName = findViewById(R.id.etRLastName);
 
         findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
-        String firstName = etFirstName.getText().toString().trim();
-        String lastName = etLastName.getText().toString().trim();
 
         if (userName.isEmpty()) {
             etUsername.setError("Username is required");
@@ -64,8 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         u.setUserName(userName);
         u.setPassword(password);
         u.setEmail(email);
-        u.setFirstName(firstName);
-        u.setLastName(lastName);
         u.setPhone(phone);
         Call<ResponseBody> call = RetrofitClient
                     .getInstance()
@@ -85,8 +75,9 @@ public class RegisterActivity extends AppCompatActivity {
                         throw new RuntimeException();
                     }
                     if(s.contains("SUCCESS")) {
-                        Toast.makeText(RegisterActivity.this, s, Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(RegisterActivity.this, VerifyAccountActivity.class));
+                        Intent intent = new Intent(RegisterActivity.this, UserMessageActivity.class);
+                        intent.putExtra("msg","registered");
+                        startActivity(intent);
                     }
                     else{
                         Toast.makeText(RegisterActivity.this, s, Toast.LENGTH_LONG).show();
@@ -101,13 +92,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-    }
-
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
 
     }
 }
