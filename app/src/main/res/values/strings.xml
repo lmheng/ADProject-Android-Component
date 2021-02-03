@@ -9,4 +9,13 @@
     <string name="title_activity_get_help">GetHelp</string>
     <string name="call">Call</string>
     <string name="visit">Visit</string>
+    <string name="resources">Resources</string>
+    <string name="Mindfulness"><u>MINDFULNESS</u></string>
+    <string name="Mindfultext">Here are some resources to help you to focus your awareness on the present and center your thoughts on now</string>
+    <string name="education"><u>EDUCATION</u></string>
+    <string name="educationtxt">Here are some interesting reads that might be helpful for your journey to better mental health</string>
+    <string name="recommended">Here are some recommended resources based on your profile.</string>
+    <string name="logout">Log Out</string>
+    <string name="hello">Hello User!</string>
+    <string name="recommend">Here are some recommended resources based in your profile</string>
 </resources>

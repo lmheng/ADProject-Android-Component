@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         callCustomActionBar(MainActivity.this,true);
         loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
-
+        findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
         findViewById(R.id.gethelp_button).setOnClickListener(this);
     }
