@@ -45,4 +45,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             logout();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+    }
 }

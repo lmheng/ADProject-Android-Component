@@ -102,7 +102,6 @@
         android:text="Continue without logging in"
         android:textSize="16sp"
         android:background="@drawable/dialogbox"
-        android:textColor="#ADF4ED"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
