@@ -31,6 +31,7 @@ public class BaseActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(ctx, SettingsActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.right_to_left_enter,R.anim.right_to_left_exit);
             }
         });
     }
