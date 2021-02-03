@@ -34,9 +34,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv.setText("Welcome, "+pref.getString("username","user"));
 
         if(!pref.contains("token")){
-            findViewById(R.id.btnToLogout).setVisibility(View.GONE);
-            findViewById(R.id.next_date).setVisibility(View.GONE);
-            TextView header = findViewById(R.id.header);
+            findViewById(R.id.next_date_taken).setVisibility(View.GONE);
+            TextView header = findViewById(R.id.next_quiz_header);
             header.setText("Please log in if you want to view full details");
         }
         else{
@@ -44,7 +43,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         callCustomActionBar(MainActivity.this,true);
-        loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
         findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
@@ -68,6 +66,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             Intent intent = new Intent(this, GetHelp.class);
             startActivity(intent);
         }
+        else if(view.getId() == R.id.resource_btn) {
+            Intent intent = new Intent(this, Resources.class);
+            startActivity(intent);
+        }
     }
 
     public void loadNextDate(){
@@ -76,9 +78,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         System.out.println("nextDate" + getNextDate);
 
-        TextView nextDate = findViewById(R.id.next_date);
+        TextView nextDate = findViewById(R.id.next_date_taken);
         nextDate.setVisibility(View.VISIBLE);
-        TextView header = findViewById(R.id.header);
+        TextView header = findViewById(R.id.next_quiz_header);
         header.setText(R.string.next_quiz_header);
 
         if(getNextDate != null) {

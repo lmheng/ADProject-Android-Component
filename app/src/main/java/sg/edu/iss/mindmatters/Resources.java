@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class Resources extends ParentActivity implements View.OnClickListener {
+public class Resources extends BaseActivity implements View.OnClickListener {
 
     RelativeLayout mindfulness;
     RelativeLayout education;
@@ -35,7 +35,7 @@ public class Resources extends ParentActivity implements View.OnClickListener {
         mindfulness.setOnClickListener(this);
         education=(RelativeLayout)findViewById(R.id.education_layout);
         education.setOnClickListener(this);
-        callCustomActionBar();
+        callCustomActionBar(Resources.this, true);
         /*pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
         String User=pref.getString("username","user");

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class Results_temp extends ParentActivity
+public class Results_temp extends BaseActivity
         implements View.OnClickListener  {
 public static final String EXTERNAL_URL_1="externalUrl1";
 public static final String EXTERNAL_URL_2="externalUrl2";
@@ -25,7 +25,7 @@ private String[]Panic=new String[]{"8vkYJf8DOsc", "sz-cNBAK7Qs"};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        callCustomActionBar();
+        callCustomActionBar(Results_temp.this, true);
 
         Button btn1 = findViewById(R.id.anxiety);
         if (btn1 != null)

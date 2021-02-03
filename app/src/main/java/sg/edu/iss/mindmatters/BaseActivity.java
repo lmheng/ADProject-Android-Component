@@ -17,23 +17,30 @@ public class BaseActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
     }
 
-    public void callCustomActionBar(Context ctx,boolean settingsVisibility){
+    public void callCustomActionBar(Context ctx, boolean settingsVisibility){
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
+
         if(!getSharedPreferences("user_credentials", MODE_PRIVATE).contains("token")
             || !settingsVisibility){
-            findViewById(R.id.settingsBtn).setVisibility(View.GONE);
+            getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
+
         }
-        ImageView settings  = (ImageView)findViewById(R.id.settingsBtn);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ctx, SettingsActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.right_to_left_enter,R.anim.right_to_left_exit);
-            }
-        });
+        else{
+            getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout_left);
+
+            ImageView settings  = (ImageView) findViewById(R.id.settingsBtn);
+            settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, SettingsActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.right_to_left_enter,R.anim.right_to_left_exit);
+                }
+            });
+
+        }
+
     }
 
 }

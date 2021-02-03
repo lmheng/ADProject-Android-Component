@@ -6,16 +6,17 @@
     >
 
     <TableRow
-        android:padding="5dp">
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:gravity="left"
-            android:padding="10dp"
             android:fontFamily="@font/oleo_script_swash_caps"
-            android:shadowColor="#474744"
+            android:shadowColor="#666564"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="3"
@@ -25,6 +26,18 @@
             android:layout_alignParentTop="true"
             android:layout_weight="1"
             />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:id="@+id/settingsBtn"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:src="@drawable/setngsicon"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:alpha="0.7"/>
 
     </TableRow>
 </TableLayout>
