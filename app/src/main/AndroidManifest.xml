@@ -14,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ParentActivity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".EditUserActivity" />
+        <activity android:name=".BaseActivity" />
         <activity android:name=".GetHelpView" />
         <activity android:name=".GetHelp" />
-        <activity android:name=".VerifyAccountActivity" />
+        <activity android:name=".UserMessageActivity" />
         <activity android:name=".NoNetwork" />
 
         <receiver

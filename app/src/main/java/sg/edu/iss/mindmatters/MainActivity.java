@@ -19,7 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends ParentActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     SharedPreferences pref;
 
@@ -43,12 +43,12 @@ public class MainActivity extends ParentActivity implements View.OnClickListener
             loadNextDate();
         }
 
-        callCustomActionBar();
+        callCustomActionBar(MainActivity.this,true);
+        loadNextDate();
         MyApplication.setCurrentActivity("MainPage");
         findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
         findViewById(R.id.gethelp_button).setOnClickListener(this);
-        findViewById(R.id.btnToLogout).setOnClickListener(this);
     }
 
     @Override
@@ -66,19 +66,6 @@ public class MainActivity extends ParentActivity implements View.OnClickListener
         }
         else if(view.getId() == R.id.gethelp_button){
             Intent intent = new Intent(this, GetHelp.class);
-            startActivity(intent);
-        }
-        else if(view.getId() == R.id.btnToLogout) {
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent =new Intent(MainActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            MainActivity.this.finish();
-        }
-        else if(view.getId()==R.id.resource_btn){
-            Intent intent = new Intent(this,Resources.class);
             startActivity(intent);
         }
     }

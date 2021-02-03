@@ -11,7 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class GetHelp extends ParentActivity implements View.OnClickListener{
+public class GetHelp extends BaseActivity implements View.OnClickListener{
 
     public static final String EXTERNAL_URL = "externalUrl";
     public final int buttonArr[] = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10};
@@ -20,7 +20,7 @@ public class GetHelp extends ParentActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_help);
-        callCustomActionBar();
+        callCustomActionBar(GetHelp.this,true);
 
         for(int id : buttonArr) {
             findViewById(id).setVisibility(View.VISIBLE);
@@ -110,5 +110,6 @@ public class GetHelp extends ParentActivity implements View.OnClickListener{
         startActivity(intent);
 
     }
+
 
 }

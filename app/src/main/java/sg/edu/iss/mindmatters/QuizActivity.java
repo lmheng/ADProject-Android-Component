@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends BaseActivity {
 
     private final String mUrl = "http://10.0.2.2:8080/quiz/landing";
     private final String DONE_URL = "http://10.0.2.2:8080/resource/list/all";
@@ -37,9 +37,8 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
         MyApplication.setCurrentActivity("QuizActivity");
-
+        this.callCustomActionBar();
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
@@ -96,4 +95,9 @@ public class QuizActivity extends AppCompatActivity {
         finish();
     }
 
+
+    public void callCustomActionBar() {
+        callCustomActionBar(QuizActivity.this,false);
+        findViewById(R.id.actionBarTitle).setVisibility(View.GONE);
+    }
 }
