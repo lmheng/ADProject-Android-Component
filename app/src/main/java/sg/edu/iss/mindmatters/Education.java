@@ -8,7 +8,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Education extends ParentActivity {
+public class Education extends BaseActivity {
 
     private String mUrl;
     private WebView eduWebView;
@@ -17,7 +17,7 @@ public class Education extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_education);
-        callCustomActionBar();
+        callCustomActionBar(Education.this, true);
 
         Intent intent = getIntent();
         mUrl=intent.getStringExtra(Resources.EXTERNAL_EDU);

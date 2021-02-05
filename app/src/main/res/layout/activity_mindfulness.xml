@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:background="@drawable/background"
     android:weightSum="10"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="10dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,9 +22,10 @@
         android:layout_weight="1"
         android:background="@drawable/dialogbox"
         android:elevation="3dp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/roboto_medium"
         android:text="@string/Mindfulness"
         android:textColor="#3A3131"
+        android:paddingLeft="20dp"
         android:textSize="35sp"
      />
 
@@ -37,11 +39,12 @@
         android:scaleType="fitCenter" />
 
     <include
-        layout="@layout/mindfulbtn"
+        layout="@layout/mindfulness_layout_insert"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        />
 
 </LinearLayout>
 

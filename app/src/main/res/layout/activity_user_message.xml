@@ -17,13 +17,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/dialogbox"
+        android:elevation="3dp"
         >
         <TextView
             android:id="@+id/userMsgSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Account Created!"
-            android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="30dp"
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:textColor="#000"
+            android:text="Please check your e-mail to verify\n your account"
             android:textSize="20sp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="5dp"
-            android:background="#c0c0c0"
+            android:background="#FFFFFF"
             app:layout_constraintTop_toBottomOf="@+id/userMsgText"/>
 
         <Button

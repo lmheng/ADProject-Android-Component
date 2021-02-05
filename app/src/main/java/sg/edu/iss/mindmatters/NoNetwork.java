@@ -41,4 +41,5 @@ public class NoNetwork extends BaseActivity implements View.OnClickListener {
                 }
             }
     }
+
 }

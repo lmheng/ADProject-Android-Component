@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MindfulnessList extends ParentActivity {
+public class MindfulnessList extends BaseActivity {
 private WebView mindfullist;
 private String mUrl;
 private TextView title;
@@ -17,7 +17,7 @@ private TextView title;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfulness_list);
-        callCustomActionBar();
+        callCustomActionBar(MindfulnessList.this, true);
         Intent intent = getIntent();
         String name=intent.getStringExtra("title");
         title=(TextView)findViewById(R.id.mindfultype);

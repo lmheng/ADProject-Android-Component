@@ -10,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-public class Recommended extends ParentActivity {
+public class Recommended extends BaseActivity {
 public static final String EXTERNAL_URL="externalUrl";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommened_include);
-        callCustomActionBar();
+        callCustomActionBar(Recommended.this, true);
 
         Intent intent=getIntent();
         String url_1=intent.getStringExtra(Resources.EXTERNAL_URL_1);
