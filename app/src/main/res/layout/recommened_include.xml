@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/curved"
+    android:background="@drawable/dialogbox"
+    android:elevation="3dp"
     android:weightSum="10"
     >
 
@@ -14,7 +15,8 @@
         android:fontFamily="@font/roboto_medium"
         android:text="@string/recommend"
         android:textColor="#9F9F9F"
-        android:textSize="14dp"/>
+        android:textSize="12sp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:id="@+id/recommended1"/>
 
         <ImageView
@@ -36,8 +38,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:id="@+id/recommended2"/>
+
     </LinearLayout>
 
     <LinearLayout

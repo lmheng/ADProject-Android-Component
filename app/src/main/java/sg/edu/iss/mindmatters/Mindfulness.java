@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-public class Mindfulness extends AppCompatActivity implements View.OnClickListener {
+public class Mindfulness extends BaseActivity implements View.OnClickListener {
 ImageView afraid;
 ImageView anxious;
 ImageView sleep;
@@ -28,7 +28,7 @@ public static final String EXTERNAL_URL="externalUrl";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfulness);
-        callCustomActionBar();
+        callCustomActionBar(Mindfulness.this, true);
         afraid=(ImageView)findViewById(R.id.afraidbtn);
         afraid.setOnClickListener(this);
         anxious=(ImageView)findViewById(R.id.anxiousbtn);
@@ -43,7 +43,7 @@ public static final String EXTERNAL_URL="externalUrl";
         depressed.setOnClickListener(this);
         Intent intent=getIntent();
         String url_1=intent.getStringExtra(Results_temp.EXTERNAL_URL_1);
-        Url_code=url_1.substring(26,url_1.length()-6);
+        Url_code=url_1.substring(27,url_1.length()-6);
         title=intent.getStringExtra("title");
         launchBtn = (ImageView)findViewById(R.id.recommended1);
         Picasso.get().load(url_1).placeholder(R.drawable.ic_launcher_background).into(launchBtn);
@@ -51,7 +51,7 @@ public static final String EXTERNAL_URL="externalUrl";
         String url_2=intent.getStringExtra(Results_temp.EXTERNAL_URL_2);
         launchBtn2 =(ImageView)findViewById(R.id.recommended2);
         Picasso.get().load(url_2).placeholder(R.drawable.ic_launcher_background).into(launchBtn2);
-        Url_code2=url_2.substring(26,url_2.length()-6);
+        Url_code2=url_2.substring(27,url_2.length()-6);
         launchBtn2.setOnClickListener(this);
     }
 
@@ -86,7 +86,7 @@ public static final String EXTERNAL_URL="externalUrl";
         }
         else if(id==R.id.depressedbtn)
         {
-            String externalurl="http://10.0.2.2:8080/resource/list/Depressed";
+            String externalurl="http://10.0.2.2:8080/resource/list/Depression";
             launchExternalPage(externalurl,"Feeling down?");
         }
       else if(id==R.id.recommended1)
@@ -107,9 +107,5 @@ public static final String EXTERNAL_URL="externalUrl";
         intent.putExtra(EXTERNAL_URL,externalurl);
         startActivity(intent);
     }
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
+
 }

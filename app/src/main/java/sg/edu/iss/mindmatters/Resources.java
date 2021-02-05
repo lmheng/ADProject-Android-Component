@@ -11,29 +11,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class Resources extends AppCompatActivity implements View.OnClickListener {
-RelativeLayout mindfulness;
-RelativeLayout education;
-SharedPreferences pref;
-public static final String EXTERNAL_URL_1="externalUrl1";
-public static final String EXTERNAL_URL_2="externalUrl2";
-public static final String EXTERNAL_EDU="externalurl";
-private String[]Anxiety= new String[]{"HT_ZvD94_kE", "Lysn2Zoio8Y", "SNqYG95j_UQ"};
-private String[]Sleep= new String[]{"86HUcX8ZtAk", "hkyKHk7s13s", "TP2gb2fSYXY"};
-private String[]GAD=new String[]{"kzzb3jHhgeU", "LqzbrcpdqR4"};
-private String[]OCD=new String[]{"GcJLXqfG-PQ", "phm_VPjijh8"};
-private String[]Depression=new String[]{"B-A4CzvHCLE", "O3Ku-cpdSJM"};
-private String[]Panic=new String[]{"8vkYJf8DOsc", "sz-cNBAK7Qs"};
-private String[]Outcomes=new String[]{"anxiety","sleep","gad","ocd","depression","panic"};
+public class Resources extends BaseActivity implements View.OnClickListener {
+
+    RelativeLayout mindfulness;
+    RelativeLayout education;
+    public static final String EXTERNAL_URL_1="externalUrl1";
+    public static final String EXTERNAL_URL_2="externalUrl2";
+    public static final String EXTERNAL_EDU="externalurl";
+    private String[]Anxiety= new String[]{"HT_ZvD94_kE", "Lysn2Zoio8Y", "SNqYG95j_UQ"};
+    private String[]Sleep= new String[]{"86HUcX8ZtAk", "hkyKHk7s13s", "TP2gb2fSYXY"};
+    private String[]GAD=new String[]{"kzzb3jHhgeU", "LqzbrcpdqR4"};
+    private String[]OCD=new String[]{"GcJLXqfG-PQ", "phm_VPjijh8"};
+    private String[]Depression=new String[]{"B-A4CzvHCLE", "O3Ku-cpdSJM"};
+    private String[]Panic=new String[]{"8vkYJf8DOsc", "sz-cNBAK7Qs"};
+    private String[]Outcomes=new String[]{"anxiety","sleep","gad","ocd","depression","panic"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resources);
+
         mindfulness=(RelativeLayout)findViewById(R.id.mindful_layout);
         mindfulness.setOnClickListener(this);
         education=(RelativeLayout)findViewById(R.id.education_layout);
         education.setOnClickListener(this);
-        callCustomActionBar();
+        callCustomActionBar(Resources.this, true);
         /*pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
         String User=pref.getString("username","user");
@@ -73,7 +75,7 @@ private String[]Outcomes=new String[]{"anxiety","sleep","gad","ocd","depression"
     public void launchExternalPage(String externalurl)
     {
         Intent intent=new Intent(Resources.this, Education.class);
-        intent.putExtra(EXTERNAL_EDU,externalurl);
+        intent.putExtra(EXTERNAL_EDU, externalurl);
         startActivity(intent);
     }
     public void launchExternalPage(String externalurl1,String externalurl2,String title)
@@ -89,11 +91,7 @@ private String[]Outcomes=new String[]{"anxiety","sleep","gad","ocd","depression"
         Random rd=new Random();
         return rd.nextInt(arr.length);
     }
-    public void callCustomActionBar(){
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-    }
+
     public void recommendation(String outcome) {
         if (outcome == "anxiety") {
             String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";

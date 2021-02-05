@@ -7,7 +7,6 @@
     android:layout_gravity="top"
     android:layout_marginBottom="10dp"
     android:animateLayoutChanges="true"
-    android:background="@drawable/bg"
     android:clipToPadding="true"
     android:fillViewport="true"
     android:orientation="vertical"
