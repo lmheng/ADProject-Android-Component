@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         }
         else if(view.getId() == R.id.gethelp_button){
-            Intent intent = new Intent(this, GetHelp.class);
+            Intent intent = new Intent(this, GetHelpList.class);
             startActivity(intent);
         }
         else if(view.getId() == R.id.resource_btn) {

@@ -1,53 +1,74 @@
 package sg.edu.iss.mindmatters;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.JavascriptInterface;
+import android.webkit.MimeTypeMap;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
+
+import okhttp3.Request;
 
 public class QuizActivity extends BaseActivity {
 
     private final String mUrl = "http://10.0.2.2:8080/quiz/landing";
-    private final String DONE_URL = "http://10.0.2.2:8080/resource/list/all";
+    private final String DONE_URL = "http://10.0.2.2:8080/resource/";
     private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        MyApplication.setCurrentActivity("QuizActivity");
-        this.callCustomActionBar();
+        callCustomActionBar(QuizActivity.this,true);
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
 
-        mWebView = findViewById(R.id.web_view);
+        mWebView = findViewById(R.id.web_view_quiz);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient() {
-            //to prevent users from accessing any other website
             @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                String auth= "";
+                if(pref.contains("token")) {
+                    auth = pref.getString("token", null);
+                }
+                try {
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    Request requestNew = new Request.Builder().url(request.getUrl().toString()).addHeader("Authorization" , auth)
+                            .build();
+                    System.out.println(requestNew.headers());
+
+                    Response response = okHttpClient.newCall(requestNew).execute();
+
+                    return new WebResourceResponse(getMimeType(request.getUrl().toString()),
+                            response.header("content-encoding", "utf-8"),
+                            response.body().byteStream());
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                catch (Exception e){
+                    return null;
+                }
+            }
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 if(url.contains(DONE_URL)) {
@@ -62,8 +83,7 @@ public class QuizActivity extends BaseActivity {
         //String data = "json="+"3";
         //mWebView.postUrl(mUrl, data.getBytes());
 
-        String data = "Authorization=" + pref.getString("token", null);
-        mWebView.postUrl(mUrl,data.getBytes());
+        mWebView.loadUrl(mUrl);
 
     }
 
@@ -96,9 +116,30 @@ public class QuizActivity extends BaseActivity {
         finish();
     }
 
+    private String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
 
-    public void callCustomActionBar() {
-        callCustomActionBar(QuizActivity.this,false);
-        findViewById(R.id.actionBarTitle).setVisibility(View.GONE);
+        if (extension != null) {
+
+            switch (extension) {
+                case "js":
+                    return "text/javascript";
+                case "woff":
+                    return "application/font-woff";
+                case "woff2":
+                    return "application/font-woff2";
+                case "ttf":
+                    return "application/x-font-ttf";
+                case "eot":
+                    return "application/vnd.ms-fontobject";
+                case "svg":
+                    return "image/svg+xml";
+            }
+
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+
+        return type;
     }
 }
