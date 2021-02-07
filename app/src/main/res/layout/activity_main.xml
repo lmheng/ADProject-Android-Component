@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:orientation="vertical"
     android:weightSum="12">
 
@@ -48,6 +48,15 @@
         android:padding="5dp"
         >
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
         <include
             layout="@layout/landing"
             android:layout_width="match_parent"
@@ -57,5 +66,6 @@
             />
 
     </RelativeLayout>
+
 
 </LinearLayout>

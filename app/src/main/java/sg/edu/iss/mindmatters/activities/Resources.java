@@ -1,7 +1,8 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.webview.Education;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,11 +79,12 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         /*if(User=="user"||User==null)
         {
             launchExternalPage();
-        }*/
+        }
+
 
 
         //find the user's profile as string.lowercase
-        //send intent over the next page with profile
+        //send intent over the next page with profile*/
 
     }
 
@@ -241,7 +246,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
                     return null;
                 }
 
-               
+
 
 
 

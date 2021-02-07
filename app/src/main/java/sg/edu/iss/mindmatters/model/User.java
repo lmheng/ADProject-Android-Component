@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

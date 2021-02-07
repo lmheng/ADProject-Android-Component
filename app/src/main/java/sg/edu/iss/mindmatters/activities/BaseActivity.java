@@ -1,14 +1,15 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import sg.edu.iss.mindmatters.R;
 
 public class BaseActivity extends AppCompatActivity{
 

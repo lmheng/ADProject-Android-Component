@@ -30,15 +30,16 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <activity android:name=".Education" />
-        <activity android:name=".Mindfulness" />
-        <activity android:name=".MindfulnessList" />
-        <activity android:name=".Resources"/>
-        <activity android:name=".Recommended"/>
-        <activity android:name=".QuizActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+
+        <activity android:name=".webview.Education" />
+        <activity android:name=".activities.Mindfulness" />
+        <activity android:name=".webview.MindfulnessList" />
+        <activity android:name=".activities.Resources" />
+        <activity android:name=".activities.Recommended" />
+        <activity android:name=".webview.QuizActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

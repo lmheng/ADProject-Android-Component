@@ -1,12 +1,13 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.webview;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.activities.Resources;
+import sg.edu.iss.mindmatters.activities.BaseActivity;
 
 public class Education extends BaseActivity {
 
