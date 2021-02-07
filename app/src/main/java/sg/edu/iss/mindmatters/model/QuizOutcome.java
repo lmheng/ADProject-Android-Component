@@ -1,9 +1,11 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Calendar;
+
+import sg.edu.iss.mindmatters.model.User;
 
 public class QuizOutcome {
         @Expose

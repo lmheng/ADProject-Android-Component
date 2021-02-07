@@ -14,12 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".EditUserActivity" />
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".GetHelpView" />
-        <activity android:name=".GetHelp" />
-        <activity android:name=".UserMessageActivity" />
+        <activity android:name=".activities.SettingsActivity"/>
+        <activity android:name=".activities.EditUserActivity" />
+        <activity android:name=".activities.BaseActivity" />
+        <activity android:name=".activities.GetHelpList" />
+        <activity android:name=".activities.UserMessageActivity" />
+        <activity android:name=".activities.DailyQuizActivity" />
         <activity android:name=".NoNetwork" />
 
         <receiver

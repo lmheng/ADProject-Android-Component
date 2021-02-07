@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Random;
 
 import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.model.QuizOutcome;
+import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.webview.Education;
 
 import retrofit2.Call;
@@ -30,19 +33,13 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     public static final String EXTERNAL_URL_1="externalUrl1";
     public static final String EXTERNAL_URL_2="externalUrl2";
     public static final String EXTERNAL_EDU="externalurl";
-    //    private String[]Anxiety= new String[]{"HT_ZvD94_kE", "Lysn2Zoio8Y", "SNqYG95j_UQ"};
-//    private String[]Sleep= new String[]{"86HUcX8ZtAk", "hkyKHk7s13s", "TP2gb2fSYXY"};
-//    private String[]GAD=new String[]{"kzzb3jHhgeU", "LqzbrcpdqR4"};
-//    private String[]OCD=new String[]{"GcJLXqfG-PQ", "phm_VPjijh8"};
-//    private String[]Depression=new String[]{"B-A4CzvHCLE", "O3Ku-cpdSJM"};
-//    private String[]Panic=new String[]{"8vkYJf8DOsc", "sz-cNBAK7Qs"};
-//    private String[]Outcomes=new String[]{"anxiety","sleep","gad","ocd","depression","panic"};
     private String[]Anxiety= new String[]{};
     private String[]Sleep= new String[]{};
     private String[]GAD=new String[]{};
     private String[]OCD=new String[]{};
     private String[]Depression=new String[]{};
     private String[]Panic=new String[]{};
+    private String[]All=new String[]{};
     List<Resource>collect=new ArrayList<>();
     SharedPreferences pref;
     String User="";
@@ -63,29 +60,17 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
         User=pref.getString("username","user");
+        if(!User.equals("user")){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                outcome=getOutcome(User);
+                outcome=getOutcome(User).toLowerCase();
             }
-        }).start();
+        }).start();}
+        else{
+            outcome="all";
 
-
-
-
-
-
-
-        /*if(User=="user"||User==null)
-        {
-            launchExternalPage();
         }
-
-
-
-        //find the user's profile as string.lowercase
-        //send intent over the next page with profile*/
-
     }
 
     @Override
@@ -96,24 +81,17 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         {
             String externalurl="http://10.0.2.2:8080/resource/edulist/Education";
             launchExternalPage(externalurl);
-
         }
         else if(id==R.id.mindful_layout)
         {
             new Thread(new Runnable() {
                 @Override
-                public void run() { recommendation("anxiety");
+                public void run() { recommendation(outcome);
                 }
             }).start();
-
         }
+    }
 
-    }
-    public void launchExternalPage()
-    {
-        Intent intent=new Intent(Resources.this, Mindfulness.class);
-        startActivity(intent);
-    }
     public void launchExternalPage(String externalurl)
     {
         Intent intent=new Intent(Resources.this, Education.class);
@@ -135,36 +113,56 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     }
 
     public void recommendation(String outcome) {
-        if (outcome.equals("anxiety")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
-            String title = "Feeling Afraid?";
-            launchExternalPage(externalurl1, externalurl2, title);
-        } else if (outcome.equals("depressed")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
-            String title = "Feeling Down?";
-            launchExternalPage(externalurl1, externalurl2, title);
-        } else if (outcome.equals("gad")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
-            String title = "Tense and Anxious?";
-            launchExternalPage(externalurl1, externalurl2, title);
-        } else if (outcome.equals("sleep")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
-            String title = "Trouble Sleeping?";
-            launchExternalPage(externalurl1, externalurl2, title);
-        } else if (outcome.equals("ocd")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
-            String title = "Compelled by compulsion?";
-            launchExternalPage(externalurl1, externalurl2, title);
-        } else if (outcome.equals("panic")) {
-            String externalurl1 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
-            String externalurl2 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
-            String title = "Panicking about panic";
-            launchExternalPage(externalurl1, externalurl2, title);
+        switch (outcome) {
+            case "anxiety": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
+                String title = "Feeling Afraid?";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "depressed": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
+                String title = "Feeling Down?";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "gad": {
+                String externalurl1 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
+                String title = "Tense and Anxious?";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "sleep": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
+                String title = "Trouble Sleeping?";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "ocd": {
+                String externalurl1 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
+                String title = "Compelled by compulsion?";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "panic": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
+                String title = "Panicking about panic";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "all": {
+                String externalurl1 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
+                String title = "Panicking about panic";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
         }
     }
     public void getResourceList()
@@ -206,6 +204,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         GAD=collect.stream().filter(x->x.getType().equalsIgnoreCase("Gad")).map(x->x.getUrlCode()).toArray(String[]::new);
         Panic=collect.stream().filter(x->x.getType().equalsIgnoreCase("Panic")).map(x->x.getUrlCode()).toArray(String[]::new);
         Depression=collect.stream().filter(x->x.getType().equalsIgnoreCase("Depression")).map(x->x.getUrlCode()).toArray(String[]::new);
+        All=collect.stream().filter(x->!x.getType().equalsIgnoreCase("Education")).map(x->x.getUrlCode()).toArray(String[]::new);
 
     }
 
@@ -272,11 +271,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         });*/
     }
 
- public List<Resource> setCollect(List<Resource> list)
-   {
-       collect= list;
-       return collect;
-   }
+
 
 
 

@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.model;
 
 
 
@@ -73,7 +73,7 @@ public class Resource {
     public void setType(String type) {
         this.type = type;
     }
-    
+
     @Override
     public String toString() {
         return "Resource{" +
