@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -30,8 +31,8 @@ public interface API {
     Call<ResponseBody> getSuccess(@Header("Authorization") String authorization);
 
 
-    @GET("rest/profile/{username}")
-    Call<QuizOutcome> getUserProfile( @Path("username")String username);
+    @GET("rest/profile/{uName}")
+    Call<QuizOutcome> getUserProfile(@Path("uName")String username);
 
     @GET("rest/list")
     Call<List<Resource>> getallresources();

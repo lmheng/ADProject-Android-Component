@@ -1,5 +1,7 @@
 package sg.edu.iss.mindmatters;
 
+
+
 import com.google.gson.annotations.SerializedName;
 
 public class Resource {
@@ -14,7 +16,15 @@ public class Resource {
     @SerializedName("type")
     private String type;
 
-    public Resource(String urlCode, String description, String name,String type) {
+    public Resource(Long id, String urlCode, String description, String name, String type) {
+        this.id = id;
+        this.urlCode = urlCode;
+        this.description = description;
+        this.name = name;
+        this.type = type;
+    }
+
+    public Resource(String urlCode, String description, String name, String type) {
         super();
         this.urlCode = urlCode;
         this.description = description;
@@ -63,7 +73,7 @@ public class Resource {
     public void setType(String type) {
         this.type = type;
     }
-
+    
     @Override
     public String toString() {
         return "Resource{" +
