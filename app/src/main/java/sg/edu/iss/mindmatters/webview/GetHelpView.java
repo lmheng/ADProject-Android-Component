@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.webview;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+
+import sg.edu.iss.mindmatters.activities.GetHelpAdapter;
+import sg.edu.iss.mindmatters.R;
 
 public class GetHelpView extends AppCompatActivity {
     private String mUrl;
@@ -25,7 +25,7 @@ public class GetHelpView extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        mUrl = intent.getStringExtra(GetHelp.EXTERNAL_URL);
+        mUrl = intent.getStringExtra(GetHelpAdapter.EXTERNAL_URL);
 
 
         // Initialize webview and launch the url

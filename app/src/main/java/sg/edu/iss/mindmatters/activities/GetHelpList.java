@@ -1,15 +1,11 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import sg.edu.iss.mindmatters.R;
 
 public class GetHelpList extends BaseActivity implements AdapterView.OnItemClickListener{
 

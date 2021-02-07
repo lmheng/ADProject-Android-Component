@@ -1,11 +1,10 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.webview;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
 import android.webkit.ValueCallback;
@@ -13,7 +12,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,6 +22,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import okhttp3.Request;
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.activities.BaseActivity;
 
 public class QuizActivity extends BaseActivity {
 

@@ -1,15 +1,14 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Random;
+
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.webview.Education;
 
 public class Resources extends BaseActivity implements View.OnClickListener {
 

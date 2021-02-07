@@ -1,14 +1,14 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.squareup.picasso.Picasso;
+
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.webview.MindfulnessList;
 
 public class Recommended extends BaseActivity {
 public static final String EXTERNAL_URL="externalUrl";

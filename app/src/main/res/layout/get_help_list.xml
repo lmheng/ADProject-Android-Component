@@ -9,7 +9,7 @@
     android:paddingHorizontal="10dp"
     android:weightSum="10"
     android:background="@drawable/background"
-    tools:context=".GetHelpList">
+    tools:context=".activities.GetHelpList">
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="10dp"
-        tools:context=".GetHelp">
+        tools:context=".activities.GetHelpList">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide0"

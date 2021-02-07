@@ -1,23 +1,19 @@
-package sg.edu.iss.mindmatters;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import sg.edu.iss.mindmatters.MyApplication;
+import sg.edu.iss.mindmatters.webview.QuizActivity;
+import sg.edu.iss.mindmatters.R;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -47,6 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.resource_btn).setOnClickListener(this);
         findViewById(R.id.test_button).setOnClickListener(this);
         findViewById(R.id.gethelp_button).setOnClickListener(this);
+        findViewById(R.id.dailyquiz_button).setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +65,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         else if(view.getId() == R.id.resource_btn) {
             Intent intent = new Intent(this, Resources.class);
+            startActivity(intent);
+        }
+        else if(view.getId() == R.id.dailyquiz_button) {
+            Intent intent = new Intent(this, DailyQuizActivity.class);
             startActivity(intent);
         }
     }

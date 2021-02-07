@@ -1,12 +1,12 @@
-package sg.edu.iss.mindmatters;
-
-import androidx.appcompat.app.AppCompatActivity;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import sg.edu.iss.mindmatters.R;
 
 public class UserMessageActivity extends BaseActivity {
 

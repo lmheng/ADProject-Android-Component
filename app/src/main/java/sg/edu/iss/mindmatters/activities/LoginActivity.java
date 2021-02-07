@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,14 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.model.User;
 
 public class LoginActivity extends BaseActivity {
 

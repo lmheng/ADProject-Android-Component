@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.model.User;
 
 public class EditUserActivity extends BaseActivity {
     private EditText etPassword,etPhone,etEmail;
