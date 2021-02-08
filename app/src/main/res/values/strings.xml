@@ -9,4 +9,7 @@
     <string name="title_activity_get_help">GetHelp</string>
     <string name="call">Call</string>
     <string name="visit">Visit</string>
+    <string name="default_notification_channel_id">test1</string>
+    <string name="General_announcements">test2</string>
+    <string name="accept">ok</string>
 </resources>

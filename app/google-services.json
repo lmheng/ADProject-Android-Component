@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "497414098397",
+    "project_id": "mindmatters456832",
+    "storage_bucket": "mindmatters456832.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497414098397:android:b050196a8da2dbb0803a34",
+        "android_client_info": {
+          "package_name": "sg.edu.iss.mindmatters"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497414098397-itptsocgi1bdc3d6v2g21o3a42qs8u45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzne_jLugNJ9cWV1iVIRyJd7kDRVsg_aM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497414098397-itptsocgi1bdc3d6v2g21o3a42qs8u45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

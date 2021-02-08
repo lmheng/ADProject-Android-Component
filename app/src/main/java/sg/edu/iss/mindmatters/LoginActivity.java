@@ -1,7 +1,13 @@
 package sg.edu.iss.mindmatters;
 
+import android.app.AlertDialog;
+import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -10,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +36,30 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         callCustomActionBar();
+
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+        if (extras != null) {
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                Log.d(Application.NOTIFICATION_SERVICE, "Extras received at onCreate:  Key: " + key + " Value: " + value);
+            }
+            String title = extras.getString("title");
+            String message = extras.getString("body");
+            if (message!=null && message.length()>0) {
+                getIntent().removeExtra("body");
+                showNotificationInADialog(title, message);
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId = getResources().getString(R.string.default_notification_channel_id);
+            String channelName = getResources().getString(R.string.General_announcements);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
 
         etUsername = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
@@ -71,6 +100,44 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent){
+        //called when a new intent for this class is created.
+        // The main case is when the app was in background, a notification arrives to the tray, and the user touches the notification
+
+        super.onNewIntent(intent);
+
+        Log.d(Application.NOTIFICATION_SERVICE, "onNewIntent - starting");
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                Log.d(Application.NOTIFICATION_SERVICE, "Extras received at onNewIntent:  Key: " + key + " Value: " + value);
+            }
+            String title = extras.getString("title");
+            String message = extras.getString("body");
+            if (message!=null && message.length()>0) {
+                getIntent().removeExtra("body");
+                showNotificationInADialog(title, message);
+            }
+        }
+    }
+
+    private void showNotificationInADialog(String title, String message) {
+
+        // show a dialog with the provided title and message
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void loginUser(String userName,String password) {

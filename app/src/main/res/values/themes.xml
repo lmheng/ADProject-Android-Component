@@ -19,4 +19,12 @@
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="windowActionBarOverlay">true</item>
     </style>
+    <style name="myDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#131312</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#121111</item>
+        <!-- Used for the background -->
+        <item name="android:background">#FBFBFB</item>
+    </style>
 </resources>
