@@ -1,23 +1,35 @@
 package sg.edu.iss.mindmatters.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-
+    @Expose
     @SerializedName("id")
     private Long id;
-
+    @Expose
     @SerializedName("userName")
     private String userName;
-
+    @Expose
     @SerializedName("phone")
     private String phone;
-
+    @Expose
     @SerializedName("email")
     private String email;
-
+    @Expose
     @SerializedName("password")
     private String password;
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+    @Expose
+    @SerializedName("enabled")
+    private Boolean isEnabled;
 
     public User(){
 
