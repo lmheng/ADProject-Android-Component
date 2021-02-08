@@ -31,4 +31,8 @@
     <string name="hours_0f_Sleep">How many hours did you sleep last night:</string>
     <string name="daily_quiz">Daily Quiz</string>
     <string name="submit">Submit</string>
+    <string name="currentlyfeeling">Current Status</string>
+    <string name="currentprofile">profile</string>
+    <string name="averageslp">Average Sleep/Day over 7Days</string>
+    <string name="avgmood">Mood/Day over 7 Days</string>
 </resources>
