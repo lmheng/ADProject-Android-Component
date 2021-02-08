@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.SettingsActivity"/>
+        <activity android:name=".dashboard"></activity>
+        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />
         <activity android:name=".activities.GetHelpList" />
