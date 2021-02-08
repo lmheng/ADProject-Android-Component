@@ -1,14 +1,15 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.squareup.picasso.Picasso;
+
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.Results_temp;
+import sg.edu.iss.mindmatters.webview.MindfulnessList;
 
 public class Mindfulness extends BaseActivity implements View.OnClickListener {
 ImageView afraid;

@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters;
+package sg.edu.iss.mindmatters.webview;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import sg.edu.iss.mindmatters.activities.Mindfulness;
+import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.activities.BaseActivity;
 
 public class MindfulnessList extends BaseActivity {
 private WebView mindfullist;

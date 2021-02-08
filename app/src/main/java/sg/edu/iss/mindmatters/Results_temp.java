@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Random;
+
+import sg.edu.iss.mindmatters.activities.BaseActivity;
+import sg.edu.iss.mindmatters.activities.Mindfulness;
 
 public class Results_temp extends BaseActivity
         implements View.OnClickListener  {

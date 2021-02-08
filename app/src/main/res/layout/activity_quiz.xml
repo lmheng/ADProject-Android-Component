@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@drawable/background"
+    tools:context=".webview.QuizActivity"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    android:weightSum="10">
 
-    <WebView android:id="@+id/web_view"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
+    <TextView
+        android:id="@+id/quiz_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/dialogbox"
+        android:elevation="3dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Quiz"
+        android:textColor="#3A3131"
+        android:textSize="35sp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="20dp"
         />
 
-</RelativeLayout>
+    <WebView
+        android:id="@+id/web_view_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        />
+
+</LinearLayout>
