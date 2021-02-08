@@ -49,6 +49,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/sad"
+            app:layout_constraintTop_toBottomOf="@id/txtVw"
+            app:layout_constraintEnd_toStartOf="@id/seek_bar"
+            app:layout_constraintBottom_toTopOf="@id/txtVw1"/>
+
         <SeekBar
             android:id="@+id/seek_bar"
             android:layout_width="250dp"
@@ -60,6 +68,14 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtVw" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/smiley"
+            app:layout_constraintTop_toBottomOf="@id/txtVw"
+            app:layout_constraintStart_toEndOf="@id/seek_bar"
+            app:layout_constraintBottom_toTopOf="@id/txtVw1"/>
 
         <TextView
             android:id="@+id/txtVw1"
@@ -76,7 +92,7 @@
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
