@@ -24,6 +24,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     SharedPreferences pref;
     SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(this);
 
+    int DAILY_DONE = 1;
+    boolean RESPONSE_CODE = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +81,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         else if(view.getId() == R.id.floatingActionButton) {
             Intent intent = new Intent(this, DailyQuizActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, DAILY_DONE);
         }
     }
 
     public void runDailyQuiz(boolean startApp){
         try {
-            if(startApp)
+            if(startApp && RESPONSE_CODE)
             {
                 if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null) {
                     Intent intent = new Intent(this, DailyQuizActivity.class);
@@ -104,6 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
         catch(CursorIndexOutOfBoundsException e) {
+            e.printStackTrace();
             Intent intent = new Intent(this, DailyQuizActivity.class);
             startActivity(intent);
         }
@@ -113,7 +117,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void loadNextDate(){
-        SharedPreferences pref1 = getSharedPreferences("QuizActivity", Context.MODE_PRIVATE);
+        SharedPreferences pref1 = getSharedPreferences("webview.QuizActivity", Context.MODE_PRIVATE);
         String getNextDate = pref1.getString(pref.getString("username","user"), null);
 
         System.out.println("nextDate" + getNextDate);
@@ -135,6 +139,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode == DAILY_DONE) {
+            if (resultCode == RESULT_CANCELED) {
+                RESPONSE_CODE = intent.getBooleanExtra("action", false);
+            }
+            if (resultCode == RESULT_OK) {
+                RESPONSE_CODE = intent.getBooleanExtra("action", true);
+            }
+        }
+    }
 
 }

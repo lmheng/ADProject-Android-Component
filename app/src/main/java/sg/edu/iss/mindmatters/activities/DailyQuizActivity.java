@@ -1,5 +1,6 @@
 package sg.edu.iss.mindmatters.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -56,6 +57,15 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            Intent response = new Intent();
+            response.putExtra("action", true);
+            setResult(RESULT_OK, response);
+            finish();
+        }
+        else if(view.getId() == R.id.btnDoLater) {
+            Intent response = new Intent();
+            response.putExtra("action", false);
+            setResult(RESULT_CANCELED, response);
             finish();
         }
     }
@@ -100,6 +110,9 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
 
         Button button = findViewById(R.id.btnSubmit);
         button.setOnClickListener(this);
+
+        Button btn = findViewById(R.id.btnDoLater);
+        btn.setOnClickListener(this);
 
     }
 

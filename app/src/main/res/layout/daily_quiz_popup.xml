@@ -52,10 +52,11 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:alpha="0.7"
             android:background="@drawable/sad"
-            app:layout_constraintTop_toBottomOf="@id/txtVw"
+            app:layout_constraintBottom_toTopOf="@id/txtVw1"
             app:layout_constraintEnd_toStartOf="@id/seek_bar"
-            app:layout_constraintBottom_toTopOf="@id/txtVw1"/>
+            app:layout_constraintTop_toBottomOf="@id/txtVw" />
 
         <SeekBar
             android:id="@+id/seek_bar"
@@ -72,10 +73,11 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:alpha="0.7"
             android:background="@drawable/smiley"
-            app:layout_constraintTop_toBottomOf="@id/txtVw"
+            app:layout_constraintBottom_toTopOf="@id/txtVw1"
             app:layout_constraintStart_toEndOf="@id/seek_bar"
-            app:layout_constraintBottom_toTopOf="@id/txtVw1"/>
+            app:layout_constraintTop_toBottomOf="@id/txtVw" />
 
         <TextView
             android:id="@+id/txtVw1"
@@ -122,6 +124,20 @@
             app:layout_constraintTop_toBottomOf="@id/txtVw2" />
 
         <Button
+            android:id="@+id/btnDoLater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/cancel"
+            android:text="Do Later"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/btnSubmit"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picker1" />
+
+        <Button
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,7 +148,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnDoLater"
             app:layout_constraintTop_toBottomOf="@id/picker1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
