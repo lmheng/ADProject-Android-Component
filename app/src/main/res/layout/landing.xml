@@ -5,34 +5,17 @@
     android:orientation="vertical"
     android:weightSum="10"
     >
-
-    <TextView
-        android:id="@+id/next_quiz_header"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/next_quiz_header"
-        android:textColor="#9F9F9F"
-        android:fontFamily="@font/roboto_light"
-        android:textSize="20dp"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/next_date_taken"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/next_quiz_date"
-        android:textColor="#9F9F9F"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"/>
+<include
+    layout="@layout/activity_dashboard"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:scaleType="fitCenter"
+    android:layout_weight="5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="2.5"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -58,26 +41,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="2.5"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_gravity="bottom">
 
         <ImageView
+            android:id="@+id/gethelp_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
             android:layout_weight="2"
             android:background="@drawable/gethelp"
-            android:layout_marginRight="5dp"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:id="@+id/gethelp_button"/>
+            android:foreground="?attr/selectableItemBackgroundBorderless" />
 
         <ImageView
+            android:id="@+id/dailyquiz_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:layout_marginLeft="5dp"
-            android:id="@+id/dailyquiz_button"
-            />
+            android:layout_weight="2"
+            android:background="@drawable/daily"
+            android:foreground="?attr/selectableItemBackgroundBorderless" />
     </LinearLayout>
 
 </LinearLayout>
