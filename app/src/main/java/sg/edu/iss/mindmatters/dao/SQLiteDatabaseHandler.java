@@ -123,8 +123,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public DailyQuiz findDailyByDate(LocalDate date, String username) throws ParseException, CursorIndexOutOfBoundsException {
-        System.out.println("Daily date" + date);
+    public DailyQuiz findDailyByDate(LocalDate date, String username) throws ParseException {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, // a. table
                 COLUMNS, // b. column names
@@ -135,6 +134,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 null, // g. order by
                 null); // h. limit
 
+        if(cursor.getCount() == 0)
+            return null;
         if (cursor != null)
             cursor.moveToFirst();
 

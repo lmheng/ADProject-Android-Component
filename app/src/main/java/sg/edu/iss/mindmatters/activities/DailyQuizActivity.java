@@ -146,4 +146,6 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
 }

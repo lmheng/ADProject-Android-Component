@@ -64,12 +64,14 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(getOutcome(User).toLowerCase().equals("normal"))
+                    outcome = "all";
+                else
                 outcome=getOutcome(User).toLowerCase();
             }
         }).start();}
         else{
             outcome="all";
-
         }
     }
 
@@ -87,6 +89,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() { recommendation(outcome);
+                System.out.println("thread running");
                 }
             }).start();
         }
@@ -98,6 +101,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         intent.putExtra(EXTERNAL_EDU, externalurl);
         startActivity(intent);
     }
+
     public void launchExternalPage(String externalurl1,String externalurl2,String title)
     {
         Intent intent=new Intent(Resources.this, Mindfulness.class);
@@ -234,7 +238,6 @@ public class Resources extends BaseActivity implements View.OnClickListener {
                 .getInstance()
                 .getAPI()
                 .getUserProfile(user);
-
 
                 try {
                     Response<QuizOutcome> qo=call.execute();

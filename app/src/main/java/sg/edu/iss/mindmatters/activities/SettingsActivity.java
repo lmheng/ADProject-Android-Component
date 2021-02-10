@@ -14,8 +14,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         callCustomActionBar(SettingsActivity.this,false);
+
         findViewById(R.id.editProfSet).setOnClickListener(this);
         findViewById(R.id.logoutSet).setOnClickListener(this);
+        findViewById(R.id.generalSettings).setOnClickListener(this);
 
     }
 
@@ -34,6 +36,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         Intent intent =new Intent(SettingsActivity.this, EditUserActivity.class);
         startActivity(intent);
     }
+
+    public void generalSettings(){
+        Intent intent =new Intent(SettingsActivity.this, GeneralSettings.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.editProfSet){
@@ -41,6 +49,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         }
         if(v.getId()==R.id.logoutSet){
             logout();
+        }
+        if(v.getId()==R.id.generalSettings){
+            generalSettings();
         }
     }
 

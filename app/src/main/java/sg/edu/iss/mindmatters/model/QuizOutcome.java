@@ -3,6 +3,8 @@ package sg.edu.iss.mindmatters.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import sg.edu.iss.mindmatters.model.User;
@@ -11,7 +13,9 @@ public class QuizOutcome {
         @Expose
         @SerializedName("id")
         private Integer id;
-        private transient Calendar lastTaken;
+        @Expose
+        @SerializedName("nextQuiz")
+        private String nextQuiz;
         @Expose
         @SerializedName("quizOutcome")
         private String quizOutcome;
@@ -25,8 +29,8 @@ public class QuizOutcome {
         this.quizOutcome = quizOutcome;
     }
 
-        public QuizOutcome(Calendar lastTaken, String quizOutcome, User user) {
-                this.lastTaken = lastTaken;
+        public QuizOutcome(String nextQuiz, String quizOutcome, User user) {
+                this.nextQuiz = nextQuiz;
                 this.quizOutcome = quizOutcome;
                 this.user = user;
             }
@@ -39,12 +43,15 @@ public class QuizOutcome {
         this.id = id;
     }
 
-    public Calendar getLastTaken() {
-        return lastTaken;
+    public LocalDate getNextQuiz() {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(nextQuiz, dtf);
     }
 
-    public void setLastTaken(Calendar lastTaken) {
-        this.lastTaken = lastTaken;
+    public void setNextQuiz(LocalDate nextQuiz) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.nextQuiz = nextQuiz.format(dtf);
     }
 
     public String getQuizOutcome() {
@@ -67,6 +74,7 @@ public class QuizOutcome {
     public String toString() {
         return "QuizOutcome{" +
                 "id=" + id +
+                "nextQuiz=" + nextQuiz +
                 ",quizOutcome='" + quizOutcome +
                 '}';
     }
