@@ -6,13 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.mikephil.charting.data.Entry;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
 
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
@@ -118,6 +123,23 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_NAME,null, values);
         db.close();
     }
+    public void createDummyData(String user){
+
+        String[] sleep = { "Excellent", "Very Good", "Average", "Poor" };
+        for(int i = 1;i<10;i++){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+        values.put(KEY_Q1, new Random().nextInt(100));
+        values.put(KEY_Q2,sleep[new Random().nextInt(sleep.length)] );
+        values.put(KEY_Q3, new Random().nextInt(10));
+        System.out.println("user" + user);
+        values.put(KEY_USER, user);
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DATE, i);  // number of days to add
+        values.put(KEY_DATE, sdf.format(today.getTime()));// insert
+        db.insert(TABLE_NAME,null, values);
+        db.close();    }
+    }
 
     public void deleteOne(DailyQuiz quiz) {
         // Get reference to writable DB
@@ -125,4 +147,81 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, "id = ?", new String[] { String.valueOf(quiz.getId()) });
         db.close();
     }
+    public ArrayList<Entry> getMoodData(String user)
+    {
+        ArrayList<Entry> DataValues=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        Cursor cursor=db.rawQuery(query ,new String[]{user});
+        for(int i=0;i<cursor.getCount();i++){
+            cursor.moveToNext();
+            DataValues.add(new Entry(i+1, (float) (Integer.parseInt(cursor.getString(0))*.1)));
+        }
+        cursor.close();
+        db.close();
+        return DataValues;
+    }
+    public float averageMoodData(String user)
+    {
+        ArrayList<Entry> DataValues=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        float averageMood=0;
+        String query="SELECT AVG(" + KEY_Q1 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        Cursor cursor=db.rawQuery(query ,new String[]{user});
+        cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+            averageMood = Float.parseFloat(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return averageMood;
+
+    }
+    public float averageSleepData(String user)
+    {
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        float averagesleep=0;
+        String query="SELECT AVG(" + KEY_Q3 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        Cursor cursor=db.rawQuery(query ,new String[]{user});
+        cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+            averagesleep = Float.parseFloat(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return averagesleep;
+
+    }
+
+    public ArrayList<Entry> getSleepData(String user)
+    {
+        ArrayList<Entry> DataValues=new ArrayList<>();
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        Cursor cursor=db.rawQuery(query ,new String[]{user});
+        for(int i=0;i<cursor.getCount();i++){
+            cursor.moveToNext();
+            DataValues.add(new Entry(i+1, Integer.parseInt(cursor.getString(0))));
+        }
+        db.close();
+        cursor.close();
+        return DataValues;
+    }
+    public String getSleepQualityData(String user)
+    {
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1";//"SELECT " + KEY_Q2+",Count("+KEY_Q2+") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY COUNT("+KEY_Q2+") DESC LIMIT 1";"SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1DESC LIMIT 1"
+        String quality="null";
+        Cursor cursor=db.rawQuery(query ,new String[]{user});
+        cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+          quality = cursor.getString(cursor.getColumnIndex("q2"));
+        }
+        db.close();
+        cursor.close();
+        return quality;
+    }
+
+
 }
