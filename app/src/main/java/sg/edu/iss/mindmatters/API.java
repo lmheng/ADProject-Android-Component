@@ -22,4 +22,9 @@ public interface API {
     Call<ResponseBody> checkUser(
             @Body User user
     );
+
+    @POST("users/forgot")
+    Call<ResponseBody> resetPassword(
+      @Body User user
+    );
 }

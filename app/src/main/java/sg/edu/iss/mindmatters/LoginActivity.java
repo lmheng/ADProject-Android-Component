@@ -19,72 +19,79 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText etUsername, etPassword;
     SharedPreferences pref;
-    String userName,password;
+    String userName, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        callCustomActionBar(LoginActivity.this, false);
+        loadComponents();
+    }
 
-        callCustomActionBar(LoginActivity.this,false);
-
+    private void loadComponents() {
         etUsername = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
 
         TextView registertv = findViewById(R.id.tvRegisterLink);
         String text = "<font>Don't have an account? Create one</font><font color=#0000FF><u> HERE!<u></font>";
-        registertv.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
+        registertv.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
 
         pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
         if (pref.contains("token")) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("username", pref.getString("username","User"));
-            intent.putExtra("token", pref.getString("token","Token"));
+            intent.putExtra("username", pref.getString("username", "User"));
+            intent.putExtra("token", pref.getString("token", "Token"));
             startActivity(intent);
         }
 
-        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userName = etUsername.getText().toString().trim();
-                password = etPassword.getText().toString().trim();
-                loginUser(userName,password);
-            }
-        });
-
-        findViewById(R.id.tvWoLogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        findViewById(R.id.tvRegisterLink).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
+        findViewById(R.id.btnLogin).setOnClickListener(this);
+        findViewById(R.id.tvWoLogin).setOnClickListener(this);
+        findViewById(R.id.tvRegisterLink).setOnClickListener(this);
+        findViewById(R.id.forgotLink).setOnClickListener(this);
     }
 
-    private void loginUser(String userName,String password) {
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.btnLogin) {
+            userName = etUsername.getText().toString().trim();
+            password = etPassword.getText().toString();
+            loginUser(userName, password);
+        } else if (id == R.id.tvWoLogin) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.tvRegisterLink) {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        } else if (id == R.id.forgotLink) {
+            startActivity(new Intent(LoginActivity.this, ForgotPwdActivity.class));
+        }
+    }
+
+    private boolean validate(String userName, String password) {
         if (userName.isEmpty()) {
             etUsername.setError("Username is required");
             etUsername.requestFocus();
-            return;
+            return false;
         } else if (password.isEmpty()) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private void loginUser(String userName, String password) {
+        if (!validate(userName, password)) {
             return;
         }
-
-        User u =  new User();
+        User u = new User();
         u.setUserName(userName);
         u.setPassword(password);
         Call<ResponseBody> call = RetrofitClient
@@ -95,24 +102,17 @@ public class LoginActivity extends BaseActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("rcode", String.valueOf(response.code()));
-                if(response.code()==200){
-                    String email="";
+                if (response.code() == 200) {
+                    String email = "";
                     try {
                         email = response.body().string();
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if(email==null || email==""){
-                        email= "example@example.com";
+                    if (email == null || email == "") {
+                        email = "example@example.com";
                     }
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("username",userName);
-                    editor.putString("password",password);
-                    editor.putString("token",response.headers().get("Authorization"));
-                    editor.putString("email",email);
-                    editor.commit();
+                    addDetails(response, email);
 
                     Toast.makeText(LoginActivity.this, "User logged in!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -130,4 +130,14 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    private void addDetails(Response<ResponseBody> response, String email) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("username", userName);
+        editor.putString("password", password);
+        editor.putString("token", response.headers().get("Authorization"));
+        editor.putString("email", email);
+        editor.commit();
+    }
+
 }
