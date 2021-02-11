@@ -52,18 +52,21 @@
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_menu_edit"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:elevation="3dp"
+            app:backgroundTint="#59DFD3"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <include
             layout="@layout/landing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1"/>
 
     </RelativeLayout>
 

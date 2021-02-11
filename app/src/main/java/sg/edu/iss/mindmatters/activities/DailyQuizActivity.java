@@ -1,5 +1,6 @@
 package sg.edu.iss.mindmatters.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import sg.edu.iss.mindmatters.R;
@@ -35,7 +36,7 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         //change once HueyLi is done
         setContentView(R.layout.daily_quiz_popup);
-        callCustomActionBar(DailyQuizActivity.this,false);
+        callCustomActionBar(DailyQuizActivity.this,true);
 
         loadView();
     }
@@ -56,6 +57,15 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            Intent response = new Intent();
+            response.putExtra("action", true);
+            setResult(RESULT_OK, response);
+            finish();
+        }
+        else if(view.getId() == R.id.btnDoLater) {
+            Intent response = new Intent();
+            response.putExtra("action", false);
+            setResult(RESULT_CANCELED, response);
             finish();
         }
     }
@@ -101,6 +111,9 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
         Button button = findViewById(R.id.btnSubmit);
         button.setOnClickListener(this);
 
+        Button btn = findViewById(R.id.btnDoLater);
+        btn.setOnClickListener(this);
+
     }
 
     public void createNewQuizEntry(){
@@ -113,19 +126,14 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
-        System.out.println(pref.getString("username","user"));
-
         DailyQuiz quiz = new DailyQuiz();
         quiz.setQ1(q1);
         quiz.setQ2(q2);
         quiz.setQ3(q3);
-
-        Calendar today = Calendar.getInstance();
-        quiz.setDate(today);
+        quiz.setDate(LocalDate.now());
         quiz.setUsername(pref.getString("username","user"));
 
         db.createQuizEntry(quiz);
-
     }
 
     @Override
@@ -138,4 +146,6 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
 }

@@ -11,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import sg.edu.iss.mindmatters.activities.Alarms;
+
 public class MyApplication extends Application implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
 
     NetworkReceiver networkReceiver = new NetworkReceiver();
+    AlarmReceiver alarmReceiver = new AlarmReceiver();
     private static String mCurrentActivity = null;
 
     @Override
@@ -21,9 +24,11 @@ public class MyApplication extends Application implements Application.ActivityLi
         super.onCreate();
         registerActivityLifecycleCallbacks(this);
 
-        System.out.println("create");
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, filter);
+
+        IntentFilter filter1 = new IntentFilter("alarm");
+        registerReceiver(alarmReceiver, filter1);
     }
 
     @Override

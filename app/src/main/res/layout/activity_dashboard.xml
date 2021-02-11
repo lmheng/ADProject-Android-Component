@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/dashboard_body"
     android:weightSum="10"
-    tools:context=".dashboard"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6">
-        <com.github.mikephil.charting.charts.LineChart
+
+      <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/linechart"/>
@@ -34,20 +35,22 @@
                 android:layout_weight=".5"
                 android:text="@string/next_quiz_header"
                 android:textColor="#9F9F9F"
-                android:fontFamily="@font/roboto_light"
-                android:textSize="20dp"
-                android:layout_marginLeft="10dp"/>
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"/>
             <TextView
             android:id="@+id/next_date_taken"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/roboto_regular"
             android:text="@string/next_quiz_date"
             android:textColor="#9F9F9F"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginStart="10dp"/>
+            android:textSize="25sp"
+            android:textStyle="normal"
+            android:layout_marginStart="10dp"
+                android:gravity="center"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -61,19 +64,21 @@
                 android:layout_weight=".5"
                 android:text="@string/currentprofile"
                 android:textColor="#9F9F9F"
-                android:fontFamily="@font/roboto_light"
-                android:textSize="20dp"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="30sp"
+                android:gravity="center"
                 android:layout_marginLeft="10dp"/>
             <TextView
                 android:id="@+id/currentStatus"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/roboto_regular"
                 android:text="@string/currentlyfeeling"
                 android:textColor="#9F9F9F"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textStyle="normal"
+                android:gravity="center"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
 </LinearLayout>
@@ -91,22 +96,24 @@
                 android:id="@+id/avgsleep_header"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".3"
+                android:layout_weight=".5"
                 android:text="@string/averageslp"
                 android:textColor="#9F9F9F"
-                android:fontFamily="@font/roboto_light"
-                android:textSize="20dp"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="30sp"
+                android:gravity="center"
                 android:layout_marginLeft="10dp"/>
             <TextView
                 android:id="@+id/averagesleep"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
-                android:fontFamily="@font/roboto_medium"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/roboto_regular"
                 android:text="sleep average"
                 android:textColor="#9F9F9F"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textStyle="normal"
+                android:gravity="center"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
         <LinearLayout
@@ -118,22 +125,24 @@
                 android:id="@+id/avg_mood_header"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".3"
+                android:layout_weight=".5"
                 android:text="@string/avgmood"
                 android:textColor="#9F9F9F"
-                android:fontFamily="@font/roboto_light"
-                android:textSize="20dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:textSize="30sp"
                 android:layout_marginLeft="10dp"/>
             <TextView
                 android:id="@+id/averagemood"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
-                android:fontFamily="@font/roboto_medium"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/roboto_regular"
                 android:text="mood average"
                 android:textColor="#9F9F9F"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textStyle="normal"
+                android:gravity="center"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
     </LinearLayout>

@@ -39,6 +39,8 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     private String[]OCD=new String[]{};
     private String[]Depression=new String[]{};
     private String[]Panic=new String[]{};
+    private String[]Loneliness=new String[]{};
+    private String[]Stress=new String[]{};
     private String[]All=new String[]{};
     List<Resource>collect=new ArrayList<>();
     SharedPreferences pref;
@@ -64,12 +66,14 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(getOutcome(User).toLowerCase().equals("normal"))
+                    outcome = "all";
+                else
                 outcome=getOutcome(User).toLowerCase();
             }
         }).start();}
         else{
             outcome="all";
-
         }
     }
 
@@ -87,6 +91,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() { recommendation(outcome);
+                System.out.println("thread running");
                 }
             }).start();
         }
@@ -98,6 +103,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         intent.putExtra(EXTERNAL_EDU, externalurl);
         startActivity(intent);
     }
+
     public void launchExternalPage(String externalurl1,String externalurl2,String title)
     {
         Intent intent=new Intent(Resources.this, Mindfulness.class);
@@ -163,6 +169,20 @@ public class Resources extends BaseActivity implements View.OnClickListener {
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
+            case "stress": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
+                String title = "Panicking about panic";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
+            case "loneliness": {
+                String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
+                String title = "Panicking about panic";
+                launchExternalPage(externalurl1, externalurl2, title);
+                break;
+            }
         }
     }
     public void getResourceList()
@@ -205,6 +225,8 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         Panic=collect.stream().filter(x->x.getType().equalsIgnoreCase("Panic")).map(x->x.getUrlCode()).toArray(String[]::new);
         Depression=collect.stream().filter(x->x.getType().equalsIgnoreCase("Depression")).map(x->x.getUrlCode()).toArray(String[]::new);
         All=collect.stream().filter(x->!x.getType().equalsIgnoreCase("Education")).map(x->x.getUrlCode()).toArray(String[]::new);
+        Loneliness=collect.stream().filter(x->x.getType().equalsIgnoreCase("Loneliness")).map(x->x.getUrlCode()).toArray(size->new String[size]);
+        Stress=collect.stream().filter(x->x.getType().equalsIgnoreCase("Stress")).map(x->x.getUrlCode()).toArray(size->new String[size]);
 
     }
 
@@ -234,7 +256,6 @@ public class Resources extends BaseActivity implements View.OnClickListener {
                 .getInstance()
                 .getAPI()
                 .getUserProfile(user);
-
 
                 try {
                     Response<QuizOutcome> qo=call.execute();
