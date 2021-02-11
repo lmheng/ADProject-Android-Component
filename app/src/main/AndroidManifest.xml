@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.GeneralSettings"></activity>
+        <activity android:name=".activities.ForgotPwdActivity"></activity>
+        <activity android:name=".activities.GeneralSettings" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />
@@ -34,7 +35,7 @@
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <activity android:name=".webview.Education" />
         <activity android:name=".activities.Mindfulness" />

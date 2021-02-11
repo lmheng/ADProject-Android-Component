@@ -22,11 +22,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void logout(){
-        SharedPreferences pref = getSharedPreferences(
-                "user_credentials", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.clear();
-        editor.commit();
+        clearDetails();
         Intent intent =new Intent(SettingsActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -59,5 +55,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
+    }
+    private void clearDetails(){
+        SharedPreferences pref = getSharedPreferences(
+                "user_credentials", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
     }
 }

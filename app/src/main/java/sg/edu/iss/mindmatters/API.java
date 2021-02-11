@@ -29,13 +29,15 @@ public interface API {
             @Body User user
     );
 
-    @GET("users/success")
-    Call<ResponseBody> getSuccess(@Header("Authorization") String authorization);
-
-
     @GET("rest/profile/{uName}")
     Call<QuizOutcome> getUserProfile(@Path("uName")String username);
 
     @GET("rest/list")
     Call<List<Resource>> getallresources();
+
+    @POST("users/forgot")
+    Call<ResponseBody> resetPassword(
+            @Body User user
+    );
+
 }
