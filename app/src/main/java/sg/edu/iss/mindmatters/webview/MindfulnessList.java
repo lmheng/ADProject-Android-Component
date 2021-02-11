@@ -2,6 +2,7 @@ package sg.edu.iss.mindmatters.webview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ private TextView title;
         title.setText(name);
         mUrl=intent.getStringExtra(Mindfulness.EXTERNAL_URL);
         mindfullist=findViewById(R.id.mindfullist);
+        mindfullist.setBackgroundColor(0);
+        mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mindfullist.getSettings().setJavaScriptEnabled(true);
         mindfullist.setWebViewClient(new WebViewClient());
         mindfullist.loadUrl(mUrl);

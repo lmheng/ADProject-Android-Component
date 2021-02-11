@@ -3,6 +3,7 @@ package sg.edu.iss.mindmatters.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -12,7 +13,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -34,7 +38,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String[] COLUMNS = { KEY_ID, KEY_Q1, KEY_Q2,
             KEY_Q3, KEY_USER , KEY_DATE};
 
-    DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public SQLiteDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,9 +79,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         quiz.setQ2(cursor.getString(2));
         quiz.setQ3(Integer.parseInt(cursor.getString(3)));
         quiz.setUsername(cursor.getString(4));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(sdf.parse(cursor.getString(5)));
-        quiz.setDate(calendar);
+        quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
 
         return quiz;
     }
@@ -98,9 +100,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 quiz.setQ2(cursor.getString(2));
                 quiz.setQ3(Integer.parseInt(cursor.getString(3)));
                 quiz.setUsername(cursor.getString(4));
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(sdf.parse(cursor.getString(5)));
-                quiz.setDate(calendar);
+                quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
                 allQuiz.add(quiz);
             } while (cursor.moveToNext());
         }
@@ -114,11 +114,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_Q1, quiz.getQ1());
         values.put(KEY_Q2, quiz.getQ2());
         values.put(KEY_Q3, quiz.getQ3());
-        System.out.println("user" + quiz.getUsername());
         values.put(KEY_USER, quiz.getUsername());
-
-        Calendar today = Calendar.getInstance();
-        values.put(KEY_DATE, sdf.format(today.getTime()));
+        values.put(KEY_DATE, sdf.format(quiz.getDate()));
         // insert
         db.insert(TABLE_NAME,null, values);
         db.close();
@@ -147,6 +144,34 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, "id = ?", new String[] { String.valueOf(quiz.getId()) });
         db.close();
     }
+
+    public DailyQuiz findDailyByDate(LocalDate date, String username) throws ParseException {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, // a. table
+                COLUMNS, // b. column names
+                " date = ? AND username = ?", // c. selections
+                new String[] { sdf.format(date),  username}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        if(cursor.getCount() == 0)
+            return null;
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        DailyQuiz quiz = new DailyQuiz();
+        quiz.setId(Integer.parseInt(cursor.getString(0)));
+        quiz.setQ1(Integer.parseInt(cursor.getString(1)));
+        quiz.setQ2(cursor.getString(2));
+        quiz.setQ3(Integer.parseInt(cursor.getString(3)));
+        quiz.setUsername(cursor.getString(4));
+        quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
+
+        return quiz;
+    }
+
     public ArrayList<Entry> getMoodData(String user)
     {
         ArrayList<Entry> DataValues=new ArrayList<>();

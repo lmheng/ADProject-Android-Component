@@ -2,6 +2,7 @@ package sg.edu.iss.mindmatters.webview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -23,6 +24,8 @@ public class Education extends BaseActivity {
         Intent intent = getIntent();
         mUrl=intent.getStringExtra(Resources.EXTERNAL_EDU);
         eduWebView=findViewById(R.id.edu_web);
+        eduWebView.setBackgroundColor(0);
+        eduWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         eduWebView.getSettings().setJavaScriptEnabled(true);
         eduWebView.setWebViewClient(new WebViewClient());
         eduWebView.loadUrl(mUrl);

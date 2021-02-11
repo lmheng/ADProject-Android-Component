@@ -2,7 +2,7 @@ package sg.edu.iss.mindmatters.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class DailyQuiz {
 
@@ -11,14 +11,12 @@ public class DailyQuiz {
     private String q2;
     private int q3;
     private String username;
-    private Calendar date;
-
-    DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private LocalDate date;
 
     public DailyQuiz() {
     }
 
-    public DailyQuiz(int id, int q1, String q2, int q3, String username, Calendar date) {
+    public DailyQuiz(int id, int q1, String q2, int q3, String username, LocalDate date) {
         this.id = id;
         this.q1 = q1;
         this.q2 = q2;
@@ -67,11 +65,11 @@ public class DailyQuiz {
         this.username = username;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -83,7 +81,7 @@ public class DailyQuiz {
                 ", q2='" + q2 + '\'' +
                 ", q3=" + q3 +
                 ", username='" + username + '\'' +
-                ", date='" + sdf.format(date.getTime()) + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 

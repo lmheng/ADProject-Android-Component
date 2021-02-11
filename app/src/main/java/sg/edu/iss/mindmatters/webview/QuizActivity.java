@@ -1,9 +1,11 @@
 package sg.edu.iss.mindmatters.webview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
@@ -13,23 +15,35 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.BaseActivity;
+import sg.edu.iss.mindmatters.model.QuizOutcome;
+import sg.edu.iss.mindmatters.model.User;
 
 public class QuizActivity extends BaseActivity {
 
     private final String mUrl = "http://10.0.2.2:8080/quiz/landing";
     private final String DONE_URL = "http://10.0.2.2:8080/resource/";
     private WebView mWebView;
+
+    LocalDate nextDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +101,34 @@ public class QuizActivity extends BaseActivity {
 
     }
 
+//    public void saveNextDate(SharedPreferences pref){
+//        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        Calendar today = Calendar.getInstance();
+//        today.set(Calendar.HOUR_OF_DAY, 0);
+//        today.add(Calendar.MONTH, 3);
+//        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        editor.putString(pref.getString("username","user"), sdf.format(today.getTime()));
+//        editor.commit();
+//    }
+
     public void saveNextDate(SharedPreferences pref){
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.add(Calendar.MONTH, 3);
-        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        editor.putString(pref.getString("username","user"), sdf.format(today.getTime()));
-        editor.commit();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                    nextDate=getNextQuizDate(getSharedPreferences(
+                            "user_credentials", MODE_PRIVATE).getString("username","user"));
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                editor.putString(pref.getString("username","user"), nextDate.format(dtf));
+                editor.commit();
+
+                Intent intent = new Intent();
+                intent.setAction("date_update");
+                sendBroadcast(intent);
+            }
+        }).start();
     }
 
     public void clearCache(){
@@ -141,5 +174,22 @@ public class QuizActivity extends BaseActivity {
         }
 
         return type;
+    }
+
+    public LocalDate getNextQuizDate(String user) {
+
+        Call<QuizOutcome> call = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .getUserProfile(user);
+
+        try {
+            retrofit2.Response<QuizOutcome> qo=call.execute();
+            QuizOutcome oc= qo.body();
+            return oc.getNextQuiz();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
