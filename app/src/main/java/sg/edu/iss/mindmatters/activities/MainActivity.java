@@ -26,6 +26,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -48,7 +49,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
    public SharedPreferences pref;
-    private LineChart linechart;
     SQLiteDatabaseHandler db;
     String user;
 
@@ -69,22 +69,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*TextView profiletype=findViewById(R.id.currentStatus);
-        TextView averagesleep=findViewById(R.id.averagesleep);
-        TextView averagemood=findViewById(R.id.averagemood);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String outcome=getOutcome("justin");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        profiletype.setText(outcome);
-                    }
-                });
-            }
-        }).start();*/
-
 
         pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
@@ -98,17 +82,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv.setText("Welcome, "+ pref.getString("username","user"));
         if(!pref.contains("token")){
             findViewById(R.id.next_date_taken).setVisibility(View.GONE);
+            findViewById(R.id.floatingActionButton).setVisibility(View.GONE);
             TextView header = findViewById(R.id.next_quiz_header);
             header.setText("Please log in if you want to view full details");
             LinearLayout landing=findViewById(R.id.landingscreen);
             landing.setBackground(getDrawable(R.drawable.background));
         }
         else{
-            loadNextDate();
             LinearLayout dashView=findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
-            populateDash(user);
-            populateGraph();
+           // populateDash(user);
+            //populateGraph();
             createNotificationChannel();
             runDailyQuiz(true);
             loadNextDate();
@@ -242,9 +226,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .getUserProfile(user);
         try {
             Response<QuizOutcome> qo=call.execute();
+            String type="";
             QuizOutcome oc= qo.body();
-            return oc.getQuizOutcome();
-        } catch (IOException e) {
+            type=oc.getQuizOutcome();
+            return type;
+        }
+        catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -255,7 +242,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 public void populateGraph()
 {
     db=new SQLiteDatabaseHandler(this);
-    linechart=(LineChart)findViewById(R.id.linechart);
+    LineChart linechart = (LineChart) findViewById(R.id.linechart);
     linechart.setDragEnabled(true);
     linechart.setScaleEnabled(false);
     ArrayList<Entry>yValues=new ArrayList<>();
@@ -294,18 +281,19 @@ public void populateDash(String user){
     averagemood.setText(String.format("%.1f",avgMood/10));
     float avgSlp=db.averageSleepData(user);
     averagesleep.setText(String.format("%.1f",avgSlp));
-    new Thread(new Runnable() {
+   /*new Thread(new Runnable() {
         @Override
         public void run() {
             String outcome=getOutcome(user);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     profiletype.setText(outcome);
                 }
             });
         }
-    }).start();
+    }).start();*/
 }
 
 

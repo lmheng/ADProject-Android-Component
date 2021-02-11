@@ -15,7 +15,6 @@
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.GeneralSettings"></activity>
-        <activity android:name=".dashboard" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />

@@ -131,9 +131,9 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_Q3, new Random().nextInt(10));
         System.out.println("user" + user);
         values.put(KEY_USER, user);
-        Calendar today = Calendar.getInstance();
-        today.add(Calendar.DATE, i);  // number of days to add
-        values.put(KEY_DATE, sdf.format(today.getTime()));// insert
+        LocalDate today = LocalDate.now();
+        today.plusDays(i);  // number of days to add
+        values.put(KEY_DATE, sdf.format(today));// insert
         db.insert(TABLE_NAME,null, values);
         db.close();    }
     }
@@ -194,7 +194,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q1 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst() && cursor.getCount()>0) {
             averageMood = Float.parseFloat(cursor.getString(0));
         }
         cursor.close();
@@ -210,7 +210,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q3 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst()&& cursor.getCount()>0) {
             averagesleep = Float.parseFloat(cursor.getString(0));
         }
         cursor.close();
@@ -225,9 +225,11 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
         String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        for(int i=0;i<cursor.getCount();i++){
-            cursor.moveToNext();
-            DataValues.add(new Entry(i+1, Integer.parseInt(cursor.getString(0))));
+        if(cursor.getCount()>0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                DataValues.add(new Entry(i + 1, Integer.parseInt(cursor.getString(0))));
+            }
         }
         db.close();
         cursor.close();
@@ -239,10 +241,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1";//"SELECT " + KEY_Q2+",Count("+KEY_Q2+") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY COUNT("+KEY_Q2+") DESC LIMIT 1";"SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1DESC LIMIT 1"
         String quality="null";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
-          quality = cursor.getString(cursor.getColumnIndex("q2"));
-        }
+        do{
+            cursor.moveToFirst();
+            if (cursor.moveToFirst())  {
+                quality = cursor.getString(cursor.getColumnIndex("q2"));
+            }
+        }while(cursor.getCount()>0);
+
         db.close();
         cursor.close();
         return quality;
