@@ -76,8 +76,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         IntentFilter filter = new IntentFilter();
         filter.addAction("date_update");
         registerReceiver(receiver, filter);
-       user=pref.getString("username","user");
-
+        user=pref.getString("username","user");
+        db=new SQLiteDatabaseHandler(this);
+   //     db.createDummyData(user);
         TextView tv = (TextView)findViewById(R.id.userNametv);
         tv.setText("Welcome, "+ pref.getString("username","user"));
         if(!pref.contains("token")){
@@ -89,10 +90,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             landing.setBackground(getDrawable(R.drawable.background));
         }
         else{
+            if(db.countDb()>0){
             LinearLayout dashView=findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
-           // populateDash(user);
-            //populateGraph();
+            populateDash(user);
+            populateGraph();}
             createNotificationChannel();
             runDailyQuiz(true);
             loadNextDate();
@@ -226,10 +228,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .getUserProfile(user);
         try {
             Response<QuizOutcome> qo=call.execute();
-            String type="";
             QuizOutcome oc= qo.body();
-            type=oc.getQuizOutcome();
-            return type;
+            return oc.getQuizOutcome();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -249,7 +249,6 @@ public void populateGraph()
     ArrayList<Entry>xValues=new ArrayList<>();
     yValues=db.getMoodData(user);
     xValues=db.getSleepData(user);
-    String sleepquality=db.getSleepQualityData(user);
     LineDataSet set2=new LineDataSet(xValues,"Mood");
     LineDataSet set1=new LineDataSet(yValues,"Sleep");
     set1.setFillAlpha(110);
@@ -281,7 +280,7 @@ public void populateDash(String user){
     averagemood.setText(String.format("%.1f",avgMood/10));
     float avgSlp=db.averageSleepData(user);
     averagesleep.setText(String.format("%.1f",avgSlp));
-   /*new Thread(new Runnable() {
+   new Thread(new Runnable() {
         @Override
         public void run() {
             String outcome=getOutcome(user);
@@ -293,7 +292,7 @@ public void populateDash(String user){
                 }
             });
         }
-    }).start();*/
+    }).start();
 }
 
 
