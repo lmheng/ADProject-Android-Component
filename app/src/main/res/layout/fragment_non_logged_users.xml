@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity"
+    android:orientation="vertical"
+    android:weightSum="11">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="8"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        >
+
+        <TextView
+            android:id="@+id/userNametv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="left|bottom"
+            android:text="Hello, User!"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="3dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="Please log in if you want to view full details"
+        android:gravity="left|center_vertical"
+        android:textColor="#9F9F9F"
+        android:fontFamily="@font/roboto_medium"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/roboto_light"
+        android:text="Try the below activities \n to find out more:"
+        android:textColor="#9F9F9F"
+        android:textSize="18sp"
+        android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.75"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/resource"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginRight="5dp"
+                android:id="@+id/resource_btn"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/takequiz"
+                android:layout_marginLeft="5dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/test_button"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.75"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/gethelp_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/gethelp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

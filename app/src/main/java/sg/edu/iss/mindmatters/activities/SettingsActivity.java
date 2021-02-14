@@ -15,9 +15,22 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_settings);
         callCustomActionBar(SettingsActivity.this,false);
 
-        findViewById(R.id.editProfSet).setOnClickListener(this);
-        findViewById(R.id.logoutSet).setOnClickListener(this);
-        findViewById(R.id.generalSettings).setOnClickListener(this);
+        SharedPreferences pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
+
+        if(pref.contains("token")){
+            findViewById(R.id.editProfSet).setOnClickListener(this);
+            findViewById(R.id.logoutSet).setOnClickListener(this);
+            findViewById(R.id.generalSettings).setOnClickListener(this);
+
+            findViewById(R.id.loginset).setVisibility(View.GONE);
+        }
+        else{
+            findViewById(R.id.loginset).setOnClickListener(this);
+
+            findViewById(R.id.editProfSet).setVisibility(View.GONE);
+            findViewById(R.id.logoutSet).setVisibility(View.GONE);
+            findViewById(R.id.generalSettings).setVisibility(View.GONE);
+        }
 
     }
 
@@ -38,6 +51,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         startActivity(intent);
     }
 
+    public void login(){
+        Intent intent =new Intent(SettingsActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.editProfSet){
@@ -48,6 +66,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         }
         if(v.getId()==R.id.generalSettings){
             generalSettings();
+        }
+        if(v.getId()==R.id.loginset){
+            login();
         }
     }
 

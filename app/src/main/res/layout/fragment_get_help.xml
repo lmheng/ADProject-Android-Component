@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".webview.QuizActivity"
     android:orientation="vertical"
-    android:weightSum="11">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+    android:weightSum="11"
+    tools:context=".activities.fragments.getHelp.getHelpFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,19 +24,21 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/roboto_medium"
             android:gravity="left|bottom"
-            android:text="Quiz"
+            android:text="Get Help"
             android:textColor="#3A3131"
             android:textSize="35sp"
             />
 
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/web_view_quiz"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:background="@color/white"
         android:elevation="3dp"
-        />
+        android:divider="#B0B0B0"
+        android:dividerHeight="0.5dp"
+        android:layout_weight="10"/>
 
 </LinearLayout>

@@ -14,12 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ForgotPwdActivity"></activity>
+        <activity android:name=".activities.fragments.LandingActivity"></activity>
+        <activity android:name=".activities.ForgotPwdActivity" />
         <activity android:name=".activities.GeneralSettings" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />
         <activity android:name=".activities.GetHelpList" />
+        <activity android:name=".activities.fragments.getHelp.GetHelpView" />
         <activity android:name=".activities.UserMessageActivity" />
         <activity android:name=".activities.DailyQuizActivity" />
         <activity android:name=".NoNetwork" />
@@ -48,7 +50,6 @@
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -24,13 +24,14 @@
         android:id="@+id/box"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/dialogbox"
         android:elevation="2dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="@id/gethelp_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/visit"
@@ -43,7 +44,6 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:translationZ="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.7"
@@ -61,7 +61,6 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:translationZ="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="@id/guideV1"
         app:layout_constraintTop_toTopOf="@id/box" />
 
@@ -71,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
         android:text="@string/info_1"
+        android:fontFamily="@font/roboto_bold"
         android:translationZ="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@id/guideV0"
         app:layout_constraintTop_toTopOf="@id/box" />
 

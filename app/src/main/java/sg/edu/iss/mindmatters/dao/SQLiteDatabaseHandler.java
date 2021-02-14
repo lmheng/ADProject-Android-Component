@@ -24,6 +24,8 @@ import java.util.Random;
 import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
 
+import static java.time.LocalDate.now;
+
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -131,7 +133,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_Q3, new Random().nextInt(10));
         System.out.println("user" + user);
         values.put(KEY_USER, user);
-        LocalDate today = LocalDate.now();
+        LocalDate today = now();
         today.plusDays(i);  // number of days to add
         values.put(KEY_DATE, sdf.format(today));// insert
         db.insert(TABLE_NAME,null, values);
@@ -178,11 +180,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
         String query="SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        for(int i=0;i<cursor.getCount();i++){
+        for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
-            DataValues.add(new Entry(i+1, (float) (Integer.parseInt(cursor.getString(0))*.1)));
+            DataValues.add(new Entry(i + 1, (float) (Integer.parseInt(cursor.getString(0)) * .1)));
         }
-        cursor.close();
         db.close();
         return DataValues;
     }
@@ -194,10 +195,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q1 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst() && cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averageMood = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
+
         db.close();
         return averageMood;
 
@@ -210,10 +211,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q3 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst()&& cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averagesleep = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
+
         db.close();
         return averagesleep;
 
@@ -225,14 +226,14 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
         String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        if(cursor.getCount()>0) {
+
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
                 DataValues.add(new Entry(i + 1, Integer.parseInt(cursor.getString(0))));
             }
-        }
+
         db.close();
-        cursor.close();
+
         return DataValues;
     }
     public String getSleepQualityData(String user)
@@ -246,12 +247,19 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             if (cursor.moveToFirst())  {
                 quality = cursor.getString(cursor.getColumnIndex("q2"));
             }
-        }while(cursor.getCount()>0);
+        }while(cursor.getCount()>1);
 
         db.close();
-        cursor.close();
+
         return quality;
     }
 
+    public int countDb()
+    {
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="SELECT * FROM DailyQuiz";
+        Cursor cursor=db.rawQuery(query,new String[]{});
+        return cursor.getCount();
+    }
 
 }

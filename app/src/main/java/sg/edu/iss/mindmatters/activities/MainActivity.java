@@ -40,6 +40,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.MyApplication;
 import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.webview.QuizActivity;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
    public SharedPreferences pref;
-    SQLiteDatabaseHandler db;
+    SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(this);
     String user;
 
     int DAILY_DONE = 1;
@@ -65,6 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         IntentFilter filter = new IntentFilter();
         filter.addAction("date_update");
         registerReceiver(receiver, filter);
-       user=pref.getString("username","user");
+        user=pref.getString("username","user");
 
         TextView tv = (TextView)findViewById(R.id.userNametv);
         tv.setText("Welcome, "+ pref.getString("username","user"));
@@ -91,7 +93,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         else{
             LinearLayout dashView=findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
-           // populateDash(user);
+            //populateDash(user);
             //populateGraph();
             createNotificationChannel();
             runDailyQuiz(true);
@@ -121,7 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         }
         else if(view.getId() == R.id.gethelp_button){
-            Intent intent = new Intent(this, GetHelpList.class);
+            Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
         }
         else if(view.getId() == R.id.resource_btn) {
@@ -218,6 +220,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             e.printStackTrace();
         }
     }
+
     public String getOutcome(String user){
 
         Call<QuizOutcome> call = RetrofitClient
@@ -241,7 +244,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 public void populateGraph()
 {
-    db=new SQLiteDatabaseHandler(this);
     LineChart linechart = (LineChart) findViewById(R.id.linechart);
     linechart.setDragEnabled(true);
     linechart.setScaleEnabled(false);

@@ -69,6 +69,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUserName" />
 
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Login"
+            android:background="@drawable/rect"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
         <TextView
             android:id="@+id/forgotLink"
             android:layout_width="wrap_content"
@@ -81,21 +94,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin"
             />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Login"
-            android:background="@drawable/rect"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forgotLink" />
 
         <TextView
             android:id="@+id/tvRegisterLink"
@@ -108,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@+id/forgotLink"
              />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
