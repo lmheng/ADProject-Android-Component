@@ -87,8 +87,8 @@ public class QuizActivity extends BaseActivity {
                 super.onPageStarted(view, url, favicon);
                 if(url.contains(DONE_URL)) {
                     finish();
-                    if(pref.contains("token"))
-                        saveNextDate(pref);
+//                    if(pref.contains("token"))
+//                        saveNextDate(pref);
                     //clearCache();
                 }
             }

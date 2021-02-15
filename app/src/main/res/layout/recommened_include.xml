@@ -3,25 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/dialogbox"
     android:elevation="3dp"
     android:weightSum="10"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/recommend"
-        android:textColor="#9F9F9F"
-        android:textSize="12sp"
-        android:layout_marginBottom="5dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="9"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -44,8 +33,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="387dp"
-        android:layout_height="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:padding="2dp">
