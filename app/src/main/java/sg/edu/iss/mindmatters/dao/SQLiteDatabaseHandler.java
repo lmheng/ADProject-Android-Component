@@ -248,11 +248,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return quality;
     }
-public int countDb()
+public int countDb(String user)
 {
     SQLiteDatabase db=this.getReadableDatabase();
-    String query="SELECT * FROM DailyQuiz";
-    Cursor cursor=db.rawQuery(query,new String[]{});
+    String query="SELECT * FROM DailyQuiz WHERE username = ?";
+
+    Cursor cursor=db.rawQuery(query,new String[]{user});
+
     return cursor.getCount();
 }
 

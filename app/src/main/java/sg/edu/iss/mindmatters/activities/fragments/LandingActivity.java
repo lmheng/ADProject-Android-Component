@@ -53,23 +53,24 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
 
         pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
 
-        if(pref.contains("token"))
-        {
-            try {
-                if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)
-                {
-                    Intent intent = new Intent(this, DailyQuizActivity.class);
-                    startActivity(intent);
+        if(savedInstanceState == null)
+        {if(pref.contains("token"))
+            {
+                try {
+                    if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)
+                    {
+                        Intent intent = new Intent(this, DailyQuizActivity.class);
+                        startActivity(intent);
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
                 }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
 
-            replaceDetailFragment(3);
-        }
-        else{
-            replaceDetailFragment(4);
-        }
+                replaceDetailFragment(3);
+            }
+            else{
+                replaceDetailFragment(4);
+            }}
 
         findViewById(R.id.resources).setOnClickListener(this);
         findViewById(R.id.home_btn).setOnClickListener(this);

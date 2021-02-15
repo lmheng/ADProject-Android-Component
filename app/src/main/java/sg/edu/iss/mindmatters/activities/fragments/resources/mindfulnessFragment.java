@@ -126,13 +126,13 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         }
         else if(id==R.id.recommended1)
         {
-            String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
-            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,title));
+            String externalUrl ="http://10.0.2.2:8080/resource/view/" + Url_code;
+            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl, title));
         }
         else if(id==R.id.recommended2)
         {
-            String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
-            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,title));
+            String externalUrl ="http://10.0.2.2:8080/resource/view/" + Url_code2;
+            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl, title));
         }
     }
 
@@ -161,15 +161,18 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
 //        launchBtn2.setOnClickListener(this);
 
         String url_1=mindfulLinks[0];
+        System.out.println(url_1);
         Url_code=url_1.substring(27,url_1.length()-6);
         title=mindfulLinks[2];
-        launchBtn = (ImageView)mView.findViewById(R.id.recommended1);
+        launchBtn = (ImageView) mView.findViewById(R.id.recommended1);
         Picasso.get().load(url_1).placeholder(R.drawable.ic_launcher_background).into(launchBtn);
         launchBtn.setOnClickListener(this);
+
         String url_2=mindfulLinks[1];
-        launchBtn2 =(ImageView)mView.findViewById(R.id.recommended2);
-        Picasso.get().load(url_2).placeholder(R.drawable.ic_launcher_background).into(launchBtn2);
+        System.out.println(url_2);
         Url_code2=url_2.substring(27,url_2.length()-6);
+        launchBtn2 = (ImageView) mView.findViewById(R.id.recommended2);
+        Picasso.get().load(url_2).placeholder(R.drawable.ic_launcher_background).into(launchBtn2);
         launchBtn2.setOnClickListener(this);
 
     }

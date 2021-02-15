@@ -2,6 +2,7 @@ package sg.edu.iss.mindmatters.activities.fragments.resources;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -47,25 +48,31 @@ public class mindfulDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mindful_detail, container, false);
         this.mView = view;
 
+
         elements = getArguments().getStringArray("resources");
-        String name=elements[1];
-        title=(TextView)mView.findViewById(R.id.mindfultype);
-        title.setText(name);
-        mUrl=elements[0];
-        mindfullist=mView.findViewById(R.id.mindfullist);
-        mindfullist.setBackgroundColor(0);
-        mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        mindfullist.getSettings().setJavaScriptEnabled(true);
-        mindfullist.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView paramWebView, String paramString)
-            {
-                paramWebView.loadUrl(paramString);
-                return true;
-            }
-        });
-        mindfullist.setWebChromeClient(new WebChromeClientCustom());
-        mindfullist.loadUrl(mUrl);
+            String name=elements[1];
+            title=(TextView)mView.findViewById(R.id.mindfultype);
+            title.setText(name);
+            mUrl=elements[0];
+            System.out.println(mUrl);
+            mindfullist=mView.findViewById(R.id.mindfullist);
+            mindfullist.setBackgroundColor(0);
+            mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            mindfullist.getSettings().setJavaScriptEnabled(true);
+            mindfullist.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView paramWebView, String paramString)
+                {
+                    paramWebView.loadUrl(paramString);
+                    return true;
+                }
+            });
+            mindfullist.setWebChromeClient(new WebChromeClientCustom());
+            if(savedInstanceState == null)
+            mindfullist.loadUrl(mUrl);
+        else{
+            mindfullist.restoreState(savedInstanceState);
+        }
 
         return view;
     }
@@ -107,7 +114,7 @@ public class mindfulDetailFragment extends Fragment {
                     .getDecorView())
                     .addView(this.mCustomView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             getActivity().getWindow().getDecorView().setSystemUiVisibility(FULL_SCREEN_SETTING);
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
             this.mCustomView.setOnSystemUiVisibilityChangeListener(visibility -> updateControls());
         }
 
@@ -127,6 +134,16 @@ public class mindfulDetailFragment extends Fragment {
             this.mCustomView.setLayoutParams(params);
             getActivity().getWindow().getDecorView().setSystemUiVisibility(FULL_SCREEN_SETTING);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mindfullist.saveState(outState);
     }
 
 }

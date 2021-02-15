@@ -87,12 +87,14 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        if(db.countDb()>0){
-            pref = this.getActivity().getSharedPreferences(
-                    "user_credentials", MODE_PRIVATE);
-            user=pref.getString("username","user");
+        if(db.countDb(user)>0) {
+//            pref = this.getActivity().getSharedPreferences(
+//                    "user_credentials", MODE_PRIVATE);
+//            user = pref.getString("username", "user");
             populateDash(user);
             combineGraph();
+            updateServerInfo();
+            runDailyQuiz();
         }
     }
 
@@ -120,11 +122,14 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         TextView tv = (TextView) mView.findViewById(R.id.userNametv);
         tv.setText("Welcome, "+ user);
 
-        if(db.countDb()>0){
+
             LinearLayout dashView=mView.findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
-            populateDash(user);
-            combineGraph();}
+            if(db.countDb(user)>0) {
+                populateDash(user);
+                combineGraph();
+            }
+            updateServerInfo();
             createNotificationChannel();
             runDailyQuiz();
             launchAlarm();
@@ -340,13 +345,16 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         averagemood.setText(String.format("%.1f",avgMood/10));
         float avgSlp=db.averageSleepData(user);
         averagesleep.setText(String.format("%.1f",avgSlp));
+    }
+
+    public void updateServerInfo(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String outcome=getOutcome(user);
+                String outcome=getOutcome(user).getQuizOutcome();
                 TextView text = mView.findViewById(R.id.currentStatus);
                 text.setText(outcome);
-
+                loadNextDate();
             }
         }).start();
     }
