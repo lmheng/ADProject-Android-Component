@@ -111,6 +111,7 @@ public static final String EXTERNAL_URL="externalUrl";
             launchExternalPage(externalUrl,title);
         }*/
     }
+
     public void launchExternalPage(String externalurl,String title)
     {
         Intent intent=new Intent(Mindfulness.this, MindfulnessList.class);

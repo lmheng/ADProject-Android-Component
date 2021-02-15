@@ -28,12 +28,15 @@ import sg.edu.iss.mindmatters.activities.fragments.getHelp.getHelpFragment;
 import sg.edu.iss.mindmatters.activities.fragments.landing.LandingFragment;
 import sg.edu.iss.mindmatters.activities.fragments.nonLogged.NonLoggedUsers;
 import sg.edu.iss.mindmatters.activities.fragments.quiz.quizFragment;
+import sg.edu.iss.mindmatters.activities.fragments.resources.educationFragment;
+import sg.edu.iss.mindmatters.activities.fragments.resources.mindfulDetailFragment;
+import sg.edu.iss.mindmatters.activities.fragments.resources.mindfulnessFragment;
 import sg.edu.iss.mindmatters.activities.fragments.resources.resourceFragment;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
 
-public class LandingActivity extends BaseActivity implements View.OnClickListener, NonLoggedUsers.INonLoggedUsersFragment{
+public class LandingActivity extends BaseActivity implements View.OnClickListener, NonLoggedUsers.INonLoggedUsersFragment, resourceFragment.IResourceFragment, mindfulnessFragment.IMindfulnessFragment{
 
-    final Fragment[] fragments = {new resourceFragment(), new quizFragment(), new getHelpFragment(), new LandingFragment(), new NonLoggedUsers()};
+    final Fragment[] fragments = {new resourceFragment(), new quizFragment(), new getHelpFragment(), new LandingFragment(), new NonLoggedUsers(), new mindfulnessFragment(), new educationFragment(), new mindfulDetailFragment()};
     final int[] views = {R.id.resources, R.id.take_quiz, R.id.get_help, R.id.home_btn, R.id.home_btn};
     BottomNavigationView nav;
 
@@ -101,13 +104,35 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    public void replaceDetailFragment(int newItemId, String[] resources) {
+
+        Fragment fragment = fragments[newItemId];
+
+            Bundle arguments = new Bundle();
+            arguments.putStringArray("resources", resources);
+            fragment.setArguments(arguments);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction trans = fm.beginTransaction();
+        trans.replace(R.id.fragment_container, fragment);
+        trans.addToBackStack(null);
+        trans.commit();
+
+        nav.setSelectedItemId(views[0]);
+    }
+
     public void replaceDetailFragment(int newItemId) {
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction trans = fm.beginTransaction();
         trans.replace(R.id.fragment_container, fragments[newItemId]);
         trans.addToBackStack(null);
         trans.commit();
-        nav.setSelectedItemId(views[newItemId]);
+
+        if(newItemId < 5)
+            nav.setSelectedItemId(views[newItemId]);
+        else
+            nav.setSelectedItemId(views[0]);
     }
 
     public void loadBottomNavigation(){
@@ -118,5 +143,20 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void itemClicked(int content) {
         replaceDetailFragment(content);
+    }
+
+    @Override
+    public void resourceClicked(String[] content) {
+        if(content.length == 3){
+            replaceDetailFragment(5, content);
+        }
+        else{
+            replaceDetailFragment(6, content);
+        }
+    }
+
+    @Override
+    public void mindfulClicked(String[] content) {
+        replaceDetailFragment(7, content);
     }
 }

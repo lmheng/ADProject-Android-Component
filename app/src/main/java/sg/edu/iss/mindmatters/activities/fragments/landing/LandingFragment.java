@@ -74,8 +74,8 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("date_update")) {
-                if(pref.contains("token"))
-                    loadNextDate();
+//                if(pref.contains("token"))
+//                    loadNextDate();
             }
         }
     };
@@ -127,7 +127,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             combineGraph();}
             createNotificationChannel();
             runDailyQuiz();
-            loadNextDate();
             launchAlarm();
             mView.findViewById(R.id.floatingActionButton).setOnClickListener(this);
             mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);
@@ -201,22 +200,22 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     }
 
     public void loadNextDate(){
-        SharedPreferences pref1 = getActivity().getSharedPreferences("activities.fragments.LandingActivity", MODE_PRIVATE);
-        String getNextDate = pref1.getString(pref.getString("username","user"), null);
+        try {
+            LocalDate getNextDate = getOutcome(pref.getString("username", "user")).getNextQuiz();
 
-        System.out.println("nextDate" + getNextDate);
-
-        TextView nextDate = mView.findViewById(R.id.next_date_taken);
-        nextDate.setVisibility(View.VISIBLE);
-        TextView header = mView.findViewById(R.id.next_quiz_header);
-        header.setText(R.string.next_quiz_header);
-
-        if(getNextDate != null) {
-            nextDate.setText(getNextDate);
+            TextView nextDate = mView.findViewById(R.id.next_date_taken);
+            nextDate.setVisibility(View.VISIBLE);
+            TextView header = mView.findViewById(R.id.next_quiz_header);
+            header.setText(R.string.next_quiz_header);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            nextDate.setText(getNextDate.format(dtf));
         }
-        else {
+        catch(NullPointerException e){
+            TextView nextDate = mView.findViewById(R.id.next_date_taken);
+            nextDate.setVisibility(View.VISIBLE);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             nextDate.setText(LocalDate.now().format(dtf));
+            e.printStackTrace();
         }
     }
 
@@ -232,7 +231,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    public String getOutcome(String user){
+    public QuizOutcome getOutcome(String user){
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
@@ -241,7 +240,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         try {
             Response<QuizOutcome> qo=call.execute();
             QuizOutcome oc= qo.body();
-            return oc.getQuizOutcome();
+            return oc;
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -294,10 +293,10 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     new Thread(new Runnable() {
         @Override
         public void run() {
-            String outcome=getOutcome(user);
+            String outcome=getOutcome(user).getQuizOutcome();
                     TextView text = mView.findViewById(R.id.currentStatus);
                     text.setText(outcome);
-
+                    loadNextDate();
             }
         }).start();
     }*/

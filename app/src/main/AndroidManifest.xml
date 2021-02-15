@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true">
         <activity android:name=".activities.fragments.LandingActivity"></activity>
         <activity android:name=".activities.ForgotPwdActivity" />
         <activity android:name=".activities.GeneralSettings" />
