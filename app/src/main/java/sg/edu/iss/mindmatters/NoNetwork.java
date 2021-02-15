@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import sg.edu.iss.mindmatters.activities.BaseActivity;
 import sg.edu.iss.mindmatters.activities.MainActivity;
+import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
 
 public class NoNetwork extends BaseActivity implements View.OnClickListener {
 
@@ -29,7 +30,7 @@ public class NoNetwork extends BaseActivity implements View.OnClickListener {
             if(view.getId() == R.id.retry_button) {
                 if(NetworkReceiver.checkInternet(this))
                 {
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent(this, LandingActivity.class);
                     startActivity(intent);
                 }
                 else{

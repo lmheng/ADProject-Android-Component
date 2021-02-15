@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/education"
+        android:background="@drawable/mindful"
         android:orientation="horizontal"
         app:layout_constraintHeight_percent="0.2"
         app:layout_constraintTop_toBottomOf="@+id/mindful_layout"
@@ -50,7 +50,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/education"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="31dp"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
@@ -83,13 +85,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/mindful"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:text="@string/Mindfultext"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

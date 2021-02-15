@@ -10,67 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/dash_support"
-        android:layout_weight="5"
+        android:layout_weight="10"
         android:visibility="gone"
         android:orientation="vertical">
-<include
-    layout="@layout/activity_dashboard"
-    android:id="@+id/dashboard"
-    android:visibility="visible"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="fitCenter"/>
-</LinearLayout>
-    <LinearLayout
+    <include
+        layout="@layout/activity_dashboard"
+        android:id="@+id/dashboard"
+        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-            android:background="@drawable/resource"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginRight="5dp"
-            android:id="@+id/resource_btn"/>
+        android:scaleType="fitCenter"/>
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/takequiz"
-            android:layout_marginLeft="5dp"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:id="@+id/test_button"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_gravity="bottom">
-
-        <ImageView
-            android:id="@+id/gethelp_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight="2"
-            android:background="@drawable/gethelp"
-            android:foreground="?attr/selectableItemBackgroundBorderless" />
-
-        <ImageView
-            android:id="@+id/dailyquiz_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="2"
-            />
-    </LinearLayout>
 
 </LinearLayout>

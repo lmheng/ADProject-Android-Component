@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters.activities;
+package sg.edu.iss.mindmatters.activities.fragments.getHelp;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.webview.GetHelpView;
 
 public class GetHelpAdapter extends ArrayAdapter {
 

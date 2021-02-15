@@ -16,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
 import sg.edu.iss.mindmatters.model.User;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -44,7 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 "user_credentials", MODE_PRIVATE);
 
         if (pref.contains("token")) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             intent.putExtra("username", pref.getString("username", "User"));
             intent.putExtra("token", pref.getString("token", "Token"));
             startActivity(intent);
@@ -64,7 +65,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             password = etPassword.getText().toString();
             loginUser(userName, password);
         } else if (id == R.id.tvWoLogin) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);
         } else if (id == R.id.tvRegisterLink) {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -114,7 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     addDetails(response, email);
 
                     Toast.makeText(LoginActivity.this, "User logged in!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
                     intent.putExtra("username", userName);
                     intent.putExtra("token", response.headers().get("Authorization"));
                     startActivity(intent);
