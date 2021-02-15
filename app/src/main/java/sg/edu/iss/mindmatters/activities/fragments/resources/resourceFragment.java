@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,20 +116,27 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         }
         else if(id==R.id.mindful_layout)
         {
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() { recommendation(outcome);
-//                }
-//            }).start();
-            iResourceFragment.resourceClicked(recommendation(outcome));
+           /*new Thread(new Runnable() {
+               @Override
+               public void run() { recommendation(outcome);
+              }
+            }).start();*/
+            //iResourceFragment.resourceClicked(recommendation(outcome));
+            Bundle bundle=new Bundle();
+            bundle.putStringArray("recommend",recommendation(outcome));
+            mindfulnessFragment fragment = new mindfulnessFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.resourcefrag, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
     }
-    public void launchExternalPage(String[] externalurl1,String title)
+    public String[] launchExternalPage(String[] externalurl1)
     {
-        Intent intent=new Intent(getActivity(), Mindfulness.class);
-        intent.putExtra(EXTERNAL_URL_1,externalurl1);
-        intent.putExtra("title",title);
-        startActivity(intent);
+        String[] mindfulPages = externalurl1;
+        return mindfulPages;
     }
 
     public String[] launchExternalPage(String externalurl)
@@ -140,81 +149,81 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         return educationSource;
     }
 
-    public String[] launchExternalPage(String externalurl1, String externalurl2, String title)
+    /*public String[] launchExternalPage(String externalurl1, String externalurl2, String title)
     {
-//        Intent intent=new Intent(getActivity(), Mindfulness.class);
-//        intent.putExtra(EXTERNAL_URL_1, externalurl1);
-//        intent.putExtra(EXTERNAL_URL_2, externalurl2);
-//        intent.putExtra("title", title);
-//        startActivity(intent);
-
-        String[] mindfulPages = {externalurl1, externalurl2, title};
+        Intent intent=new Intent(getActivity(), Mindfulness.class);
+        intent.putExtra(EXTERNAL_URL_1, externalurl1);
+        intent.putExtra(EXTERNAL_URL_2, externalurl2);
+        intent.putExtra("title", title);
+        startActivity(intent);
+      //String[] mindfulPages = {externalurl1, externalurl2, title};
         return mindfulPages;
-    }
+    }*/
+
     static int RandomNo(String[]arr)
     {
         Random rd=new Random();
         return rd.nextInt(arr.length-1);
     }
 
-    public void recommendation(String outcome) {
+    public String[] recommendation(String outcome) {
         switch (outcome) {
             case "anxiety": {
-                String[] externalurl1=Anxiety;
+                String[] externalurl1 = Anxiety;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
-                return launchExternalPage(externalurl1, externalurl2, title);
+                return launchExternalPage(externalurl1);
+
             }
             case "depressed": {
-                String[] externalurl1=Depression;
+                String[] externalurl1 = Depression;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "gad": {
-                String[] externalurl1=GAD;
+                String[] externalurl1 = GAD;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "sleep": {
-                String[] externalurl1=Sleep;
+                String[] externalurl1 = Sleep;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "ocd": {
-                String[] externalurl1=OCD;
+                String[] externalurl1 = OCD;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "panic": {
-                String[] externalurl1=Panic;
+                String[] externalurl1 = Panic;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "all": {
-                String[] externalurl1=All;
+                String[] externalurl1 = All;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "stress": {
-                String[] externalurl1=Stress;
+                String[] externalurl1 = Stress;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
             case "loneliness": {
-                String[] externalurl1=Loneliness;
+                String[] externalurl1 = Loneliness;
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, title);
-                break;
+                return launchExternalPage(externalurl1);
+
             }
-        }
+
+        }return null;
     }
     public void getResourceList()
     {

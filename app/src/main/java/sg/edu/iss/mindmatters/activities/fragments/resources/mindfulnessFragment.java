@@ -1,7 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,13 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
+import com.synnapps.carouselview.ImageListener;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.Results_temp;
-import sg.edu.iss.mindmatters.activities.Mindfulness;
-import sg.edu.iss.mindmatters.webview.MindfulnessList;
+import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.model.Resource;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -90,7 +99,7 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
-    @Override
+  @Override
     public void onClick(View view) {
         int id=view.getId();
 
@@ -124,29 +133,21 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
             String externalurl="http://10.0.2.2:8080/resource/list/Depression";
             iMindfulnessFragment.mindfulClicked(launchExternalPage(externalurl,"Feeling down?"));
         }
-        else if(id==R.id.recommended1)
+       /*else if(id==R.id.carousel)
         {
             String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
-            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,title));
-        }
-        else if(id==R.id.recommended2)
-        {
-            String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
-            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,title));
-        }
+            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,"recommended"));
+        }*/
+
     }
 
     public String[] launchExternalPage(String externalurl,String title)
     {
-//        Intent intent=new Intent(getActivity(), MindfulnessList.class);
-//        intent.putExtra("title",title);
-//        intent.putExtra(EXTERNAL_URL,externalurl);
-//        startActivity(intent);
-
         return new String[]{externalurl, title};
     }
-    public void ViewRecommended()
-    {
+
+
+ //   public void ViewRecommended() {
 //        Intent intent=getActivity().getIntent();
 //        String url_1=intent.getStringExtra(Results_temp.EXTERNAL_URL_1);
 //        Url_code=url_1.substring(27,url_1.length()-6);
@@ -160,7 +161,7 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
 //        Url_code2=url_2.substring(27,url_2.length()-6);
 //        launchBtn2.setOnClickListener(this);
 
-        String url_1=mindfulLinks[0];
+/*        String url_1=mindfulLinks[0];
         Url_code=url_1.substring(27,url_1.length()-6);
         title=mindfulLinks[2];
         launchBtn = (ImageView)mView.findViewById(R.id.recommended1);
@@ -172,16 +173,132 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         Url_code2=url_2.substring(27,url_2.length()-6);
         launchBtn2.setOnClickListener(this);
 
-    }
+    }*/
+ /*@Override
+ public void onClick(View view) {
+     int id=view.getId();
 
-    public interface IMindfulnessFragment{
-        void mindfulClicked(String[] content);
-    }
+     if(id==R.id.afraidbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/Anxiety";
+         launchExternalPage(externalurl,"Feeling Afraid?");
+     }
+     else if(id==R.id.anxiousbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/GAD";
+         launchExternalPage(externalurl,"Tense and Anxious?");
+     }
+     else if(id==R.id.sleepbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/Sleep";
+         launchExternalPage(externalurl,"Trouble Sleeping?");
+     }
+     else if(id==R.id.panicbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/Panic";
+         launchExternalPage(externalurl,"Panicking about panic?");
+     }
+     else if(id==R.id.ocdbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/Ocd";
+         launchExternalPage(externalurl,"Compulsion?");
+     }
+     else if(id==R.id.depressedbtn)
+     {
+         String externalurl="http://10.0.2.2:8080/resource/list/Depression";
+         launchExternalPage(externalurl,"Feeling down?");
+     }
+     else if(id==R.id.carousel)
+     {
+         String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
+         launchExternalPage(externalUrl,title);
+     }
+        /*else if(id==R.id.recommended2)
+        {
+            String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
+            launchExternalPage(externalUrl,title);
+        }
+ }*/
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        iMindfulnessFragment = (IMindfulnessFragment) context;
-    }
+        public interface IMindfulnessFragment {
+            void mindfulClicked(String[] content);
+        }
 
+        @Override
+        public void onAttach (Context context){
+            super.onAttach(context);
+            iMindfulnessFragment = (IMindfulnessFragment) context;
+        }
+    /*    public void launchExternalPage (String externalurl, String title)
+        {
+            Intent intent = new Intent(getActivity(), MindfulnessList.class);
+            intent.putExtra("title", title);
+            intent.putExtra(EXTERNAL_URL, externalurl);
+            startActivity(intent);
+        }*/
+        public void ViewRecommended(){
+            String[] resource = getArguments().getStringArray("recommend");//(Resources.EXTERNAL_URL_1);
+            String[] array = new String[3];
+            for (int i = 0; i < array.length; i++) {
+                array[i] = resource[new Random().nextInt(resource.length) - 1];
+            }
+            CarouselView carousel = mView.findViewById(R.id.carousel);
+            carousel.setPageCount(array.length);
+            carousel.setImageListener(new ImageListener() {
+                @Override
+                public void setImageForPosition(int position, ImageView imageView) {
+                    Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                }
+            });
+            carousel.setImageClickListener(new ImageClickListener() {
+                @Override
+                public void onClick(int position) {
+                    getResourceMapping(array[position]);
+                    String externalUrl = "http://10.0.2.2:8080/resource/view/" + array[position];
+                    iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,title));
+                }
+            });
+        }
+    public void setTitle(String title)
+    {
+        this.title=title;
+    }
+    public String getTitle(HashMap<String,String>map,String key)
+    {
+        title=map.get(key);
+        return title;
+    }
+    public void getResourceMapping(String key)
+    {
+        Call<List<Resource>> call = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .getallresources();
+        HashMap<String,String>map=new HashMap<>();
+        call.enqueue(new Callback<List<Resource>>() {
+            @Override
+            public void onResponse(Call<List<Resource>> call, Response<List<Resource>> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getActivity(), "Can't get Resources", Toast.LENGTH_LONG).show();
+                }
+
+                List<Resource> allResources= response.body();
+                for(Resource r:allResources)
+                {
+                    map.put(r.getName(),r.getUrlCode());
+                }
+                setTitle(getTitle(map,key));
+
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Resource>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 }

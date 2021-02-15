@@ -27,10 +27,7 @@ ImageView sleep;
 ImageView panic;
 ImageView ocd;
 ImageView depressed;
-ImageView launchBtn;//
-ImageView launchBtn2;//
 String Url_code;
-String Url_code2;
 String title;
 
 public static final String EXTERNAL_URL="externalUrl";
@@ -39,7 +36,7 @@ public static final String EXTERNAL_URL="externalUrl";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mindfulness);
         callCustomActionBar(Mindfulness.this, true);
-        afraid=(ImageView)findViewById(R.id.afraidbtn);
+        /*afraid=(ImageView)findViewById(R.id.afraidbtn);
         afraid.setOnClickListener(this);
         anxious=(ImageView)findViewById(R.id.anxiousbtn);
         anxious.setOnClickListener(this);
@@ -62,7 +59,7 @@ public static final String EXTERNAL_URL="externalUrl";
             {
             LinearLayout RecWrap=findViewById(R.id.recommend_wrap);
             RecWrap.setVisibility(View.GONE);
-        }
+        }*/
 
     }
 
