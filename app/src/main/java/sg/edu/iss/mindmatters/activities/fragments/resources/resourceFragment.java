@@ -85,7 +85,9 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if(getOutcome(User).toLowerCase().equals("normal"))
+                    if(getOutcome(User)==null)
+                        outcome="all";
+                    else if(getOutcome(User).toLowerCase().equals("normal"))
                         outcome = "all";
                     else
                         outcome=getOutcome(User).toLowerCase();
@@ -152,56 +154,65 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     public String[] recommendation(String outcome) {
         switch (outcome) {
             case "anxiety": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
+                int number=RandomNo(Anxiety);
+                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[Math.abs(number-1)] + "/0.jpg";
                 String title = "Feeling Afraid?";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "depressed": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
+                int number=RandomNo(Depression);
+                String externalurl1 = "https://img.youtube.com/vi/" + Depression[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Depression[Math.abs(number-1)] + "/0.jpg";
                 String title = "Feeling Down?";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "gad": {
-                String externalurl1 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
+                int number=RandomNo(GAD);
+                String externalurl1 = "https://img.youtube.com/vi/" + GAD[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + GAD[Math.abs(number-1)] + "/0.jpg";
                 String title = "Tense and Anxious?";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "sleep": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
+                int number=RandomNo(Sleep);
+                String externalurl1 = "https://img.youtube.com/vi/" + Sleep[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Sleep[Math.abs(number-1)] + "/0.jpg";
                 String title = "Trouble Sleeping?";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "ocd": {
-                String externalurl1 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
+                int number=RandomNo(OCD);
+                String externalurl1 = "https://img.youtube.com/vi/" + OCD[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + OCD[Math.abs(number-1)] + "/0.jpg";
                 String title = "Compelled by compulsion?";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "panic": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
+                int number=RandomNo(Panic);
+                String externalurl1 = "https://img.youtube.com/vi/" + Panic[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Panic[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "all": {
-                String externalurl1 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
-                String title = "Panicking about panic";
+                int number=RandomNo(All);
+                String externalurl1 = "https://img.youtube.com/vi/" + All[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + All[Math.abs(number-1)] + "/0.jpg";
+                String title = "Mindful Living";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "stress": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
+                int number=RandomNo(Stress);
+                String externalurl1 = "https://img.youtube.com/vi/" + Stress[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Stress[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "loneliness": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
+                int number=RandomNo(Loneliness);
+                String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 return launchExternalPage(externalurl1, externalurl2, title);
             }

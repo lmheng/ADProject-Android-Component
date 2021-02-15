@@ -35,8 +35,8 @@
     <string name="submit">Submit</string>
     <string name="currentlyfeeling">Current Status</string>
     <string name="currentprofile">Profile</string>
-    <string name="averageslp">Avg Sleep/Day</string>
-    <string name="avgmood">Avg Mood/Day</string>
+    <string name="averageslp">Average Sleep</string>
+    <string name="avgmood">Average Mood</string>
     <string name="afraid">Ever felt afraid and alone? Some of our resources here may be able to help.</string>
     <string name="sleep">Simple exercises to bring a peace of mind, making way for better sleep each night.</string>
     <string name="depressed">You matter to us and we will do our best to support you. Some of these practices here might offer some solace in these trying times.</string>

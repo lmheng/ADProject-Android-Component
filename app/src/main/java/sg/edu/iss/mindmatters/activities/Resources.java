@@ -66,7 +66,9 @@ public class Resources extends BaseActivity implements View.OnClickListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(getOutcome(User).toLowerCase().equals("normal"))
+                if(getOutcome(User)==null)
+                    outcome = "all";
+                else if(getOutcome(User).toLowerCase().equals("normal"))
                     outcome = "all";
                 else
                 outcome=getOutcome(User).toLowerCase();
@@ -121,8 +123,9 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     public void recommendation(String outcome) {
         switch (outcome) {
             case "anxiety": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
+                int no= RandomNo(Anxiety);
+                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[no] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[Math.abs(no-1)] + "/0.jpg";
                 String title = "Feeling Afraid?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;

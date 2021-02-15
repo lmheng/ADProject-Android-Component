@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,10 +20,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.io.IOException;
@@ -75,6 +85,18 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(db.countDb()>0){
+            pref = this.getActivity().getSharedPreferences(
+                    "user_credentials", MODE_PRIVATE);
+            user=pref.getString("username","user");
+            populateDash(user);
+            combineGraph();
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -99,14 +121,15 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         tv.setText("Welcome, "+ user);
 
         if(db.countDb()>0){
-                LinearLayout dashView=mView.findViewById(R.id.dash_support);
-                dashView.setVisibility(View.VISIBLE);
-                populateDash(user);
-                populateGraph();}
+            LinearLayout dashView=mView.findViewById(R.id.dash_support);
+            dashView.setVisibility(View.VISIBLE);
+            populateDash(user);
+            combineGraph();}
             createNotificationChannel();
             runDailyQuiz();
             launchAlarm();
             mView.findViewById(R.id.floatingActionButton).setOnClickListener(this);
+            mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);
 
 
         MyApplication.setCurrentActivity("MainPage");
@@ -227,7 +250,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
 
 
-    public void populateGraph()
+   /* public void populateGraph()
     {
         LineChart linechart = (LineChart) mView.findViewById(R.id.linechart);
         linechart.setDragEnabled(true);
@@ -258,6 +281,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         linechart.getXAxis().setDrawGridLines(false);
 
     }
+
     public void populateDash(String user){
         TextView averagesleep=mView.findViewById(R.id.averagesleep);
         TextView averagemood=mView.findViewById(R.id.averagemood);
@@ -275,6 +299,92 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
                     loadNextDate();
             }
         }).start();
+    }*/
+
+    public LineData GenerateLine()
+    {
+        db=new SQLiteDatabaseHandler(getActivity());
+        LineData line = new LineData();
+        ArrayList<Entry>yValues=new ArrayList<>();
+        yValues=db.getMoodData(user);
+        LineDataSet set1=new LineDataSet(yValues,"Sleep");
+        set1.setFillAlpha(android.R.color.holo_blue_bright);
+        set1.setValueTextSize(10f);
+        set1.setLineWidth(2f);
+        line.addDataSet(set1);
+
+
+        return line;
+    }
+
+    public BarData generateBar(){
+        db=new SQLiteDatabaseHandler(getActivity());
+        BarData bar=new BarData();
+        bar.setBarWidth(0.5f);
+        ArrayList<BarEntry>moodValues=new ArrayList<>();
+        moodValues=db.getSleepData(user);
+        BarDataSet set2=new BarDataSet(moodValues,"Mood");
+        set2.setStackLabels(new String[]{"Mood"});
+        set2.setColor(R.color.teal_200);
+        set2.setValueTextColor(Color.rgb(61, 165, 255));
+        set2.setValueTextSize(10f);
+        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        bar.addDataSet(set2);
+        return bar;
+    }
+    public void populateDash(String user){
+        TextView averagesleep=mView.findViewById(R.id.averagesleep);
+        TextView averagemood=mView.findViewById(R.id.averagemood);
+        db=new SQLiteDatabaseHandler(getActivity());
+        float avgMood=db.averageMoodData(user);
+        averagemood.setText(String.format("%.1f",avgMood/10));
+        float avgSlp=db.averageSleepData(user);
+        averagesleep.setText(String.format("%.1f",avgSlp));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String outcome=getOutcome(user);
+                TextView text = mView.findViewById(R.id.currentStatus);
+                text.setText(outcome);
+
+            }
+        }).start();
+    }
+
+    public void combineGraph()
+    {
+        CombinedChart Chart=mView.findViewById(R.id.linechart);
+        CombinedData combine=new CombinedData();
+        combine.setData(GenerateLine());
+        combine.setData(generateBar());
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+            xAxisLabel.add("Day 1");
+            xAxisLabel.add("Tue");
+            xAxisLabel.add("Wed");
+            xAxisLabel.add("Thu");
+            xAxisLabel.add("Fri");
+            xAxisLabel.add("Sat");
+            xAxisLabel.add("Sun");
+        ValueFormatter vf= new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return xAxisLabel.get((int) value);
+            }
+        };
+        combine.setValueFormatter(vf);
+        Chart.setData(combine);
+        Chart.getAxisRight().setEnabled(false);
+        Chart.setDrawGridBackground(false);
+        Chart.getAxisRight().setDrawGridLines(false);
+        Chart.getAxisLeft().setDrawGridLines(false);
+        Chart.getXAxis().setDrawGridLines(false);
+        Chart.setDragEnabled(true);
+        Chart.setScaleEnabled(true);
+        Chart.getXAxis().setAxisMaximum(generateBar().getXMax()+0.5f);
+        Chart.getXAxis().setAxisMinimum(generateBar().getXMin()-0.5f);
+        Chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        Chart.getDescription().setEnabled(false);
+
     }
 
     @Override
