@@ -7,6 +7,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 
 import java.text.DateFormat;
@@ -23,6 +24,8 @@ import java.util.Random;
 
 import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
+
+import static java.time.LocalDate.now;
 
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
@@ -131,7 +134,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_Q3, new Random().nextInt(10));
         System.out.println("user" + user);
         values.put(KEY_USER, user);
-        LocalDate today = LocalDate.now();
+        LocalDate today = now();
         today.plusDays(i);  // number of days to add
         values.put(KEY_DATE, sdf.format(today));// insert
         db.insert(TABLE_NAME,null, values);
@@ -176,13 +179,12 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     {
         ArrayList<Entry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q1,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        for(int i=0;i<cursor.getCount();i++){
-            cursor.moveToNext();
-            DataValues.add(new Entry(i+1, (float) (Integer.parseInt(cursor.getString(0))*.1)));
-        }
-        cursor.close();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                DataValues.add(new Entry(i + 1, (float) (Integer.parseInt(cursor.getString(0)) * .1)));
+            }
         db.close();
         return DataValues;
     }
@@ -194,10 +196,9 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q1 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst() && cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averageMood = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
         db.close();
         return averageMood;
 
@@ -210,29 +211,25 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q3 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst()&& cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averagesleep = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
         db.close();
         return averagesleep;
 
     }
 
-    public ArrayList<Entry> getSleepData(String user)
+    public ArrayList<BarEntry> getSleepData(String user)
     {
-        ArrayList<Entry> DataValues=new ArrayList<>();
+        ArrayList<BarEntry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q3,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SElECT*FROM(SELECT " + KEY_Q3 +","+KEY_ID+ " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7)order by "+KEY_ID+" ASC";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        if(cursor.getCount()>0) {
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
-                DataValues.add(new Entry(i + 1, Integer.parseInt(cursor.getString(0))));
+                DataValues.add(new BarEntry(i + 1, Integer.parseInt(cursor.getString(0))));
             }
-        }
         db.close();
-        cursor.close();
         return DataValues;
     }
     public String getSleepQualityData(String user)
@@ -246,12 +243,17 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             if (cursor.moveToFirst())  {
                 quality = cursor.getString(cursor.getColumnIndex("q2"));
             }
-        }while(cursor.getCount()>0);
+        }while(cursor.getCount()>1);
 
         db.close();
-        cursor.close();
         return quality;
     }
-
+public int countDb()
+{
+    SQLiteDatabase db=this.getReadableDatabase();
+    String query="SELECT * FROM DailyQuiz";
+    Cursor cursor=db.rawQuery(query,new String[]{});
+    return cursor.getCount();
+}
 
 }

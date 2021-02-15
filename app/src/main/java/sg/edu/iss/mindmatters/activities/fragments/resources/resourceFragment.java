@@ -1,35 +1,40 @@
-package sg.edu.iss.mindmatters.activities;
+package sg.edu.iss.mindmatters.activities.fragments.resources;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.activities.Mindfulness;
+import sg.edu.iss.mindmatters.activities.Resources;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.webview.Education;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static android.content.Context.MODE_PRIVATE;
 
-public class Resources extends BaseActivity implements View.OnClickListener {
+public class resourceFragment extends Fragment implements View.OnClickListener {
 
-    RelativeLayout mindfulness;
-    RelativeLayout education;
+    LinearLayout mindfulness;
+    LinearLayout education;
     public static final String EXTERNAL_URL_1="externalUrl1";
     public static final String EXTERNAL_URL_2="externalUrl2";
     public static final String EXTERNAL_EDU="externalurl";
@@ -42,46 +47,59 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     private String[]Loneliness=new String[]{};
     private String[]Stress=new String[]{};
     private String[]All=new String[]{};
-    List<Resource>collect=new ArrayList<>();
+    List<Resource> collect=new ArrayList<>();
     SharedPreferences pref;
     String User="";
     String outcome="";
 
+    View mView;
+
+    public resourceFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resources);
+    }
 
-        mindfulness=(RelativeLayout)findViewById(R.id.mindful_layout);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        View view = inflater.inflate(R.layout.fragment_resource, container, false);
+        this.mView = view;
+
+        mindfulness=mView.findViewById(R.id.mindful_layout);
         mindfulness.setOnClickListener(this);
-        education=(RelativeLayout)findViewById(R.id.education_layout);
+        education=mView.findViewById(R.id.education_layout);
         education.setOnClickListener(this);
-        callCustomActionBar(Resources.this, true);
         getResourceList();
-        pref = getSharedPreferences(
+        pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
         User=pref.getString("username","user");
         if(!User.equals("user")){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(getOutcome(User)==null)
-                    outcome = "all";
-                else if(getOutcome(User).toLowerCase().equals("normal"))
-                    outcome = "all";
-                else
-                outcome=getOutcome(User).toLowerCase();
-            }
-        }).start();}
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if(getOutcome(User)==null)
+                        outcome="all";
+                    else if(getOutcome(User).toLowerCase().equals("normal"))
+                        outcome = "all";
+                    else
+                        outcome=getOutcome(User).toLowerCase();
+                }
+            }).start();}
         else{
             outcome="all";
         }
+
+        return view;
     }
 
     @Override
     public void onClick(View view) {
-
         int id=view.getId();
         if(id==R.id.education_layout)
         {
@@ -93,7 +111,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() { recommendation(outcome);
-                System.out.println("thread running");
+                    System.out.println("thread running");
                 }
             }).start();
         }
@@ -101,14 +119,14 @@ public class Resources extends BaseActivity implements View.OnClickListener {
 
     public void launchExternalPage(String externalurl)
     {
-        Intent intent=new Intent(Resources.this, Education.class);
+        Intent intent=new Intent(getActivity(), Education.class);
         intent.putExtra(EXTERNAL_EDU, externalurl);
         startActivity(intent);
     }
 
     public void launchExternalPage(String externalurl1,String externalurl2,String title)
     {
-        Intent intent=new Intent(Resources.this, Mindfulness.class);
+        Intent intent=new Intent(getActivity(), Mindfulness.class);
         intent.putExtra(EXTERNAL_URL_1,externalurl1);
         intent.putExtra(EXTERNAL_URL_2,externalurl2);
         intent.putExtra("title",title);
@@ -123,65 +141,73 @@ public class Resources extends BaseActivity implements View.OnClickListener {
     public void recommendation(String outcome) {
         switch (outcome) {
             case "anxiety": {
-                int no= RandomNo(Anxiety);
-                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[no] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[Math.abs(no-1)] + "/0.jpg";
+                int number=RandomNo(Anxiety);
+                String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[Math.abs(number-1)] + "/0.jpg";
                 String title = "Feeling Afraid?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "depressed": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
+                int number=RandomNo(Depression);
+                String externalurl1 = "https://img.youtube.com/vi/" + Depression[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Depression[Math.abs(number-1)] + "/0.jpg";
                 String title = "Feeling Down?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "gad": {
-                String externalurl1 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
+                int number=RandomNo(GAD);
+                String externalurl1 = "https://img.youtube.com/vi/" + GAD[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + GAD[Math.abs(number-1)] + "/0.jpg";
                 String title = "Tense and Anxious?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "sleep": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
+                int number=RandomNo(Sleep);
+                String externalurl1 = "https://img.youtube.com/vi/" + Sleep[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Sleep[Math.abs(number-1)] + "/0.jpg";
                 String title = "Trouble Sleeping?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "ocd": {
-                String externalurl1 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
+                int number=RandomNo(OCD);
+                String externalurl1 = "https://img.youtube.com/vi/" + OCD[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + OCD[Math.abs(number-1)] + "/0.jpg";
                 String title = "Compelled by compulsion?";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "panic": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
+                int number=RandomNo(Panic);
+                String externalurl1 = "https://img.youtube.com/vi/" + Panic[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Panic[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "all": {
-                String externalurl1 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
-                String title = "Panicking about panic";
+                int number=RandomNo(All);
+                String externalurl1 = "https://img.youtube.com/vi/" + All[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + All[Math.abs(number-1)] + "/0.jpg";
+                String title = "Mindful Living";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "stress": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
+                int number=RandomNo(Stress);
+                String externalurl1 = "https://img.youtube.com/vi/" + Stress[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Stress[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
             }
             case "loneliness": {
-                String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
-                String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
+                int number=RandomNo(Loneliness);
+                String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[number] + "/0.jpg";
+                String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[Math.abs(number-1)] + "/0.jpg";
                 String title = "Panicking about panic";
                 launchExternalPage(externalurl1, externalurl2, title);
                 break;
@@ -199,7 +225,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
             @Override
             public void onResponse(Call<List<Resource>> call, Response<List<Resource>> response) {
                 if(!response.isSuccessful()){
-                Toast.makeText(Resources.this, "Can't get Resources", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Can't get Resources", Toast.LENGTH_LONG).show();
                 }
                 List<Resource> allResources= response.body();
                 for(Resource r:allResources)
@@ -213,7 +239,7 @@ public class Resources extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<List<Resource>> call, Throwable t) {
-                Toast.makeText(Resources.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -260,14 +286,14 @@ public class Resources extends BaseActivity implements View.OnClickListener {
                 .getAPI()
                 .getUserProfile(user);
 
-                try {
-                    Response<QuizOutcome> qo=call.execute();
-                    QuizOutcome oc= qo.body();
-                    return oc.getQuizOutcome();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+        try {
+            Response<QuizOutcome> qo=call.execute();
+            QuizOutcome oc= qo.body();
+            return oc.getQuizOutcome();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
 
 
@@ -294,9 +320,5 @@ public class Resources extends BaseActivity implements View.OnClickListener {
             }
         });*/
     }
-
-
-
-
 
 }

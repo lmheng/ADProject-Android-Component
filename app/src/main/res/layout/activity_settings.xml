@@ -134,4 +134,35 @@
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/loginset"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.90"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialogbox"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutSet"
+        android:elevation="3dp"
+        android:weightSum="8"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        >
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/login"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="Login"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package sg.edu.iss.mindmatters.webview;
+package sg.edu.iss.mindmatters.activities.fragments.getHelp;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import sg.edu.iss.mindmatters.activities.GetHelpAdapter;
+import sg.edu.iss.mindmatters.activities.fragments.getHelp.GetHelpAdapter;
 import sg.edu.iss.mindmatters.R;
 
 public class GetHelpView extends AppCompatActivity {

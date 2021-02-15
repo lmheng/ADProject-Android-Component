@@ -87,7 +87,7 @@ public static final String EXTERNAL_URL="externalUrl";
         else if(id==R.id.ocdbtn)
         {
             String externalurl="http://10.0.2.2:8080/resource/list/Ocd";
-            launchExternalPage(externalurl,"Compelled by compulsion?");
+            launchExternalPage(externalurl,"Compulsion?");
         }
         else if(id==R.id.depressedbtn)
         {

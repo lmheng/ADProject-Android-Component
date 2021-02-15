@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_btn"
+        android:icon="@drawable/house"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/resources"
+        android:icon="@drawable/asteroid"
+        android:title="@string/resources"
+        />
+
+    <item
+        android:id="@+id/take_quiz"
+        android:icon="@drawable/pencil"
+        android:title="Quiz" />
+
+    <item
+        android:id="@+id/get_help"
+        android:icon="@drawable/phonebook"
+        android:title="Get Help" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/preference"
+        android:title="Settings" />
+
+</menu>
