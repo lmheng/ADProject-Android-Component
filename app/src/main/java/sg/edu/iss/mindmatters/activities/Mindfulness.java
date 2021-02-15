@@ -9,6 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
+import com.synnapps.carouselview.ImageListener;
+
+import java.lang.reflect.Array;
+import java.util.Random;
 
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.Results_temp;
@@ -94,16 +100,16 @@ public static final String EXTERNAL_URL="externalUrl";
             String externalurl="http://10.0.2.2:8080/resource/list/Depression";
             launchExternalPage(externalurl,"Feeling down?");
         }
-      else if(id==R.id.recommended1)
+      else if(id==R.id.carousel)
         {
             String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
             launchExternalPage(externalUrl,title);
         }
-        else if(id==R.id.recommended2)
+        /*else if(id==R.id.recommended2)
         {
             String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code;
             launchExternalPage(externalUrl,title);
-        }
+        }*/
     }
     public void launchExternalPage(String externalurl,String title)
     {
@@ -115,17 +121,29 @@ public static final String EXTERNAL_URL="externalUrl";
     public void ViewRecommended()
     {
         Intent intent=getIntent();
-        String url_1=intent.getStringExtra(Results_temp.EXTERNAL_URL_1);
-        Url_code=url_1.substring(27,url_1.length()-6);
-        title=intent.getStringExtra("title");
-        launchBtn = (ImageView)findViewById(R.id.recommended1);
-        Picasso.get().load(url_1).placeholder(R.drawable.ic_launcher_background).into(launchBtn);
-        launchBtn.setOnClickListener(this);
-        String url_2=intent.getStringExtra(Results_temp.EXTERNAL_URL_2);
-        launchBtn2 =(ImageView)findViewById(R.id.recommended2);
-        Picasso.get().load(url_2).placeholder(R.drawable.ic_launcher_background).into(launchBtn2);
-        Url_code2=url_2.substring(27,url_2.length()-6);
-        launchBtn2.setOnClickListener(this);
+        String[] resource=intent.getStringArrayExtra(Resources.EXTERNAL_URL_1);//(Resources.EXTERNAL_URL_1);
+        String title_1=intent.getStringExtra("title");
+        String[] array= new String[4];
+        for(int i =0;i<array.length;i++){
+            array[i]=resource[new Random().nextInt(resource.length)-1];
+        }
+        CarouselView carousel=findViewById(R.id.carousel);
+        carousel.setPageCount(array.length);
+        carousel.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            }
+        });
+        carousel.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onClick(int position) {
+                String externalUrl ="http://10.0.2.2:8080/resource/view/"+array[position];
+                launchExternalPage(externalUrl,title_1);
+            }
+        });
     }
 
 }
