@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -129,6 +130,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             loadNextDate();
             launchAlarm();
             mView.findViewById(R.id.floatingActionButton).setOnClickListener(this);
+            mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);
 
 
         MyApplication.setCurrentActivity("MainPage");
@@ -356,10 +358,18 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         CombinedData combine=new CombinedData();
         combine.setData(GenerateLine());
         combine.setData(generateBar());
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+            xAxisLabel.add("Day 1");
+            xAxisLabel.add("Tue");
+            xAxisLabel.add("Wed");
+            xAxisLabel.add("Thu");
+            xAxisLabel.add("Fri");
+            xAxisLabel.add("Sat");
+            xAxisLabel.add("Sun");
         ValueFormatter vf= new ValueFormatter() {
             @Override
-            public String getFormattedValue(float value) {
-                return""+(int)value;
+            public String getFormattedValue(float value, AxisBase axis) {
+                return xAxisLabel.get((int) value);
             }
         };
         combine.setValueFormatter(vf);
