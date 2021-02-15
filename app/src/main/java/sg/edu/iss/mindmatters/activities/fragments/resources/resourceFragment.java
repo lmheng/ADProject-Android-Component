@@ -1,5 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     String User="";
     String outcome="";
 
+    IResourceFragment iResourceFragment;
     View mView;
 
     public resourceFragment() {
@@ -96,113 +98,117 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public interface IResourceFragment{
+        void resourceClicked(String[] content);
+    }
+
     @Override
     public void onClick(View view) {
         int id=view.getId();
         if(id==R.id.education_layout)
         {
             String externalurl="http://10.0.2.2:8080/resource/edulist/Education";
-            launchExternalPage(externalurl);
+            iResourceFragment.resourceClicked(launchExternalPage(externalurl));
         }
         else if(id==R.id.mindful_layout)
         {
-            new Thread(new Runnable() {
-                @Override
-                public void run() { recommendation(outcome);
-                    System.out.println("thread running");
-                }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() { recommendation(outcome);
+//                }
+//            }).start();
+            iResourceFragment.resourceClicked(recommendation(outcome));
         }
     }
 
-    public void launchExternalPage(String externalurl)
+    public String[] launchExternalPage(String externalurl)
     {
-        Intent intent=new Intent(getActivity(), Education.class);
-        intent.putExtra(EXTERNAL_EDU, externalurl);
-        startActivity(intent);
+//        Intent intent=new Intent(getActivity(), Education.class);
+//        intent.putExtra(EXTERNAL_EDU, externalurl);
+//        startActivity(intent);
+
+        String[] educationSource = {externalurl};
+        return educationSource;
     }
 
-    public void launchExternalPage(String externalurl1,String externalurl2,String title)
+    public String[] launchExternalPage(String externalurl1, String externalurl2, String title)
     {
-        Intent intent=new Intent(getActivity(), Mindfulness.class);
-        intent.putExtra(EXTERNAL_URL_1,externalurl1);
-        intent.putExtra(EXTERNAL_URL_2,externalurl2);
-        intent.putExtra("title",title);
-        startActivity(intent);
+//        Intent intent=new Intent(getActivity(), Mindfulness.class);
+//        intent.putExtra(EXTERNAL_URL_1, externalurl1);
+//        intent.putExtra(EXTERNAL_URL_2, externalurl2);
+//        intent.putExtra("title", title);
+//        startActivity(intent);
+
+        String[] mindfulPages = {externalurl1, externalurl2, title};
+        return mindfulPages;
     }
+
     static int RandomNo(String[]arr)
     {
         Random rd=new Random();
         return rd.nextInt(arr.length-1);
     }
 
-    public void recommendation(String outcome) {
+    public String[] recommendation(String outcome) {
         switch (outcome) {
             case "anxiety": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Anxiety[RandomNo(Anxiety)] + "/0.jpg";
                 String title = "Feeling Afraid?";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "depressed": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Depression[RandomNo(Depression)] + "/0.jpg";
                 String title = "Feeling Down?";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "gad": {
                 String externalurl1 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + GAD[RandomNo(GAD)] + "/0.jpg";
                 String title = "Tense and Anxious?";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "sleep": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Sleep[RandomNo(Sleep)] + "/0.jpg";
                 String title = "Trouble Sleeping?";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "ocd": {
                 String externalurl1 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + OCD[RandomNo(OCD)] + "/0.jpg";
                 String title = "Compelled by compulsion?";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "panic": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Panic[RandomNo(Panic)] + "/0.jpg";
                 String title = "Panicking about panic";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "all": {
                 String externalurl1 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + All[RandomNo(All)] + "/0.jpg";
                 String title = "Panicking about panic";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "stress": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Stress[RandomNo(Stress)] + "/0.jpg";
                 String title = "Panicking about panic";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
             case "loneliness": {
                 String externalurl1 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
                 String externalurl2 = "https://img.youtube.com/vi/" + Loneliness[RandomNo(Loneliness)] + "/0.jpg";
                 String title = "Panicking about panic";
-                launchExternalPage(externalurl1, externalurl2, title);
-                break;
+                return launchExternalPage(externalurl1, externalurl2, title);
             }
         }
+        return null;
     }
+
     public void getResourceList()
     {
         Call<List<Resource>> call = RetrofitClient
@@ -249,26 +255,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     }
 
     public String getOutcome(String user){
-       /* Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                .create();
-       Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, new JsonDeserializer<Calendar>() {
-            @Override
-            public Calendar deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                    throws JsonParseException {
-                return Calendar.getInstance(TimeZone.getTimeZone(json.getAsString()));
-            }
-        }).create();*/
-       /* Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        API api =retrofit.create(API.class);
-
-        Call<QuizOutcome> call = api.getUserProfile(user);*/
-
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
@@ -284,30 +270,12 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             return null;
         }
 
+    }
 
-
-
-
-        /*call.enqueue(new Callback<QuizOutcome>() {
-            @Override
-            public void onResponse(Call<QuizOutcome> call, Response<QuizOutcome> response) {
-                System.out.println("response code:"+response.code());
-                if(!response.isSuccessful()){
-                    Toast.makeText(Resources.this, "Can't get quiz outcome", Toast.LENGTH_LONG).show();
-
-                }
-                else {
-                    QuizOutcome oc = response.body();
-                    outcome = oc.getQuizOutcome().toLowerCase();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<QuizOutcome> call, Throwable t) {
-                System.out.println("Jason failed to parse");
-                Toast.makeText(Resources.this, "json failed to parse", Toast.LENGTH_LONG).show();
-            }
-        });*/
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        iResourceFragment = (IResourceFragment) context;
     }
 
 }

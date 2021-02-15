@@ -37,4 +37,11 @@
     <string name="currentprofile">Profile</string>
     <string name="averageslp">Avg Sleep/Day</string>
     <string name="avgmood">Avg Mood/Day</string>
+    <string name="afraid">Ever felt afraid and alone? Some of our resources here may be able to help.</string>
+    <string name="sleep">Simple exercises to bring a peace of mind, making way for better sleep each night.</string>
+    <string name="depressed">You matter to us and we will do our best to support you. Some of these practices here might offer some solace in these trying times.</string>
+    <string name="anxious">There are times when anxiety gets the better of us. Some of our practices here may help in easing anxious nerves.</string>
+    <string name="panic">Practices that give a quick run through on the what and how-to in easing panic </string>
+    <string name="ocd">Obsessive thoughts and compulsive behaviors can become so consuming they interfere with your daily life. Our practices may help give a better understanding and how to cope with OCD.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

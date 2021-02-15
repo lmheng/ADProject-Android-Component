@@ -1,75 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recommend_wrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="3dp">
+
+                <TextView
+                    android:id="@+id/mindfulness_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="20dp"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/recommend"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <include
+                    layout="@layout/recommened_include"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/mindfulness_text"
+                    />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/mindful_header"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="0.2"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="20dp"
+        android:gravity="left|center"
+        android:text="Select any one of the below sections to begin:"
+        android:textSize="20dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@id/recommend_wrap"
+        />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/afraidbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/afraid"
-            android:layout_marginRight="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/mindful_header"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mindfulness_background"
+            >
 
-        <ImageView
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/afraid"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/afraid"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/sleepbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/sleep"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/mindfulness_background"
+            app:layout_constraintTop_toBottomOf="@id/afraidbtn"
+            >
 
-        <ImageView
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/sleep"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/sleep"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/depressedbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/depressed"
-            android:layout_marginLeft="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/mindfulness_background"
+            app:layout_constraintTop_toBottomOf="@id/sleepbtn"
+            >
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/depressed"
+                android:layout_marginRight="5dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-    >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/depressed"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
 
-        <ImageView
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/anxiousbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/tense"
-            android:layout_marginRight="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/mindfulness_background"
+            app:layout_constraintTop_toBottomOf="@id/depressedbtn"
+            >
 
-        <ImageView
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/tense"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/anxious"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/panicbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/panic"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/mindfulness_background"
+            app:layout_constraintTop_toBottomOf="@id/anxiousbtn"
+            >
 
-        <ImageView
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/panic"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/panic"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/ocdbtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/obsessed"
-            android:layout_marginLeft="5dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/mindfulness_background"
+            app:layout_constraintTop_toBottomOf="@id/panicbtn"
+            >
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/obsessed"
+                android:layout_marginRight="5dp"/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="@string/ocd"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
