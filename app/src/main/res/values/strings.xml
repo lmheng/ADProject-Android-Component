@@ -35,6 +35,6 @@
     <string name="submit">Submit</string>
     <string name="currentlyfeeling">Current Status</string>
     <string name="currentprofile">Profile</string>
-    <string name="averageslp">Avg Slp/Day</string>
-    <string name="avgmood">Avg Md/Day</string>
+    <string name="averageslp">Average Sleep</string>
+    <string name="avgmood">Average Mood</string>
 </resources>

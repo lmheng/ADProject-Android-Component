@@ -7,6 +7,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 
 import java.text.DateFormat;
@@ -178,7 +179,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     {
         ArrayList<Entry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q1,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
@@ -218,15 +219,15 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Entry> getSleepData(String user)
+    public ArrayList<BarEntry> getSleepData(String user)
     {
-        ArrayList<Entry> DataValues=new ArrayList<>();
+        ArrayList<BarEntry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q3,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SElECT*FROM(SELECT " + KEY_Q3 +","+KEY_ID+ " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7)order by "+KEY_ID+" ASC";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
-                DataValues.add(new Entry(i + 1, Integer.parseInt(cursor.getString(0))));
+                DataValues.add(new BarEntry(i + 1, Integer.parseInt(cursor.getString(0))));
             }
         db.close();
         return DataValues;

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Build;
@@ -18,10 +19,20 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -94,7 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             LinearLayout dashView=findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
             populateDash(user);
-            populateGraph();}
+            combineGraph();}
             createNotificationChannel();
             runDailyQuiz(true);
             loadNextDate();
@@ -112,9 +123,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume(){
         super.onResume();
-      if(pref.contains("token"))
+      if(pref.contains("token")) {
           runDailyQuiz(false);
-    }
+      }
+        if(db.countDb()>0){
+            pref = getSharedPreferences(
+                    "user_credentials", MODE_PRIVATE);
+            user=pref.getString("username","user");
+            populateDash(user);
+            combineGraph();
+        }
+      }
+
 
     @Override
     public void onClick(View view) {
@@ -239,37 +259,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
 
-public void populateGraph()
+public LineData GenerateLine()
 {
     db=new SQLiteDatabaseHandler(this);
-    LineChart linechart = (LineChart) findViewById(R.id.linechart);
-    linechart.setDragEnabled(true);
-    linechart.setScaleEnabled(false);
+    LineData line = new LineData();
     ArrayList<Entry>yValues=new ArrayList<>();
-    ArrayList<Entry>xValues=new ArrayList<>();
     yValues=db.getMoodData(user);
-    xValues=db.getSleepData(user);
-    LineDataSet set2=new LineDataSet(xValues,"Mood");
     LineDataSet set1=new LineDataSet(yValues,"Sleep");
-    set1.setFillAlpha(110);
-    set1.setFillColor(android.R.color.holo_blue_bright);
-    set1.setLineWidth(3f);
-    set1.setDrawFilled(true);
-    set2.setFillAlpha(85);
-    set2.setFillColor(android.R.color.black);
-    set2.setLineWidth(3f);
-    set2.setDrawFilled(true);
-    ArrayList<ILineDataSet>datasets=new ArrayList<>();
-    datasets.add(set1);
-    datasets.add(set2);
-    LineData data = new LineData(datasets);
-    linechart.setData(data);
-    linechart.getAxisRight().setEnabled(false);
-    linechart.setDrawGridBackground(false);
-    linechart.getAxisRight().setDrawGridLines(false);
-    linechart.getAxisLeft().setDrawGridLines(false);
-    linechart.getXAxis().setDrawGridLines(false);
+    set1.setFillAlpha(android.R.color.holo_blue_bright);
+    set1.setValueTextSize(10f);
+    set1.setLineWidth(2f);
+    line.addDataSet(set1);
 
+
+    return line;
+}
+
+public BarData generateBar(){
+        db=new SQLiteDatabaseHandler(this);
+        BarData bar=new BarData();
+        bar.setBarWidth(0.5f);
+        ArrayList<BarEntry>moodValues=new ArrayList<>();
+        moodValues=db.getSleepData(user);
+        BarDataSet set2=new BarDataSet(moodValues,"Mood");
+        set2.setStackLabels(new String[]{"Mood"});
+        set2.setColor(R.color.teal_200);
+        set2.setValueTextColor(Color.rgb(61, 165, 255));
+        set2.setValueTextSize(10f);
+        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        bar.addDataSet(set2);
+        return bar;
 }
 public void populateDash(String user){
     TextView profiletype=findViewById(R.id.currentStatus);
@@ -293,6 +312,33 @@ public void populateDash(String user){
             });
         }
     }).start();
+}
+
+public void combineGraph()
+{
+    CombinedChart Chart=findViewById(R.id.linechart);
+    CombinedData combine=new CombinedData();
+    combine.setData(GenerateLine());
+    combine.setData(generateBar());
+    ValueFormatter vf= new ValueFormatter() {
+        @Override
+        public String getFormattedValue(float value) {
+            return""+(int)value;
+        }
+    };
+    combine.setValueFormatter(vf);
+    Chart.setData(combine);
+    Chart.getAxisRight().setEnabled(false);
+    Chart.setDrawGridBackground(false);
+    Chart.getAxisRight().setDrawGridLines(false);
+    Chart.getAxisLeft().setDrawGridLines(false);
+    Chart.getXAxis().setDrawGridLines(false);
+    Chart.setDragEnabled(true);
+    Chart.setScaleEnabled(true);
+    Chart.getXAxis().setAxisMaximum(generateBar().getXMax()+0.5f);
+    Chart.getXAxis().setAxisMinimum(generateBar().getXMin()-0.5f);
+    Chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
 }
 
 
