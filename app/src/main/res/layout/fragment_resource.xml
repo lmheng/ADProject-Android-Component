@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.fragments.LandingActivity"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:id="@+id/resourcefrag"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
