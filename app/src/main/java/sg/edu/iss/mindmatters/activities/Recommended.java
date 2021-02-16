@@ -6,8 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
+import com.synnapps.carouselview.ImageListener;
 
 import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.webview.MindfulnessList;
 
 public class Recommended extends BaseActivity {
@@ -17,8 +21,26 @@ public static final String EXTERNAL_URL="externalUrl";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommened_include);
         callCustomActionBar(Recommended.this, true);
-
         Intent intent=getIntent();
+        String[] array=intent.getStringArrayExtra(Resources.EXTERNAL_URL_1);//(Resources.EXTERNAL_URL_1);
+        String title_1=intent.getStringExtra("title");
+        CarouselView carousel=findViewById(R.id.carousel);
+        carousel.setPageCount(array.length);
+        carousel.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
+
+            }
+        });
+        carousel.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onClick(int position) {
+                String externalUrl ="http://10.0.2.2:8080/resource/view/"+array[position];
+                launchExternalPage(externalUrl,title_1);
+            }
+        });
+       /* Intent intent=getIntent();
         String url_1=intent.getStringExtra(Resources.EXTERNAL_URL_1);
         String Url_code=url_1.substring(26,url_1.length()-6);
         String title_1=intent.getStringExtra("title");
@@ -41,7 +63,7 @@ public static final String EXTERNAL_URL="externalUrl";
                 String externalUrl ="http://10.0.2.2:8080/resource/view/" +Url_code2;
                 launchExternalPage(externalUrl,title_1);
             }
-        });
+        });*/
 
     }
 

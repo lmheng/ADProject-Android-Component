@@ -343,7 +343,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String outcome=getOutcome(user);
+                String outcome=getOutcome(user).getQuizOutcome();
                 TextView text = mView.findViewById(R.id.currentStatus);
                 text.setText(outcome);
 
