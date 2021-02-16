@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.API;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.activities.MainActivity;
+import sg.edu.iss.mindmatters.activities.LoginActivity;
 import sg.edu.iss.mindmatters.model.DailyTips;
 
 public class Notification_receiver extends BroadcastReceiver {
@@ -75,7 +75,7 @@ public class Notification_receiver extends BroadcastReceiver {
 
     public void createNotification(Context context, Intent intent,String content)
     {
-        Intent repeating_intent = new Intent(context, MainActivity.class);
+        Intent repeating_intent = new Intent(context, LoginActivity.class);
         repeating_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
