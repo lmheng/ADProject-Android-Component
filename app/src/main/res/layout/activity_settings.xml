@@ -137,32 +137,66 @@
     <LinearLayout
         android:id="@+id/loginset"
         android:layout_width="0dp"
-        app:layout_constraintWidth_percent="0.90"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:background="@drawable/dialogbox"
+        android:elevation="3dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:weightSum="8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoutSet"
-        android:elevation="3dp"
-        android:weightSum="8"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        >
+        app:layout_constraintWidth_percent="0.90">
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/login"/>
+            android:src="@drawable/login" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="7"
             android:text="Login"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dailyTips"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/dialogbox"
+        android:elevation="3dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:orientation="horizontal"
+        android:weightSum="8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutSet"
+        app:layout_constraintWidth_percent="0.90">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/tip" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp"
-            />
+            android:layout_weight="7"
+            android:text="Daily Tips"
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/notifyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import sg.edu.iss.mindmatters.model.DailyTips;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.model.User;
@@ -39,5 +40,8 @@ public interface API {
     Call<ResponseBody> resetPassword(
             @Body User user
     );
+
+    @GET("rest/tip")
+    Call <List<DailyTips>> getDailyTips();
 
 }
