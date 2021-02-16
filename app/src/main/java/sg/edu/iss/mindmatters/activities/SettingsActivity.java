@@ -131,7 +131,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         Calendar calender = Calendar.getInstance();
 
         calender.set(Calendar.HOUR_OF_DAY,21);
-        calender.set(Calendar.MINUTE,38);
+        calender.set(Calendar.MINUTE,50);
         calender.set(Calendar.SECOND,00);
 
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
