@@ -23,11 +23,11 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.GetHelpList" />
         <activity android:name=".activities.fragments.getHelp.GetHelpView" />
         <activity android:name=".activities.UserMessageActivity" />
         <activity android:name=".activities.DailyQuizActivity" />
         <activity android:name=".NoNetwork" />
+        <activity android:name=".activities.fragments.OnboardingActivity" />
 
         <receiver
             android:name=".NetworkReceiver"
@@ -42,14 +42,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".webview.Education" />
-        <activity android:name=".activities.Mindfulness" />
-        <activity android:name=".webview.MindfulnessList" />
-        <activity android:name=".activities.Resources" />
-        <activity android:name=".activities.Recommended" />
         <activity android:name=".webview.QuizActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

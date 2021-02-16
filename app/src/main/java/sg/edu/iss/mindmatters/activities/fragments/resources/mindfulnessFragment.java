@@ -1,7 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,9 +16,6 @@ import android.widget.LinearLayout;
 import com.squareup.picasso.Picasso;
 
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.Results_temp;
-import sg.edu.iss.mindmatters.activities.Mindfulness;
-import sg.edu.iss.mindmatters.webview.MindfulnessList;
 
 import static android.content.Context.MODE_PRIVATE;
 

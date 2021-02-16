@@ -1,6 +1,5 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -18,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.activities.Mindfulness;
 
 public class mindfulDetailFragment extends Fragment {
 

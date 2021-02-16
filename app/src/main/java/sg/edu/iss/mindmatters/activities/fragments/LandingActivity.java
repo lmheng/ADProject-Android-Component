@@ -1,20 +1,15 @@
 package sg.edu.iss.mindmatters.activities.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.time.LocalDate;
 
@@ -22,7 +17,6 @@ import sg.edu.iss.mindmatters.MyApplication;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.activities.BaseActivity;
 import sg.edu.iss.mindmatters.activities.DailyQuizActivity;
-import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.activities.SettingsActivity;
 import sg.edu.iss.mindmatters.activities.fragments.getHelp.getHelpFragment;
 import sg.edu.iss.mindmatters.activities.fragments.landing.LandingFragment;

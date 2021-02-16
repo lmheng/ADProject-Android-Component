@@ -2,10 +2,8 @@ package sg.edu.iss.mindmatters.activities.fragments.landing;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
@@ -21,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -33,7 +30,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -47,12 +43,8 @@ import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.DailyQuizActivity;
-import sg.edu.iss.mindmatters.activities.GetHelpList;
-import sg.edu.iss.mindmatters.activities.MainActivity;
-import sg.edu.iss.mindmatters.activities.Resources;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
-import sg.edu.iss.mindmatters.webview.QuizActivity;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -69,17 +61,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     int DAILY_DONE = 1;
     boolean RESPONSE_CODE = true;
 
-    protected BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals("date_update")) {
-//                if(pref.contains("token"))
-//                    loadNextDate();
-            }
-        }
-    };
-
     public LandingFragment() {
         // Required empty public constructor
     }
@@ -88,9 +69,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
         if(db.countDb(user)>0) {
-//            pref = this.getActivity().getSharedPreferences(
-//                    "user_credentials", MODE_PRIVATE);
-//            user = pref.getString("username", "user");
             populateDash(user);
             combineGraph();
             updateServerInfo();
@@ -113,17 +91,13 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("date_update");
-        getActivity().registerReceiver(receiver, filter);
-
         user=pref.getString("username","user");
 
         TextView tv = (TextView) mView.findViewById(R.id.userNametv);
         tv.setText("Welcome, "+ user);
 
 
-            LinearLayout dashView=mView.findViewById(R.id.dash_support);
+            LinearLayout dashView=mView.findViewById(R.id.dashboard_body);
             dashView.setVisibility(View.VISIBLE);
             if(db.countDb(user)>0) {
                 populateDash(user);
@@ -145,19 +119,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.test_button){
-            Intent intent = new Intent(getActivity(), QuizActivity.class);
-            startActivity(intent);
-        }
-        else if(view.getId() == R.id.gethelp_button){
-            Intent intent = new Intent(getActivity(), GetHelpList.class);
-            startActivity(intent);
-        }
-        else if(view.getId() == R.id.resource_btn) {
-            Intent intent = new Intent(getActivity(), Resources.class);
-            startActivity(intent);
-        }
-        else if(view.getId() == R.id.floatingActionButton) {
+            if(view.getId() == R.id.floatingActionButton) {
             Intent intent = new Intent(getActivity(), DailyQuizActivity.class);
             startActivityForResult(intent, DAILY_DONE);
         }
@@ -252,59 +214,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             return null;
         }
     }
-
-
-
-   /* public void populateGraph()
-    {
-        LineChart linechart = (LineChart) mView.findViewById(R.id.linechart);
-        linechart.setDragEnabled(true);
-        linechart.setScaleEnabled(false);
-        ArrayList<Entry> yValues=new ArrayList<>();
-        ArrayList<Entry>xValues=new ArrayList<>();
-        yValues=db.getMoodData(user);
-        xValues=db.getSleepData(user);
-        LineDataSet set2=new LineDataSet(xValues,"Mood");
-        LineDataSet set1=new LineDataSet(yValues,"Sleep");
-        set1.setFillAlpha(110);
-        set1.setFillColor(android.R.color.holo_blue_bright);
-        set1.setLineWidth(3f);
-        set1.setDrawFilled(true);
-        set2.setFillAlpha(85);
-        set2.setFillColor(android.R.color.black);
-        set2.setLineWidth(3f);
-        set2.setDrawFilled(true);
-        ArrayList<ILineDataSet>datasets=new ArrayList<>();
-        datasets.add(set1);
-        datasets.add(set2);
-        LineData data = new LineData(datasets);
-        linechart.setData(data);
-        linechart.getAxisRight().setEnabled(false);
-        linechart.setDrawGridBackground(false);
-        linechart.getAxisRight().setDrawGridLines(false);
-        linechart.getAxisLeft().setDrawGridLines(false);
-        linechart.getXAxis().setDrawGridLines(false);
-
-    }
-
-    public void populateDash(String user){
-        TextView averagesleep=mView.findViewById(R.id.averagesleep);
-        TextView averagemood=mView.findViewById(R.id.averagemood);
-        db=new SQLiteDatabaseHandler(getActivity());
-        float avgMood=db.averageMoodData(user);
-        averagemood.setText(String.format("%.1f",avgMood/10));
-        float avgSlp=db.averageSleepData(user);
-        averagesleep.setText(String.format("%.1f",avgSlp));
-    new Thread(new Runnable() {
-        @Override
-        public void run() {
-            String outcome=getOutcome(user).getQuizOutcome();
-                    TextView text = mView.findViewById(R.id.currentStatus);
-                    text.setText(outcome);
-                    loadNextDate();
-            }
-        }).start();
-    }*/
 
     public LineData GenerateLine()
     {

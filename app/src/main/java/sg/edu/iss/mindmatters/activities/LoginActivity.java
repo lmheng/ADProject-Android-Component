@@ -17,6 +17,7 @@ import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
+import sg.edu.iss.mindmatters.activities.fragments.OnboardingActivity;
 import sg.edu.iss.mindmatters.model.User;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -30,6 +31,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         callCustomActionBar(LoginActivity.this, false);
+        checkOnboarding();
         loadComponents();
     }
 
@@ -138,6 +140,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         editor.putString("token", response.headers().get("Authorization"));
         editor.putString("email", email);
         editor.commit();
+    }
+
+    private void checkOnboarding(){
+        SharedPreferences preferences =
+                getSharedPreferences("my_preferences", MODE_PRIVATE);
+        if(!preferences.getBoolean("onboarding_complete", false)){
+            Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

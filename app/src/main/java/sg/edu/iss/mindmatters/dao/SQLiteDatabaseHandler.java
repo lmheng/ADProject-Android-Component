@@ -3,26 +3,20 @@ package sg.edu.iss.mindmatters.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
 
 import static java.time.LocalDate.now;
@@ -108,6 +102,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
+        db.close();
+
         return allQuiz;
     }
 
@@ -171,6 +167,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         quiz.setQ3(Integer.parseInt(cursor.getString(3)));
         quiz.setUsername(cursor.getString(4));
         quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
+
+        db.close();
 
         return quiz;
     }
@@ -248,14 +246,16 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return quality;
     }
-public int countDb(String user)
-{
-    SQLiteDatabase db=this.getReadableDatabase();
-    String query="SELECT * FROM DailyQuiz WHERE username = ?";
 
-    Cursor cursor=db.rawQuery(query,new String[]{user});
+    public int countDb(String user)
+    {
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="SELECT * FROM DailyQuiz WHERE username = ?";
 
-    return cursor.getCount();
-}
+        Cursor cursor=db.rawQuery(query,new String[]{user});
+
+        db.close();
+        return cursor.getCount();
+    }
 
 }

@@ -1,7 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -24,11 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
-import sg.edu.iss.mindmatters.activities.Mindfulness;
-import sg.edu.iss.mindmatters.activities.Resources;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
-import sg.edu.iss.mindmatters.webview.Education;
 
 import static android.content.Context.MODE_PRIVATE;
 

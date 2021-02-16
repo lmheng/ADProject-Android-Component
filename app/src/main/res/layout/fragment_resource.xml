@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.MainActivity"
-    android:weightSum="11">
+    tools:context=".activities.fragments.LandingActivity"
+    android:weightSum="10">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="9"
         android:weightSum="10"
         android:background="@color/white"
         android:elevation="5dp"
