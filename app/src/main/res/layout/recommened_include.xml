@@ -4,35 +4,31 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/dialogbox"
     android:elevation="3dp"
     android:weightSum="10">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/recommend"
-        android:textColor="#9F9F9F"
-        android:textSize="12sp"
-        android:layout_marginLeft="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8.5"
+        android:layout_weight="9.2"
         android:orientation="horizontal">
+
         <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carousel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:id="@+id/carousel"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/curved_bright"
-            app:slideInterval="5000"/>
+            android:scaleType="fitCenter"
+            app:slideInterval="4000">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/carousel_img"/>
+        </com.synnapps.carouselview.CarouselView>
 
 
         <!--<ImageView
@@ -56,7 +52,7 @@
     <LinearLayout
         android:layout_width="387dp"
         android:layout_height="10dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.8"
         android:orientation="horizontal"
         android:padding="2dp">
 
@@ -65,12 +61,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:id="@+id/carouseltext"
             android:fontFamily="@font/roboto_medium"
             android:text=""
             android:textColor="#9F9F9F"
             android:textSize="15dp"
+            android:layout_marginLeft="10dp"
             android:textStyle="bold" />
     </LinearLayout>
 

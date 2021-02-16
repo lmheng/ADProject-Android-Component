@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class mindfulDetailFragment extends Fragment {
         String name=elements[1];
         title=(TextView)mView.findViewById(R.id.mindfultype);
         title.setText(name);
+        title.setAutoSizeTextTypeUniformWithConfiguration(1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
         mUrl=elements[0];
         mindfullist=mView.findViewById(R.id.mindfullist);
         mindfullist.setBackgroundColor(0);
