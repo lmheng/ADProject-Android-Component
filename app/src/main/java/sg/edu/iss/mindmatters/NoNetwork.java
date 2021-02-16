@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import sg.edu.iss.mindmatters.activities.BaseActivity;
-import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
 
 public class NoNetwork extends BaseActivity implements View.OnClickListener {

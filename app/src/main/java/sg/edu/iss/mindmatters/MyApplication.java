@@ -43,7 +43,6 @@ public class MyApplication extends Application implements Application.ActivityLi
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
-        System.out.println("resume");
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, filter);
     }
@@ -71,7 +70,6 @@ public class MyApplication extends Application implements Application.ActivityLi
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        System.out.println("closed");
         this.unregisterReceiver(networkReceiver);
     }
 

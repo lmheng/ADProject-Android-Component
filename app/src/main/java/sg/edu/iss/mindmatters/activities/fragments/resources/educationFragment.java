@@ -1,6 +1,5 @@
 package sg.edu.iss.mindmatters.activities.fragments.resources;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +11,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.activities.Resources;
 
 public class educationFragment extends Fragment {
 

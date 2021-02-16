@@ -15,18 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true">
-        <activity android:name=".activities.fragments.LandingActivity"></activity>
+        android:hardwareAccelerated="true"
+        android:screenOrientation="portrait"
+        >
+        <activity android:name=".activities.fragments.LandingActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize"> </activity>
         <activity android:name=".activities.ForgotPwdActivity" />
         <activity android:name=".activities.GeneralSettings" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.GetHelpList" />
         <activity android:name=".activities.fragments.getHelp.GetHelpView" />
         <activity android:name=".activities.UserMessageActivity" />
         <activity android:name=".activities.DailyQuizActivity" />
         <activity android:name=".NoNetwork" />
+        <activity android:name=".activities.fragments.OnboardingActivity" />
 
         <receiver
             android:name=".NetworkReceiver"
@@ -41,14 +43,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".webview.Education" />
-        <activity android:name=".activities.Mindfulness" />
-        <activity android:name=".webview.MindfulnessList" />
-        <activity android:name=".activities.Resources" />
-        <activity android:name=".activities.Recommended" />
         <activity android:name=".webview.QuizActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
