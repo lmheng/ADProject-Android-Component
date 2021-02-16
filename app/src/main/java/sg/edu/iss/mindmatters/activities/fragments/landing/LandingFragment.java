@@ -104,9 +104,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
                 combineGraph();
             }
             updateServerInfo();
-            createNotificationChannel();
             runDailyQuiz();
-            launchAlarm();
             mView.findViewById(R.id.floatingActionButton).setOnClickListener(this);
             mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);
 
@@ -155,16 +153,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void createNotificationChannel(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-        NotificationChannel channel = new NotificationChannel("123456", "Notif Channel", importance);
-        channel.setDescription("To display messages");
-
-        NotificationManager notifMgr = getActivity().getSystemService(NotificationManager.class);
-        notifMgr.createNotificationChannel(channel);
-    }
 
     public void loadNextDate(){
         try {
@@ -182,18 +170,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             nextDate.setVisibility(View.VISIBLE);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             nextDate.setText(LocalDate.now().format(dtf));
-            e.printStackTrace();
-        }
-    }
-
-    public void launchAlarm(){
-        try{
-            if(getActivity().getSharedPreferences("Settings", MODE_PRIVATE).getString("alarm", "not set").contains("not set")){
-                Alarms.startAction(getActivity());
-            };
-        }
-        catch(NullPointerException e){
-            Alarms.startAction(getActivity());
             e.printStackTrace();
         }
     }

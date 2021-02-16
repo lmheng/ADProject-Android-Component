@@ -67,7 +67,6 @@ public class QuizActivity extends BaseActivity {
                     OkHttpClient okHttpClient = new OkHttpClient();
                     Request requestNew = new Request.Builder().url(request.getUrl().toString()).addHeader("Authorization" , auth)
                             .build();
-                    System.out.println(requestNew.headers());
 
                     Response response = okHttpClient.newCall(requestNew).execute();
 
@@ -87,65 +86,17 @@ public class QuizActivity extends BaseActivity {
                 super.onPageStarted(view, url, favicon);
                 if(url.contains(DONE_URL)) {
                     finish();
-//                    if(pref.contains("token"))
-//                        saveNextDate(pref);
-                    //clearCache();
                 }
             }
         });
-
-        //String data = "json="+"3";
-        //mWebView.postUrl(mUrl, data.getBytes());
 
         mWebView.loadUrl(mUrl);
 
     }
 
-//    public void saveNextDate(SharedPreferences pref){
-//        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        Calendar today = Calendar.getInstance();
-//        today.set(Calendar.HOUR_OF_DAY, 0);
-//        today.add(Calendar.MONTH, 3);
-//        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        editor.putString(pref.getString("username","user"), sdf.format(today.getTime()));
-//        editor.commit();
-//    }
-
-    public void saveNextDate(SharedPreferences pref){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                    nextDate=getNextQuizDate(getSharedPreferences(
-                            "user_credentials", MODE_PRIVATE).getString("username","user"));
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                editor.putString(pref.getString("username","user"), nextDate.format(dtf));
-                editor.commit();
-
-                Intent intent = new Intent();
-                intent.setAction("date_update");
-                sendBroadcast(intent);
-            }
-        }).start();
-    }
-
-    public void clearCache(){
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-            // a callback which is executed when the cookies have been removed
-            @Override
-            public void onReceiveValue(Boolean aBoolean) {
-                Log.d("Cookie", "Cookie removed: " + aBoolean);
-            }});
-        mWebView.clearCache(true);
-    }
-
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        //clearCache();
         finish();
     }
 
@@ -176,20 +127,4 @@ public class QuizActivity extends BaseActivity {
         return type;
     }
 
-    public LocalDate getNextQuizDate(String user) {
-
-        Call<QuizOutcome> call = RetrofitClient
-                .getInstance()
-                .getAPI()
-                .getUserProfile(user);
-
-        try {
-            retrofit2.Response<QuizOutcome> qo=call.execute();
-            QuizOutcome oc= qo.body();
-            return oc.getNextQuiz();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

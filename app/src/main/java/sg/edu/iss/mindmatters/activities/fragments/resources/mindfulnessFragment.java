@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +47,6 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
     CarouselView carousel;
     TextView caption;
 
-
-    public static final String EXTERNAL_URL="externalUrl";
-
-    private String[] mindfulLinks;
     View mView;
 
     IMindfulnessFragment iMindfulnessFragment;
@@ -70,7 +67,6 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mindfulness, container, false);
         this.mView = view;
-        mindfulLinks = getArguments().getStringArray("resources");
 
         afraid=mView.findViewById(R.id.afraidbtn);
         afraid.setOnClickListener(this);
@@ -151,55 +147,47 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
             super.onAttach(context);
             iMindfulnessFragment = (IMindfulnessFragment) context;
         }
+
         public void ViewRecommended(){
-            String[] resource = getArguments().getStringArray("recommend");//(Resources.EXTERNAL_URL_1);
+            String[] resource = getArguments().getStringArray("resources");
             String[] array = new String[3];
             for (int i = 0; i < array.length; i++) {
                 array[i] = resource[new Random().nextInt(resource.length-1)];
             }
             carousel=mView.findViewById(R.id.carousel);
             carousel.setPageCount(array.length);
-            ViewListener viewListener = new ViewListener() {
-                @Override
-                public View setViewForPosition(int position) {
-                    View customView = getLayoutInflater().inflate(R.layout.recommened_include, null);
-                    ImageView imageView=customView.findViewById(R.id.carousel_img);
-                    Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    caption=customView.findViewById(R.id.carouseltext);
-                    getTitleMapping(array[position],caption);
-                    return customView;
-                }
+
+            ViewListener viewListener = position -> {
+                View customView = getLayoutInflater().inflate(R.layout.recommened_include, null);
+                ImageView imageView=customView.findViewById(R.id.carousel_img);
+                Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                caption=customView.findViewById(R.id.carouseltext);
+                getResourceMapping(array[position],null,caption,false);
+                return customView;
             };
             carousel.setViewListener(viewListener);
-            /*carousel.setImageListener(new ImageListener() {
-                @Override
-                public void setImageForPosition(int position, ImageView imageView) {
-                    Picasso.get().load("https://img.youtube.com/vi/" + array[position] + "/0.jpg").placeholder(R.drawable.ic_launcher_background).into(imageView);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
-            });*/
-            carousel.setImageClickListener(new ImageClickListener() {
-                @Override
-                public void onClick(int position) {
-                    String externalUrl = "http://10.0.2.2:8080/resource/view/" + array[position];
-                    getResourceMapping(array[position],externalUrl);
-                }
+            carousel.setImageClickListener(position -> {
+                String externalUrl = "http://10.0.2.2:8080/resource/view/" + array[position];
+                getResourceMapping(array[position],externalUrl,null,true);
             });
         }
-    public String getTitle(HashMap<String,String>map,String key)
+
+    public String getTitle(HashMap<String,Resource>map,String key)
     {
-        String value=map.get(key);
+        String value=map.get(key).getName();
         return value;
     }
-    public void getResourceMapping(String key,String externalUrl)
+
+    public void getResourceMapping(String key,String externalUrl, TextView caption, boolean launch)
     {
         Call<List<Resource>> call = RetrofitClient
                 .getInstance()
                 .getAPI()
                 .getallresources();
-        HashMap<String,String>map=new HashMap<>();
+        HashMap<String,Resource>map=new HashMap<>();
         call.enqueue(new Callback<List<Resource>>() {
+
             @Override
             public void onResponse(Call<List<Resource>> call, Response<List<Resource>> response) {
                 if(!response.isSuccessful()){
@@ -209,52 +197,47 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
                 List<Resource> allResources= response.body();
                 for(Resource r:allResources)
                 {
-                    map.put(r.getUrlCode(),r.getName());
+                    map.put(r.getUrlCode(), r);
                 }
-                String value=getTitle(map,key);
-               TextView caption=mView.findViewById(R.id.carouseltext);
-               caption.setText(value);
-               caption.setAutoSizeTextTypeUniformWithConfiguration(2,17,1, TypedValue.COMPLEX_UNIT_DIP);
-               iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,value));
-            }
 
+                String value=getTitle(map,key);
+                String type = getResourceType(map.get(key));
+
+                if(launch)
+                {TextView caption=mView.findViewById(R.id.carouseltext);
+                   caption.setText(value);
+                    caption.setAutoSizeTextTypeUniformWithConfiguration(15,17,1, TypedValue.COMPLEX_UNIT_DIP);
+                   iMindfulnessFragment.mindfulClicked(launchExternalPage(externalUrl,type));}
+                else{
+                    caption.setAutoSizeTextTypeUniformWithConfiguration(15,17,1, TypedValue.COMPLEX_UNIT_DIP);
+                    caption.setText(value);
+                }
+            }
 
             @Override
             public void onFailure(Call<List<Resource>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
-    public void getTitleMapping(String key,TextView caption)
-    {
-        Call<List<Resource>> call = RetrofitClient
-                .getInstance()
-                .getAPI()
-                .getallresources();
-        HashMap<String,String>map=new HashMap<>();
-        call.enqueue(new Callback<List<Resource>>() {
-            @Override
-            public void onResponse(Call<List<Resource>> call, Response<List<Resource>> response) {
-                if(!response.isSuccessful()){
-                    Toast.makeText(getActivity(), "Can't get Resources", Toast.LENGTH_LONG).show();
-                }
-                List<Resource> allResources= response.body();
-                for(Resource r:allResources)
-                {
-                    map.put(r.getUrlCode(),r.getName());
-                }
-                String value=getTitle(map,key);
-                caption.setText(value);
-                caption.setAutoSizeTextTypeUniformWithConfiguration(2,17,1, TypedValue.COMPLEX_UNIT_DIP);
-            }
 
+    public String getResourceType(Resource r){
+        switch(r.getType()){
+            case("GAD"):
+                return "Feeling Afraid?";
+            case("Anxiety"):
+                return "Tense and Anxious?";
+            case("Sleep"):
+                return "Trouble Sleeping?";
+            case("Panic"):
+                return "Panicking about panic?";
+            case("OCD"):
+                return "Compelled by compulsion?";
+            case("Depression"):
+                return "Feeling down?";
+        }
 
-            @Override
-            public void onFailure(Call<List<Resource>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
+        return null;
     }
+
 }

@@ -48,12 +48,11 @@ public class mindfulDetailFragment extends Fragment {
         this.mView = view;
 
 
-        elements = getArguments().getStringArray("resources");
+            elements = getArguments().getStringArray("resources");
             String name=elements[1];
             title=(TextView)mView.findViewById(R.id.mindfultype);
             title.setText(name);
             mUrl=elements[0];
-            System.out.println(mUrl);
             mindfullist=mView.findViewById(R.id.mindfullist);
             mindfullist.setBackgroundColor(0);
             mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);

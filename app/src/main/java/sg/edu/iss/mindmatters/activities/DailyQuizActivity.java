@@ -34,7 +34,6 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //change once HueyLi is done
         setContentView(R.layout.daily_quiz_popup);
         callCustomActionBar(DailyQuizActivity.this,true);
 
@@ -85,7 +84,7 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(DailyQuizActivity.this, "Selected:" + progressChangedValue, Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -100,12 +99,8 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
         picker1.setMaxValue(24);
         picker1.setMinValue(0);
 
-        picker1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                //Toast.makeText(DailyQuizActivity.this, "Selected:" + i1, Toast.LENGTH_SHORT).show();
-                sleepHours = i1;
-            }
+        picker1.setOnValueChangedListener((numberPicker, i, i1) -> {
+            sleepHours = i1;
         });
 
         Button button = findViewById(R.id.btnSubmit);
@@ -138,7 +133,6 @@ public class DailyQuizActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        //Toast.makeText(getApplicationContext(), "Selected: "+ sleep[position] ,Toast.LENGTH_SHORT).show();
         sleepOutcome = sleep[position];
     }
 
