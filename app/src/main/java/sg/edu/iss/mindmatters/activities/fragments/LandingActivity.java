@@ -59,6 +59,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         {if(pref.contains("token"))
             {
                 launchAlarm();
+//                db.createDummyData(pref.getString("username", "user"));
 
                 try {
                     if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)

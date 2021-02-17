@@ -229,6 +229,10 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
             return null;
         }
+        catch(NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
