@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -20,6 +22,7 @@ import sg.edu.iss.mindmatters.model.User;
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText etUsername, etPassword,etPhone,etEmail,etRePassword;
+    ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +32,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-
     private void loadComponents(){
         etUsername = findViewById(R.id.etRUserName);
         etPassword = findViewById(R.id.etRPassword);
         etRePassword = findViewById(R.id.etReenterPassword);
         etPhone = findViewById(R.id.etRPhone);
         etEmail = findViewById(R.id.etREmail);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarRegister);
+        mProgressBar.setIndeterminate(true);
 
         findViewById(R.id.btnRegister).setOnClickListener(this);
     }
@@ -117,7 +121,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .getInstance()
                 .getAPI()
                 .createUser(u);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -167,11 +173,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     }
                     Toast.makeText(RegisterActivity.this, "Something went wrong!Try again later", Toast.LENGTH_LONG).show();
                 }
+                mProgressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                mProgressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         });
     }

@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import sg.edu.iss.mindmatters.model.DailyTips;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.model.User;
@@ -19,13 +20,18 @@ public interface API {
             @Body User user
     );
 
+    @GET("users/getInfo")
+    Call<User> getInfo(
+            @Header("Authorization") String authorization
+    );
+
     @POST("users/edit")
     Call<ResponseBody> editUser (
             @Header("Authorization") String authorization,@Body User user
     );
 
     @POST("login")
-    Call<ResponseBody> checkUser (
+    Call<User> checkUser (
             @Body User user
     );
 
@@ -39,5 +45,20 @@ public interface API {
     Call<ResponseBody> resetPassword(
             @Body User user
     );
+
+
+    @POST("users/social")
+    Call<User> loginSocial(
+            @Body User user
+    );
+
+    @POST("users/delete")
+    Call<ResponseBody> deleteAccount(
+            @Header("Authorization") String authorization,@Body User user
+    );
+
+    @GET("rest/tip")
+    Call <List<DailyTips>> getDailyTips();
+
 
 }

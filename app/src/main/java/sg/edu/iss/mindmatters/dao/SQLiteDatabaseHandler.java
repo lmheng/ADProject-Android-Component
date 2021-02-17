@@ -3,26 +3,20 @@ package sg.edu.iss.mindmatters.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
 
 import static java.time.LocalDate.now;
@@ -62,31 +56,6 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         this.onCreate(sqLiteDatabase);
     }
 
-    public DailyQuiz getDailyQuiz(int id) throws ParseException {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, // a. table
-                COLUMNS, // b. column names
-                " id = ?", // c. selections
-                new String[] { String.valueOf(id) }, // d. selections args
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        DailyQuiz quiz = new DailyQuiz();
-        quiz.setId(Integer.parseInt(cursor.getString(0)));
-        quiz.setQ1(Integer.parseInt(cursor.getString(1)));
-        quiz.setQ2(cursor.getString(2));
-        quiz.setQ3(Integer.parseInt(cursor.getString(3)));
-        quiz.setUsername(cursor.getString(4));
-        quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
-
-        return quiz;
-    }
-
     public List<DailyQuiz> allQuiz() throws ParseException {
 
         List<DailyQuiz> allQuiz = new LinkedList<DailyQuiz>();
@@ -107,7 +76,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 allQuiz.add(quiz);
             } while (cursor.moveToNext());
         }
-
+        db.close();
         return allQuiz;
     }
 
@@ -123,6 +92,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_NAME,null, values);
         db.close();
     }
+
     public void createDummyData(String user){
 
         String[] sleep = { "Excellent", "Very Good", "Average", "Poor" };
@@ -139,13 +109,6 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DATE, sdf.format(today));// insert
         db.insert(TABLE_NAME,null, values);
         db.close();    }
-    }
-
-    public void deleteOne(DailyQuiz quiz) {
-        // Get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, "id = ?", new String[] { String.valueOf(quiz.getId()) });
-        db.close();
     }
 
     public DailyQuiz findDailyByDate(LocalDate date, String username) throws ParseException {
@@ -171,7 +134,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         quiz.setQ3(Integer.parseInt(cursor.getString(3)));
         quiz.setUsername(cursor.getString(4));
         quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
-
+        db.close();
         return quiz;
     }
 
@@ -232,28 +195,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return DataValues;
     }
-    public String getSleepQualityData(String user)
+
+    public int countDb(String user)
     {
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1";//"SELECT " + KEY_Q2+",Count("+KEY_Q2+") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY COUNT("+KEY_Q2+") DESC LIMIT 1";"SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1DESC LIMIT 1"
-        String quality="null";
-        Cursor cursor=db.rawQuery(query ,new String[]{user});
-        do{
-            cursor.moveToFirst();
-            if (cursor.moveToFirst())  {
-                quality = cursor.getString(cursor.getColumnIndex("q2"));
-            }
-        }while(cursor.getCount()>1);
-
-        db.close();
-        return quality;
-    }
-public int countDb(String user)
-{
-    SQLiteDatabase db=this.getReadableDatabase();
-    String query="SELECT * FROM DailyQuiz where username =?";
-    Cursor cursor=db.rawQuery(query,new String[]{user});
-    return cursor.getCount();
+        String query="SELECT * FROM DailyQuiz WHERE username = ?";
+        Cursor cursor=db.rawQuery(query,new String[]{user});
+        return cursor.getCount();
 }
 
 }

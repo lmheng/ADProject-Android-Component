@@ -24,11 +24,11 @@ public class UserMessageActivity extends BaseActivity implements View.OnClickLis
         if (getIntent().getStringExtra("msg").equals("registered")) {
             messageTitle.setText("Account Created!");
             message.setText("Please check your email to verify your account." +
-                    "\n\n If you have not received any email, email to team1.sa51@gmail.com for support ");
+                    "\n\nIf you have not received any email, email to team1.sa51@gmail.com for support ");
         } else if (getIntent().getStringExtra("msg").equals("resetPwd")) {
             messageTitle.setText("Reset password link sent!");
             message.setText("Please check your email to reset your password." +
-                    "\n\n If you have not received any email, email to team1.sa51@gmail.com for support ");
+                    "\n\nIf you have not received any email, email to team1.sa51@gmail.com for support ");
         } else if (getIntent().getStringExtra("msg").equals("edited")) {
             messageTitle.setText("Saved Successfully!");
             if (getIntent().getBooleanExtra("passEdit", false)) {
@@ -38,6 +38,10 @@ public class UserMessageActivity extends BaseActivity implements View.OnClickLis
             } else {
                 message.setText(getIntent().getStringExtra("content"));
             }
+        }
+        else if(getIntent().getStringExtra("msg").equals("deleted")){
+            messageTitle.setText("Account Deleted Successfully!");
+            message.setText("Thank you for using our services");
         }
         findViewById(R.id.btnVerifyOk).setOnClickListener(this);
     }
@@ -59,6 +63,15 @@ public class UserMessageActivity extends BaseActivity implements View.OnClickLis
                     finish();
                 }
             }
+            if (getIntent().getStringExtra("msg").equals("deleted")) {
+                    SharedPreferences pref = getSharedPreferences(
+                            "user_credentials", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.clear();
+                    editor.commit();
+
+            }
+
             intent = new Intent(UserMessageActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

@@ -49,17 +49,8 @@ public class QuizOutcome {
         return LocalDate.parse(nextQuiz, dtf);
     }
 
-    public void setNextQuiz(LocalDate nextQuiz) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        this.nextQuiz = nextQuiz.format(dtf);
-    }
-
     public String getQuizOutcome() {
         return quizOutcome;
-    }
-
-    public void setQuizOutcome(String quizOutcome) {
-        this.quizOutcome = quizOutcome;
     }
 
     public User getUser() {
