@@ -28,7 +28,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(context);
         SharedPreferences pref = context.getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
-        System.out.println("Receiver broadcast alarm");
+
         if (action == null)
             return;
         try {

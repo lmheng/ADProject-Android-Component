@@ -46,18 +46,6 @@ public class Resource {
         return urlCode;
     }
 
-    public void setUrlCode(String urlCode) {
-        this.urlCode = urlCode;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getName() {
         return name;
     }
@@ -70,9 +58,6 @@ public class Resource {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public String toString() {

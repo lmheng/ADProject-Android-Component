@@ -6,34 +6,41 @@
     android:background="@drawable/background"
     tools:context=".webview.QuizActivity"
     android:orientation="vertical"
-    android:paddingHorizontal="10dp"
-    android:weightSum="10">
+    android:weightSum="11">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/quiz_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/dialogbox"
-        android:elevation="3dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Quiz"
-        android:textColor="#3A3131"
-        android:textSize="35sp"
-        android:layout_marginBottom="10dp"
-        android:paddingLeft="20dp"
-        />
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="left|bottom"
+            android:text="Quiz"
+            android:textColor="#3A3131"
+            android:textSize="35sp"
+            />
+
+    </LinearLayout>
 
     <WebView
         android:id="@+id/web_view_quiz"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="9"
+        android:elevation="3dp"
         />
 
 </LinearLayout>

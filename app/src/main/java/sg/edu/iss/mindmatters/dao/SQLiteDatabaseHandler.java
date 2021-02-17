@@ -3,26 +3,23 @@ package sg.edu.iss.mindmatters.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import sg.edu.iss.mindmatters.activities.MainActivity;
 import sg.edu.iss.mindmatters.model.DailyQuiz;
+
+import static java.time.LocalDate.now;
 
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
@@ -59,31 +56,6 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         this.onCreate(sqLiteDatabase);
     }
 
-    public DailyQuiz getDailyQuiz(int id) throws ParseException {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, // a. table
-                COLUMNS, // b. column names
-                " id = ?", // c. selections
-                new String[] { String.valueOf(id) }, // d. selections args
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        DailyQuiz quiz = new DailyQuiz();
-        quiz.setId(Integer.parseInt(cursor.getString(0)));
-        quiz.setQ1(Integer.parseInt(cursor.getString(1)));
-        quiz.setQ2(cursor.getString(2));
-        quiz.setQ3(Integer.parseInt(cursor.getString(3)));
-        quiz.setUsername(cursor.getString(4));
-        quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
-
-        return quiz;
-    }
-
     public List<DailyQuiz> allQuiz() throws ParseException {
 
         List<DailyQuiz> allQuiz = new LinkedList<DailyQuiz>();
@@ -105,6 +77,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
+        db.close();
+
         return allQuiz;
     }
 
@@ -120,6 +94,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_NAME,null, values);
         db.close();
     }
+
     public void createDummyData(String user){
 
         String[] sleep = { "Excellent", "Very Good", "Average", "Poor" };
@@ -131,18 +106,11 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_Q3, new Random().nextInt(10));
         System.out.println("user" + user);
         values.put(KEY_USER, user);
-        LocalDate today = LocalDate.now();
+        LocalDate today = now();
         today.plusDays(i);  // number of days to add
         values.put(KEY_DATE, sdf.format(today));// insert
         db.insert(TABLE_NAME,null, values);
         db.close();    }
-    }
-
-    public void deleteOne(DailyQuiz quiz) {
-        // Get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, "id = ?", new String[] { String.valueOf(quiz.getId()) });
-        db.close();
     }
 
     public DailyQuiz findDailyByDate(LocalDate date, String username) throws ParseException {
@@ -169,6 +137,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         quiz.setUsername(cursor.getString(4));
         quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
 
+        db.close();
+
         return quiz;
     }
 
@@ -176,13 +146,12 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     {
         ArrayList<Entry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q1,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SELECT " + KEY_Q1 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        for(int i=0;i<cursor.getCount();i++){
-            cursor.moveToNext();
-            DataValues.add(new Entry(i+1, (float) (Integer.parseInt(cursor.getString(0))*.1)));
-        }
-        cursor.close();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                DataValues.add(new Entry(i + 1, (float) (Integer.parseInt(cursor.getString(0)) * .1)));
+            }
         db.close();
         return DataValues;
     }
@@ -194,10 +163,9 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q1 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst() && cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averageMood = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
         db.close();
         return averageMood;
 
@@ -210,48 +178,36 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String query="SELECT AVG(" + KEY_Q3 + ") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
         cursor.moveToFirst();
-        if (cursor.moveToFirst()&& cursor.getCount()>0) {
+        if (cursor.getCount()>0) {
             averagesleep = Float.parseFloat(cursor.getString(0));
         }
-        cursor.close();
         db.close();
         return averagesleep;
 
     }
 
-    public ArrayList<Entry> getSleepData(String user)
+    public ArrayList<BarEntry> getSleepData(String user)
     {
-        ArrayList<Entry> DataValues=new ArrayList<>();
+        ArrayList<BarEntry> DataValues=new ArrayList<>();
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT " + KEY_Q3 + " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7";
+        String query="SELECT * FROM (SELECT q3,id FROM DailyQuiz WHERE username=? ORDER BY id DESC LIMIT 7)ORDER BY id ASC";//"SElECT*FROM(SELECT " + KEY_Q3 +","+KEY_ID+ " From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY "+KEY_ID+" DESC LIMIT 7)order by "+KEY_ID+" ASC";
         Cursor cursor=db.rawQuery(query ,new String[]{user});
-        if(cursor.getCount()>0) {
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
-                DataValues.add(new Entry(i + 1, Integer.parseInt(cursor.getString(0))));
+                DataValues.add(new BarEntry(i + 1, Integer.parseInt(cursor.getString(0))));
             }
-        }
         db.close();
-        cursor.close();
         return DataValues;
     }
-    public String getSleepQualityData(String user)
+
+    public int countDb(String user)
     {
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1";//"SELECT " + KEY_Q2+",Count("+KEY_Q2+") From " +TABLE_NAME+" WHERE "+KEY_USER+ "=? ORDER BY COUNT("+KEY_Q2+") DESC LIMIT 1";"SELECT q2,Count(q2) From DailyQuiz WHERE username =? ORDER BY COUNT(q2) DESC LIMIT 1DESC LIMIT 1"
-        String quality="null";
-        Cursor cursor=db.rawQuery(query ,new String[]{user});
-        do{
-            cursor.moveToFirst();
-            if (cursor.moveToFirst())  {
-                quality = cursor.getString(cursor.getColumnIndex("q2"));
-            }
-        }while(cursor.getCount()>0);
+        String query="SELECT * FROM DailyQuiz WHERE username = ?";
 
-        db.close();
-        cursor.close();
-        return quality;
+        Cursor cursor=db.rawQuery(query,new String[]{user});
+
+        return cursor.getCount();
     }
-
 
 }

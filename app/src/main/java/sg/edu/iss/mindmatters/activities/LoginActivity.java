@@ -39,6 +39,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
+import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
+import sg.edu.iss.mindmatters.activities.fragments.OnboardingActivity;
 import sg.edu.iss.mindmatters.model.User;
 
 import com.facebook.FacebookSdk;
@@ -66,6 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         callCustomActionBar(LoginActivity.this, false);
+        checkOnboarding();
         loadComponents();
         setupGoogleSignIn();
     }
@@ -83,7 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 "user_credentials", MODE_PRIVATE);
 
         if (pref.contains("token")) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             intent.putExtra("username", pref.getString("username", "User"));
             intent.putExtra("token", pref.getString("token", "Token"));
             startActivity(intent);
@@ -124,7 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             password = etPassword.getText().toString();
             loginUser(userEmail, password);
         } else if (id == R.id.tvWoLogin) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);
         } else if (id == R.id.tvRegisterLink) {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -293,23 +296,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         disconnectFromGoogle();
     }
 
+
     public void disconnectFromFacebook(){
         if (AccessToken.getCurrentAccessToken() == null) {
             return; // already logged out
         }
         LoginManager.getInstance().logOut();
-//        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
-//                .Callback() {
-//            @Override
-//            public void onCompleted(GraphResponse graphResponse) {
-//
-//                LoginManager.getInstance().logOut();
-//
-//            }
-//        }).executeAsync();
   }
 
     public void disconnectFromGoogle(){
         mGoogleSignInClient.signOut();
     }
+
+    private void checkOnboarding(){
+        SharedPreferences preferences =
+                getSharedPreferences("my_preferences", MODE_PRIVATE);
+        if(!preferences.getBoolean("onboarding_complete", false)){
+            Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
+        }
+    }
+
+
 }

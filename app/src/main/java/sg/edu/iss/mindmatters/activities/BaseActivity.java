@@ -42,13 +42,10 @@ public class BaseActivity extends AppCompatActivity{
             getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout_left);
 
             ImageView settings  = (ImageView) findViewById(R.id.settingsBtn);
-            settings.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ctx, SettingsActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.right_to_left_enter,R.anim.right_to_left_exit);
-                }
+            settings.setOnClickListener(view -> {
+                Intent intent = new Intent(ctx, SettingsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_to_left_enter,R.anim.right_to_left_exit);
             });
 
         }
