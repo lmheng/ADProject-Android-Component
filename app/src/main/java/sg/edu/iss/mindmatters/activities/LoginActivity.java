@@ -85,13 +85,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
-//        if (pref.contains("token")) {
-//            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
-//            intent.putExtra("username", pref.getString("username", "User"));
-//            intent.putExtra("token", pref.getString("token", "Token"));
-//            startActivity(intent);
-//        }
-
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.tvWoLogin).setOnClickListener(this);
         findViewById(R.id.tvRegisterLink).setOnClickListener(this);
@@ -126,6 +119,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             userEmail = etUserEmail.getText().toString().trim();
             password = etPassword.getText().toString();
             loginUser(userEmail, password);
+            finish();
         } else if (id == R.id.tvWoLogin) {
             Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);
