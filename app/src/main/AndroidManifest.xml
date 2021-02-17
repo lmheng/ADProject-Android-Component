@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name = "android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MyApplication"
@@ -15,17 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
-
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.DeleteActivity"></activity>
-
-
-        android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true"
-        android:screenOrientation="portrait"
-        >
-        <activity android:name=".activities.fragments.LandingActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize"> </activity>
-
+        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.DeleteActivity" />
+        <activity
+            android:name=".activities.fragments.LandingActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"></activity>
         <activity android:name=".activities.ForgotPwdActivity" />
         <activity android:name=".activities.GeneralSettings" />
         <activity android:name=".activities.SettingsActivity" />
@@ -56,9 +51,11 @@
 
         <activity android:name=".webview.QuizActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.AppPageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
