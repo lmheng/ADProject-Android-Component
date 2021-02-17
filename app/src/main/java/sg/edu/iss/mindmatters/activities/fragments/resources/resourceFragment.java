@@ -30,6 +30,7 @@ import sg.edu.iss.mindmatters.activities.Mindfulness;
 import sg.edu.iss.mindmatters.activities.Resources;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
+import sg.edu.iss.mindmatters.model.User;
 import sg.edu.iss.mindmatters.webview.Education;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -52,7 +53,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     private String[]All=new String[]{};
     List<Resource> collect=new ArrayList<>();
     SharedPreferences pref;
-    String User="";
+    String autherization="";
     String outcome="";
 
     IResourceFragment iResourceFragment;
@@ -82,22 +83,23 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         getResourceList();
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
-        User=pref.getString("username","user");
-        if(!User.equals("user")){
+        autherization=pref.getString("token",null);
+        if(!pref.getString("username","user").equals("user")){
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if(getOutcome(User)==null)
-                        outcome="all";
-                    else if(getOutcome(User).toLowerCase().equals("normal"))
+                    if(getOutcome(autherization)==null)
+                        outcome = "all";
+                    else if(getOutcome(autherization).toLowerCase().equals("normal"))
                         outcome = "all";
                     else
-                        outcome=getOutcome(User).toLowerCase();
+                        outcome=getOutcome(autherization).toLowerCase();
                 }
             }).start();}
         else{
             outcome="all";
         }
+
 
         return view;
     }
@@ -270,12 +272,12 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public String getOutcome(String user){
+    public String getOutcome(String autherization){
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .getUserProfile(user);
+                .getUserProfile(autherization);
 
         try {
             Response<QuizOutcome> qo=call.execute();

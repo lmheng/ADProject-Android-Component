@@ -53,7 +53,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
 
         pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
 
-        if(pref.contains("token"))
+        if(pref.getString("username","user")!="user")//(pref.contains("token"))
         {
             try {
                 if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)

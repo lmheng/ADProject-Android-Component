@@ -176,12 +176,12 @@ public class QuizActivity extends BaseActivity {
         return type;
     }
 
-    public LocalDate getNextQuizDate(String user) {
+    public LocalDate getNextQuizDate(String autherization) {
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .getUserProfile(user);
+                .getUserProfile(autherization);
 
         try {
             retrofit2.Response<QuizOutcome> qo=call.execute();

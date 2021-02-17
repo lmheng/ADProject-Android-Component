@@ -103,11 +103,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             landing.setBackground(getDrawable(R.drawable.background));
         }
         else{
-            if(db.countDb()>0){
+
             LinearLayout dashView=findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
+            if(db.countDb(pref.getString("username","user"))>0){
             populateDash(user);
-            combineGraph();}
+            combineGraph();
+            }
             createNotificationChannel();
             runDailyQuiz(true);
             loadNextDate();
@@ -128,7 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       if(pref.contains("token")) {
           runDailyQuiz(false);
       }
-        if(db.countDb()>0){
+        if(db.countDb(pref.getString("username","user"))>0){
             pref = getSharedPreferences(
                     "user_credentials", MODE_PRIVATE);
             user=pref.getString("username","user");
@@ -242,12 +244,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-    public String getOutcome(String user){
+    public String getOutcome(String autherize){
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .getUserProfile(user);
+                .getUserProfile(autherize);
         try {
             Response<QuizOutcome> qo=call.execute();
             QuizOutcome oc= qo.body();

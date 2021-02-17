@@ -64,6 +64,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
     public SharedPreferences pref;
     SQLiteDatabaseHandler db;
+    String token;
     String user;
 
     int DAILY_DONE = 1;
@@ -87,11 +88,11 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        if(db.countDb()>0){
+        if(db.countDb(pref.getString("username","user"))>0){
             pref = this.getActivity().getSharedPreferences(
                     "user_credentials", MODE_PRIVATE);
-            user=pref.getString("username","user");
-            populateDash(user);
+            token=pref.getString("token",null);
+            populateDash(pref.getString("username","user"));
             combineGraph();
         }
     }
@@ -107,7 +108,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
         this.mView = view;
-
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
@@ -115,21 +115,25 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         filter.addAction("date_update");
         getActivity().registerReceiver(receiver, filter);
 
+        token=pref.getString("token",null);
         user=pref.getString("username","user");
 
         TextView tv = (TextView) mView.findViewById(R.id.userNametv);
         tv.setText("Welcome, "+ user);
+        if(!user.equals("user")){
 
-        if(db.countDb()>0){
             LinearLayout dashView=mView.findViewById(R.id.dash_support);
             dashView.setVisibility(View.VISIBLE);
+            if(db.countDb(user)>0)
+            {
             populateDash(user);
-            combineGraph();}
+            combineGraph();
+            }
             createNotificationChannel();
             runDailyQuiz();
             launchAlarm();
             mView.findViewById(R.id.floatingActionButton).setOnClickListener(this);
-            mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);
+            mView.findViewById(R.id.floatingActionButton).setVisibility(View.VISIBLE);}
 
 
         MyApplication.setCurrentActivity("MainPage");
@@ -201,7 +205,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
     public void loadNextDate(){
         try {
-            LocalDate getNextDate = getOutcome(pref.getString("username", "user")).getNextQuiz();
+            LocalDate getNextDate = getOutcome(pref.getString("token", null)).getNextQuiz();
 
             TextView nextDate = mView.findViewById(R.id.next_date_taken);
             nextDate.setVisibility(View.VISIBLE);
@@ -231,12 +235,12 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    public QuizOutcome getOutcome(String user){
+    public QuizOutcome getOutcome(String token){
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .getUserProfile(user);
+                .getUserProfile(token);
         try {
             Response<QuizOutcome> qo=call.execute();
             QuizOutcome oc= qo.body();
@@ -343,7 +347,10 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String outcome=getOutcome(user).getQuizOutcome();
+                String outcome="";
+                if(getOutcome(pref.getString("token",null))!=null){
+                    outcome=getOutcome(pref.getString("token",null)).getQuizOutcome();
+                }
                 TextView text = mView.findViewById(R.id.currentStatus);
                 text.setText(outcome);
 
