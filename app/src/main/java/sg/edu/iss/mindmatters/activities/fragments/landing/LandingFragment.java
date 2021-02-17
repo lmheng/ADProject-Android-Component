@@ -163,7 +163,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     public void loadNextDate(){
         try {
             LocalDate getNextDate = getOutcome(pref.getString("token", null)).getNextQuiz();
-
             TextView nextDate = mView.findViewById(R.id.next_date_taken);
             nextDate.setVisibility(View.VISIBLE);
             TextView header = mView.findViewById(R.id.next_quiz_header);
@@ -243,8 +242,9 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             @Override
             public void run() {
                 String outcome="";
-                if(getOutcome(pref.getString("token",null))!=null){
-                    outcome=getOutcome(pref.getString("token",null)).getQuizOutcome();
+                QuizOutcome qo=getOutcome(pref.getString("token",null));
+                if(qo!=null){
+                    outcome=qo.getQuizOutcome();
                 }
                 TextView text = mView.findViewById(R.id.currentStatus);
                 text.setText(outcome);
@@ -292,7 +292,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
-
         db = new SQLiteDatabaseHandler(getActivity());
     }
 

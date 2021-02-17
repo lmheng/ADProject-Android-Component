@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="sg.edu.iss.mindmatters">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -12,25 +13,29 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation = "portrait"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".activities.LoginActivity"></activity>
-        <activity android:name=".activities.DeleteActivity" />
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true">
+        <activity android:name=".activities.LoginActivity"
+            android:screenOrientation = "portrait"></activity>
+        <activity android:name=".activities.DeleteActivity" android:screenOrientation = "portrait"/>
         <activity
             android:name=".activities.fragments.LandingActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"></activity>
-        <activity android:name=".activities.ForgotPwdActivity" />
-        <activity android:name=".activities.GeneralSettings" />
-        <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.EditUserActivity" />
-        <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.fragments.getHelp.GetHelpView" />
-        <activity android:name=".activities.UserMessageActivity" />
-        <activity android:name=".activities.DailyQuizActivity" />
-        <activity android:name=".NoNetwork" />
-        <activity android:name=".activities.fragments.OnboardingActivity" />
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:screenOrientation = "portrait"></activity>
+        <activity android:name=".activities.ForgotPwdActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.GeneralSettings" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.SettingsActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.EditUserActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.BaseActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.fragments.getHelp.GetHelpView" android:screenOrientation = "portrait" />
+        <activity android:name=".activities.UserMessageActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.DailyQuizActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".NoNetwork" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.fragments.OnboardingActivity"
+            tools:ignore="Instantiatable" android:screenOrientation = "portrait"/>
 
         <receiver
             android:name=".NetworkReceiver"
@@ -49,8 +54,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".webview.QuizActivity" />
-        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".webview.QuizActivity" android:screenOrientation = "portrait"/>
+        <activity android:name=".activities.RegisterActivity" android:screenOrientation = "portrait"/>
         <activity android:name=".activities.AppPageActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

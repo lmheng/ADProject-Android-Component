@@ -81,12 +81,13 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if(getOutcome(autherization)==null)
+                    String type=getOutcome(autherization);
+                    if(type==null)
                         outcome = "all";
-                    else if(getOutcome(autherization).toLowerCase().equals("normal"))
+                    else if(type.toLowerCase().equals("normal"))
                         outcome = "all";
                     else
-                        outcome=getOutcome(autherization).toLowerCase();
+                        outcome=type.toLowerCase();
                 }
             }).start();}
         else{
