@@ -19,7 +19,7 @@ import sg.edu.iss.mindmatters.model.User;
 
 public class EditUserActivity extends BaseActivity implements View.OnClickListener{
 
-    private EditText etPassword,etPhone,etEmail,etRePassword;
+    private EditText etUserName,etPassword,etPhone,etEmail,etRePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,14 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void loadComponents(){
+        etUserName = findViewById(R.id.etEdUserName);
         etPassword = findViewById(R.id.etEdPassword);
         etPhone = findViewById(R.id.etEdPhone);
         etEmail = findViewById(R.id.etEdEmail);
         etRePassword = findViewById(R.id.etEdReenterPassword);
-        etEmail.setText(getSharedPreferences("user_credentials", MODE_PRIVATE).getString("email","example@example.com"));
+        etEmail.setText(getIntent().getStringExtra("email"));
+        etPhone.setText(getIntent().getStringExtra("phone"));
+        etUserName.setText(getIntent().getStringExtra("userName"));
         etEmail.setEnabled(false);
 
         findViewById(R.id.btnEdit).setOnClickListener(this);
@@ -48,8 +51,12 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private boolean validate(String password, String phone, String rePassword, String email){
-        if (password.isEmpty()) {
+    private boolean validate(String password, String phone, String rePassword, String email,String userName){
+        if (userName.isEmpty()) {
+            etUserName.setError("Username cannot be blank");
+            etUserName.requestFocus();
+            return false;
+        }else if (password.isEmpty()) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
             return false;
@@ -57,7 +64,12 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
             etRePassword.setError("Password is required");
             etRePassword.requestFocus();
             return false;
-        } else if(!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&]).{8,}$")){
+        }else if(!userName.matches("^[A-Za-z0-9]*$")){
+            etUserName.setError("Username can contain only  alphabets and numbers");
+            etUserName.requestFocus();
+            return false;
+        }
+        else if(!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&]).{8,}$")){
             etPassword.setError("At least 8 characters. Should be combination of numbers, uppercase, " +
                     "lowercase and one special character from @$!%*#?&");
             etPassword.requestFocus();
@@ -81,12 +93,14 @@ public class EditUserActivity extends BaseActivity implements View.OnClickListen
         String phone = etPhone.getText().toString().trim();
         String rePassword = etRePassword.getText().toString();
         String email = etEmail.getText().toString().trim();
+        String userName =  etUserName.getText().toString().trim();
 
-        if(!validate(password,phone,rePassword,email)){
+        if(!validate(password,phone,rePassword,email,userName)){
             return;
         }
 
         User u =  new User();
+        u.setUserName(userName);
         u.setPassword(password);
         u.setPhone(phone);
         u.setEmail(email);

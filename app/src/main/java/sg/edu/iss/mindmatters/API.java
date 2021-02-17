@@ -20,13 +20,18 @@ public interface API {
             @Body User user
     );
 
+    @GET("users/getInfo")
+    Call<User> getInfo(
+            @Header("Authorization") String authorization
+    );
+
     @POST("users/edit")
     Call<ResponseBody> editUser (
             @Header("Authorization") String authorization,@Body User user
     );
 
     @POST("login")
-    Call<ResponseBody> checkUser (
+    Call<User> checkUser (
             @Body User user
     );
 
@@ -41,7 +46,19 @@ public interface API {
             @Body User user
     );
 
+
+    @POST("users/social")
+    Call<User> loginSocial(
+            @Body User user
+    );
+
+    @POST("users/delete")
+    Call<ResponseBody> deleteAccount(
+            @Header("Authorization") String authorization,@Body User user
+    );
+
     @GET("rest/tip")
     Call <List<DailyTips>> getDailyTips();
+
 
 }
