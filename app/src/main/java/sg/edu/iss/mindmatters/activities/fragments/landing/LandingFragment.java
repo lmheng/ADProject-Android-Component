@@ -74,8 +74,9 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             pref = this.getActivity().getSharedPreferences(
                     "user_credentials", MODE_PRIVATE);
             token=pref.getString("token",null);
-            populateDash(pref.getString("username","user"));
-            combineGraph();
+                populateDash(pref.getString("username", "user"));
+                combineGraph();
+                mView.findViewById(R.id.loginmsg).setVisibility(View.GONE);
             updateServerInfo();
             runDailyQuiz();
         }
@@ -106,6 +107,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             if(db.countDb(user)>0) {
             populateDash(user);
             combineGraph();
+            mView.findViewById(R.id.loginmsg).setVisibility(View.GONE);
             }
             updateServerInfo();
             runDailyQuiz();
