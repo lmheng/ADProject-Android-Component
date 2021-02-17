@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
@@ -93,10 +94,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
         this.mView = view;
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("date_update");
-        getActivity().registerReceiver(receiver, filter);
 
         token=pref.getString("token",null);
         user=pref.getString("username","user");

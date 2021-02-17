@@ -27,7 +27,7 @@ import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.model.User;
-import sg.edu.iss.mindmatters.webview.Education;
+
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -111,8 +111,8 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         }
         else if(id==R.id.mindful_layout)
         {
-            iResourceFragment.resourceClicked(recommendation(outcome));
-           /* Bundle bundle=new Bundle();
+           iResourceFragment.resourceClicked(recommendation(outcome));
+          /*Bundle bundle=new Bundle();
             bundle.putStringArray("recommend",recommendation(outcome));
             mindfulnessFragment fragment = new mindfulnessFragment();
             fragment.setArguments(bundle);
@@ -136,7 +136,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
                 return launchExternalPage(externalurl1);
 
             }
-            case "depressed": {
+            case "depression": {
                 String[] externalurl1 = Depression;
                 return launchExternalPage(externalurl1);
 
