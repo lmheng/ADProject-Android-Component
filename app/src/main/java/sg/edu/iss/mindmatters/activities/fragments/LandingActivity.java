@@ -256,4 +256,6 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+
+
 }

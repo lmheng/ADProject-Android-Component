@@ -162,14 +162,12 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
     public void loadNextDate(){
         try {
-            //LocalDate getNextDate = getOutcome(pref.getString("token", null)).getNextQuiz();
             String date = getArguments().getStringArray("outcome")[0];
 
             TextView nextDate = mView.findViewById(R.id.next_date_taken);
             nextDate.setVisibility(View.VISIBLE);
             TextView header = mView.findViewById(R.id.next_quiz_header);
             header.setText(R.string.next_quiz_header);
-            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             nextDate.setText(date);
         }
         catch(NullPointerException e){
