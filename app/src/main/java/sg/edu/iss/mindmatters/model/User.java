@@ -20,6 +20,12 @@ public class User {
     @SerializedName("password")
     private String password;
 
+    @SerializedName("loginMethod")
+    private String loginMethod;
+
+    @SerializedName("accessToken")
+    private String accessToken;
+
     public Boolean getEnabled() {
         return isEnabled;
     }
@@ -70,4 +76,35 @@ public class User {
         this.password = password;
     }
 
+    public String getLoginMethod() {
+        return loginMethod;
+    }
+
+    public void setLoginMethod(String loginMethod) {
+        this.loginMethod = loginMethod;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

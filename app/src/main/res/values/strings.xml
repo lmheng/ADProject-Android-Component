@@ -35,6 +35,11 @@
     <string name="submit">Submit</string>
     <string name="currentlyfeeling">Current Status</string>
     <string name="currentprofile">Profile</string>
+    
+    <string name="facebook_app_id">4194427213922309</string>
+    <string name="fb_login_protocol_scheme">fb4194427213922309</string>
+    <string name="server_client_id">219115013472-673vqc6jb2shbumc4ilqrdste402a6jj.apps.googleusercontent.com</string>
+
     <string name="averageslp">Average Sleep</string>
     <string name="avgmood">Average Mood</string>
     <string name="afraid">Ever felt afraid and alone? Some of our resources here may be able to help.</string>
@@ -48,4 +53,5 @@
     <string name="onboarding_take_quiz">Complete questionnaire, get access to recommended resources</string>
     <string name="onboarding_daily_quiz">Take daily quiz to monitor mental health (logged in user only)</string>
     <string name="onboarding_dashboard">Log in if you want to view personalized data on your sleep and wellness patterns!</string>
+
 </resources>
