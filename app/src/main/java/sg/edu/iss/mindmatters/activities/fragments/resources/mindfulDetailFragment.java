@@ -54,8 +54,9 @@ public class mindfulDetailFragment extends Fragment {
             title.setText(name);
             mUrl=elements[0];
             mindfullist=mView.findViewById(R.id.mindfullist);
+            mindfullist.setLayerType(View.LAYER_TYPE_HARDWARE,null);
             mindfullist.setBackgroundColor(0);
-            mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+           // mindfullist.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             mindfullist.getSettings().setJavaScriptEnabled(true);
             mindfullist.setWebViewClient(new WebViewClient() {
                 @Override
