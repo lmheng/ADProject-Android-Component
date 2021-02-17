@@ -90,6 +90,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             intent.putExtra("username", pref.getString("username", "User"));
             intent.putExtra("token", pref.getString("token", "Token"));
             startActivity(intent);
+            finish();
         }
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
@@ -126,6 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             userEmail = etUserEmail.getText().toString().trim();
             password = etPassword.getText().toString();
             loginUser(userEmail, password);
+            finish();
         } else if (id == R.id.tvWoLogin) {
             Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);

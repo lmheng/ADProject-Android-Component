@@ -82,8 +82,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         }
         else{
             findViewById(R.id.loginset).setOnClickListener(this);
-            findViewById(R.id.notifyBtn).setOnClickListener(this);
-
+            findViewById(R.id.generalSettings).setOnClickListener(this);
             findViewById(R.id.editProfSet).setVisibility(View.GONE);
             findViewById(R.id.logoutSet).setVisibility(View.GONE);
             findViewById(R.id.generalSettings).setVisibility(View.GONE);
@@ -153,18 +152,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    public void switchCase(){
-        createNotificationChannel();
-        mySwitch = findViewById(R.id.notifyBtn);
-        SharedPreferences sharedPreferences = getSharedPreferences("save", MODE_PRIVATE);
-        mySwitch.setChecked(sharedPreferences.getBoolean("value", true));
-        if(mySwitch.isChecked()==true){
-            dailyTips();
-        }else{
-          stopDailyTips();
-        }
-    }
-
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.editProfSet){
@@ -184,9 +171,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         if(v.getId()==R.id.loginset){
             login();
         }
-        if(v.getId()==R.id.notifyBtn){
-            switchCase();
-        }
     }
 
     @Override
@@ -194,6 +178,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         super.onBackPressed();
         overridePendingTransition(R.anim.left_to_right_enter, R.anim.left_to_right_exit);
     }
+
     private void clearDetails(){
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);

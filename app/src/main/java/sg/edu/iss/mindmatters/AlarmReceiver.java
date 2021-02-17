@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -14,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat;
 import java.text.ParseException;
 import java.time.LocalDate;
 
+import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.LoginActivity;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
 
@@ -24,6 +26,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+
+        System.out.println("Alarm set");
 
         SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(context);
         SharedPreferences pref = context.getSharedPreferences(
@@ -44,6 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             createNotification(context, text);
             e.printStackTrace();
         }
+
     }
 
     private void createNotification(Context context, String text){
@@ -56,8 +61,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                 context, 0, intent, 0);
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "123456");
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground).setContentTitle("Daily Quiz").setContentText(text).setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true).setContentIntent(pendingIntent);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "888888");
+        builder.setSmallIcon(R.drawable.mindmatters_logo).setContentTitle("Daily Quiz").setContentText(text).setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true).setContentIntent(pendingIntent);
         Notification notification = builder.build();
 
         NotificationManagerCompat mgr = NotificationManagerCompat.from(context);
