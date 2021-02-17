@@ -153,7 +153,7 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
             String[] array = new String[3];
             for (int i = 0; i < array.length; i++) {
                 int random=new Random().nextInt(resource.length-1);
-                array[i] = resource[Math.abs(random-i)];
+                array[i] = resource[Math.abs(random)];
             }
             carousel=mView.findViewById(R.id.carousel);
             carousel.setPageCount(array.length);
