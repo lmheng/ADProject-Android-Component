@@ -49,6 +49,12 @@ public class QuizOutcome {
         return LocalDate.parse(nextQuiz, dtf);
     }
 
+    public String parseQuiz() {
+            LocalDate quiz = getNextQuiz();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return quiz.format(dtf);
+    }
+
     public String getQuizOutcome() {
         return quizOutcome;
     }
@@ -68,6 +74,10 @@ public class QuizOutcome {
                 "nextQuiz=" + nextQuiz +
                 ",quizOutcome='" + quizOutcome +
                 '}';
+    }
+
+    public String[] quizOutcomeData() {
+            return new String[] {parseQuiz(), quizOutcome};
     }
 
 }

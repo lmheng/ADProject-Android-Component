@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
-        System.out.println("Alarm set");
+        Toast.makeText(context, "Daily Quiz receiver", Toast.LENGTH_LONG).show();
 
         SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(context);
         SharedPreferences pref = context.getSharedPreferences(

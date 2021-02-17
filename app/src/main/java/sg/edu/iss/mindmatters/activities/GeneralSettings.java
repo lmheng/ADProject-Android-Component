@@ -65,7 +65,6 @@ public class GeneralSettings extends BaseActivity implements CompoundButton.OnCh
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(buttonView == mySwitch)
         {
-            System.out.println("Daily tip");
             if (isChecked) {
                 Alarms.dailyTips(this);
             } else {
@@ -73,7 +72,6 @@ public class GeneralSettings extends BaseActivity implements CompoundButton.OnCh
             }
         }
         else {
-            System.out.println("Alarm");
             if (isChecked) {
                 Alarms.startAction(this);
             } else {

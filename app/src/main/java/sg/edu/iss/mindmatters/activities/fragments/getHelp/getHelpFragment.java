@@ -22,7 +22,7 @@ public class getHelpFragment extends Fragment implements  AdapterView.OnItemClic
     };
 
     public final String[] webURL = {"https://www.gov.sg/article/call-these-helplines-if-you-need-emotional-or-psychological-support",
-            "https://www.imh.com.sg/contact-us/", "https://www.sos.org.sg/contact-us", "https://www.silverribbonsingapore.com/counselling.html",
+            "https://www.imh.com.sg/contact-us/", "https://www.sos.org.sg/contact-us", "https://www.giving.sg/web/silver-ribbon-singapore-",
             "https://www.touch.org.sg/about-touch/our-services/touch-cyber-wellness-homepage/contact-us", "#"
     };
     public final String[] phone = {"tel:18002026868", "tel:63892222", "tel:18002214444", "tel:63853714", "tel:18003772252", "tel:98276591"};

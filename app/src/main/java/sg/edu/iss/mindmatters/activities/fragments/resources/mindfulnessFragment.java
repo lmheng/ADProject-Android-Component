@@ -87,6 +87,10 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         String user=pref.getString("username","user");
         if(!user.equals("user"))
         {
+            if(getArguments().getStringArray("outcome")==null) {
+                TextView txt = mView.findViewById(R.id.mindfulness_text);
+                txt.setText("You may be interested in the following videos:");
+            }
             ViewRecommended();
         }
         else
