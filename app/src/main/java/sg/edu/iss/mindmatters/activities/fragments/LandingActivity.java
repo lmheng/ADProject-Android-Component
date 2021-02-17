@@ -1,5 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,16 +12,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
+import retrofit2.Call;
+import retrofit2.Response;
 import sg.edu.iss.mindmatters.MyApplication;
 import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.BaseActivity;
 import sg.edu.iss.mindmatters.activities.DailyQuizActivity;
@@ -34,6 +41,7 @@ import sg.edu.iss.mindmatters.activities.fragments.resources.mindfulDetailFragme
 import sg.edu.iss.mindmatters.activities.fragments.resources.mindfulnessFragment;
 import sg.edu.iss.mindmatters.activities.fragments.resources.resourceFragment;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
+import sg.edu.iss.mindmatters.model.QuizOutcome;
 
 public class LandingActivity extends BaseActivity implements View.OnClickListener, NonLoggedUsers.INonLoggedUsersFragment, resourceFragment.IResourceFragment, mindfulnessFragment.IMindfulnessFragment{
 
@@ -41,8 +49,16 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     final int[] views = {R.id.resources, R.id.take_quiz, R.id.get_help, R.id.home_btn, R.id.home_btn};
     BottomNavigationView nav;
 
+    QuizOutcome qo;
     SharedPreferences pref;
     SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(this);
+    Handler mainHandler = new Handler() {
+        public void handleMessage(@NonNull Message msg) {
+            if(msg.obj == "Done") {
+                replaceDetailFragment(3, null,true);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +75,25 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         {if(pref.contains("token"))
             {
                 launchAlarm();
+                new Thread(() -> {
+                    qo = getOutcome(pref.getString("token", ""));
+                    Message msg = new Message();
+                    msg.obj = "Done";
+                    mainHandler.sendMessage(msg);
+                }).start();
 //                db.createDummyData(pref.getString("username", "user"));
-
                 try {
                     if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)
                     {
-                        Intent intent = new Intent(this, DailyQuizActivity.class);
+                        Intent intent = new Intent(LandingActivity.this, DailyQuizActivity.class);
                         startActivity(intent);
                     }
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
-                replaceDetailFragment(3, true);
             }
             else{
-                replaceDetailFragment(4, true);
+                replaceDetailFragment(4, null,true);
             }}
 
         findViewById(R.id.resources).setOnClickListener(this);
@@ -86,22 +105,30 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        new Thread(() -> {
+            qo = getOutcome(pref.getString("token", ""));
+        }).start();
+    }
+
+    @Override
     public void onClick(View view) {
 
         if(view.getId() == R.id.home_btn){
             if(pref.contains("token"))
-                replaceDetailFragment(3, false);
+                replaceDetailFragment(3, null,false);
             else
-                replaceDetailFragment(4, false);
+                replaceDetailFragment(4, null,false);
         }
         else if(view.getId() == R.id.resources) {
-            replaceDetailFragment(0, false);
+            replaceDetailFragment(0, null,false);
         }
         else if(view.getId() == R.id.take_quiz) {
-            replaceDetailFragment(1, false);
+            replaceDetailFragment(1, null, false);
         }
         else if(view.getId() == R.id.get_help) {
-            replaceDetailFragment(2, false);
+            replaceDetailFragment(2, null, false);
         }
         else if(view.getId() == R.id.settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -110,30 +137,29 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    public void replaceDetailFragment(int newItemId, String[] resources) {
+    public void replaceDetailFragment(int newItemId, String[] resources, boolean firstActivity) {
 
         Fragment fragment = fragments[newItemId];
+        Bundle arguments = new Bundle();
 
-            Bundle arguments = new Bundle();
+        if(resources != null){
             arguments.putStringArray("resources", resources);
             fragment.setArguments(arguments);
+        }
+
+        if(newItemId == 0 || newItemId == 3 || newItemId == 5) {
+            if(qo.getQuizOutcome() != null)
+                arguments.putStringArray("outcome", qo.quizOutcomeData());
+            else
+                arguments.putStringArray("outcome", null);
+            fragment.setArguments(arguments);
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction trans = fm.beginTransaction();
         trans.replace(R.id.fragment_container, fragment);
-        trans.addToBackStack(null);
-        trans.commit();
-
-        nav.setSelectedItemId(views[0]);
-    }
-
-    public void replaceDetailFragment(int newItemId, boolean firstActivity) {
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction trans = fm.beginTransaction();
-        trans.replace(R.id.fragment_container, fragments[newItemId], String.valueOf(newItemId));
         if(!firstActivity)
-            trans.addToBackStack(String.valueOf(newItemId));
+            trans.addToBackStack(null);
         trans.commit();
 
         if(newItemId < 5)
@@ -149,22 +175,22 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void itemClicked(int content) {
-        replaceDetailFragment(content, false);
+        replaceDetailFragment(content, null, false);
     }
 
     @Override
     public void resourceClicked(String[] content) {
         if(content.length != 1){
-            replaceDetailFragment(5, content);
+            replaceDetailFragment(5, content, false);
         }
         else{
-            replaceDetailFragment(6, content);
+            replaceDetailFragment(6, content, false);
         }
     }
 
     @Override
     public void mindfulClicked(String[] content) {
-        replaceDetailFragment(7, content);
+        replaceDetailFragment(7, content, false);
     }
 
     private void createNotificationChannel(){
@@ -210,6 +236,23 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         catch(Exception e){
             nav.setSelectedItemId(views[3]);
             e.printStackTrace();
+        }
+    }
+
+    public QuizOutcome getOutcome(String token){
+
+        Call<QuizOutcome> call = RetrofitClient
+                .getInstance()
+                .getAPI()
+                .getUserProfile(token);
+        try {
+            Response<QuizOutcome> qo=call.execute();
+            QuizOutcome oc= qo.body();
+            return oc;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

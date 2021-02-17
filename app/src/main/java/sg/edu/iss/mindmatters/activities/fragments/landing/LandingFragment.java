@@ -162,14 +162,15 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
 
     public void loadNextDate(){
         try {
-            LocalDate getNextDate = getOutcome(pref.getString("token", null)).getNextQuiz();
+            //LocalDate getNextDate = getOutcome(pref.getString("token", null)).getNextQuiz();
+            String date = getArguments().getStringArray("outcome")[0];
 
             TextView nextDate = mView.findViewById(R.id.next_date_taken);
             nextDate.setVisibility(View.VISIBLE);
             TextView header = mView.findViewById(R.id.next_quiz_header);
             header.setText(R.string.next_quiz_header);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            nextDate.setText(getNextDate.format(dtf));
+            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            nextDate.setText(date);
         }
         catch(NullPointerException e){
             TextView nextDate = mView.findViewById(R.id.next_date_taken);
@@ -177,23 +178,6 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             nextDate.setText(LocalDate.now().format(dtf));
             e.printStackTrace();
-        }
-    }
-
-    public QuizOutcome getOutcome(String token){
-
-        Call<QuizOutcome> call = RetrofitClient
-                .getInstance()
-                .getAPI()
-                .getUserProfile(token);
-        try {
-            Response<QuizOutcome> qo=call.execute();
-            QuizOutcome oc= qo.body();
-            return oc;
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -239,18 +223,13 @@ public class LandingFragment extends Fragment implements View.OnClickListener{
     }
 
     public void updateServerInfo(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 String outcome="";
-                if(getOutcome(pref.getString("token",null))!=null){
-                    outcome=getOutcome(pref.getString("token",null)).getQuizOutcome();
+                if(getArguments().getStringArray("outcome")!=null){
+                    outcome=getArguments().getStringArray("outcome")[1];
+                    TextView text = mView.findViewById(R.id.currentStatus);
+                    text.setText(outcome);
                 }
-                TextView text = mView.findViewById(R.id.currentStatus);
-                text.setText(outcome);
                 loadNextDate();
-            }
-        }).start();
     }
 
     public void combineGraph()

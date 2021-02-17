@@ -46,7 +46,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     private String[]All=new String[]{};
     List<Resource> collect=new ArrayList<>();
     SharedPreferences pref;
-    String autherization="";
     String outcome="";
 
     IResourceFragment iResourceFragment;
@@ -76,19 +75,14 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         getResourceList();
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
-        autherization=pref.getString("token",null);
+        String[] out = getArguments().getStringArray("outcome");
         if(!pref.getString("username","user").equals("user")){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if(getOutcome(autherization)==null)
+                    if(out==null)
                         outcome = "all";
-                    else if(getOutcome(autherization).toLowerCase().equals("normal"))
+                    else if(out[1].toLowerCase().equals("normal"))
                         outcome = "all";
                     else
-                        outcome=getOutcome(autherization).toLowerCase();
-                }
-            }).start();}
+                        outcome=out[1].toLowerCase();}
         else{
             outcome="all";
         }
@@ -211,28 +205,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         All=collect.stream().filter(x->!x.getType().equalsIgnoreCase("Education")).map(x->x.getUrlCode()).toArray(String[]::new);
         Loneliness=collect.stream().filter(x->x.getType().equalsIgnoreCase("Loneliness")).map(x->x.getUrlCode()).toArray(size->new String[size]);
         Stress=collect.stream().filter(x->x.getType().equalsIgnoreCase("Stress")).map(x->x.getUrlCode()).toArray(size->new String[size]);
-
-    }
-
-    public String getOutcome(String autherization){
-
-        Call<QuizOutcome> call = RetrofitClient
-                .getInstance()
-                .getAPI()
-                .getUserProfile(autherization);
-
-        try {
-            Response<QuizOutcome> qo=call.execute();
-            QuizOutcome oc= qo.body();
-            return oc.getQuizOutcome();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch(NullPointerException e) {
-            e.printStackTrace();
-            return null;
-        }
 
     }
 

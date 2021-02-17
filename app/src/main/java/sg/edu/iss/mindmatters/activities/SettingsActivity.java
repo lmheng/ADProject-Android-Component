@@ -47,10 +47,6 @@ import sg.edu.iss.mindmatters.dao.Notification_receiver;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
-    SwitchCompat mySwitch;
-    private static final String CHANNEL_ID = "888888";
-    private static final String CHANNEL_NAME = "Message Notification Channel";
-    private static final String CHANNEL_DESCRIPTION = "This channel is for displaying messages";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +80,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             findViewById(R.id.generalSettings).setOnClickListener(this);
             findViewById(R.id.editProfSet).setVisibility(View.GONE);
             findViewById(R.id.logoutSet).setVisibility(View.GONE);
-            findViewById(R.id.generalSettings).setVisibility(View.GONE);
             findViewById(R.id.deleteProfSet).setVisibility(View.GONE);
         }
 
