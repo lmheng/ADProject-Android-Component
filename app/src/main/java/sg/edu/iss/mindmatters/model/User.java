@@ -91,4 +91,20 @@ public class User {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

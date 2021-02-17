@@ -38,10 +38,6 @@ import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.model.User;
-
-public class SettingsActivity extends BaseActivity implements View.OnClickListener {
-    GoogleSignInClient mGoogleSignInClient;
-
 import androidx.appcompat.widget.SwitchCompat;
 
 import java.util.Calendar;
@@ -50,11 +46,11 @@ import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.dao.Notification_receiver;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
+    GoogleSignInClient mGoogleSignInClient;
     SwitchCompat mySwitch;
     private static final String CHANNEL_ID = "888888";
     private static final String CHANNEL_NAME = "Message Notification Channel";
     private static final String CHANNEL_DESCRIPTION = "This channel is for displaying messages";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +71,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-        SharedPreferences pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
 
         if(pref.contains("token")){
             findViewById(R.id.editProfSet).setOnClickListener(this);
@@ -183,8 +177,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             generalSettings();
         }
 
-        if(v.getId()==R.id.deleteProfSet){
+        if(v.getId()==R.id.deleteProfSet) {
             deleteProfile();
+        }
 
         if(v.getId()==R.id.loginset){
             login();

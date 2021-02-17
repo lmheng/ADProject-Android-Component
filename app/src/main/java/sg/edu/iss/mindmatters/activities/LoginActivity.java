@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             editor.putString("loginMethod",loginMethod);
             editor.commit();
             Toast.makeText(LoginActivity.this, "User logged in!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);
         }
     }
