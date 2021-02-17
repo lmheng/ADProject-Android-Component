@@ -119,7 +119,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             userEmail = etUserEmail.getText().toString().trim();
             password = etPassword.getText().toString();
             loginUser(userEmail, password);
-            finish();
         } else if (id == R.id.tvWoLogin) {
             Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
             startActivity(intent);
@@ -263,6 +262,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() == 200) {
                     addDetails(response,loginMethod);
+                    finish();
                 } else {
                     signOut();
                     String message = "Incorrect Credentials! Try again!";

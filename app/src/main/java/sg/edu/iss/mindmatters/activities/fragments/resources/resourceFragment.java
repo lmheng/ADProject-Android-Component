@@ -112,15 +112,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         else if(id==R.id.mindful_layout)
         {
            iResourceFragment.resourceClicked(recommendation(outcome));
-          /*Bundle bundle=new Bundle();
-            bundle.putStringArray("recommend",recommendation(outcome));
-            mindfulnessFragment fragment = new mindfulnessFragment();
-            fragment.setArguments(bundle);
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.resourcefrag, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();*/
         }
     }
     public String[] launchExternalPage(String[] externalurl1)
@@ -196,7 +187,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
                 List<Resource> allResources= response.body();
                 for(Resource r:allResources)
                 {
-                    System.out.println(r.getName());
                     collect.add(r);
                 }
                 SplitListByType();
