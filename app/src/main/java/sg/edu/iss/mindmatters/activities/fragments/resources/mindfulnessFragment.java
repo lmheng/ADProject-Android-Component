@@ -123,7 +123,7 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
         else if(id==R.id.ocdbtn)
         {
             String externalurl="http://10.0.2.2:8080/resource/list/Ocd";
-            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalurl,"Compelled by compulsion?"));
+            iMindfulnessFragment.mindfulClicked(launchExternalPage(externalurl,"Compulsion?"));
         }
         else if(id==R.id.depressedbtn)
         {
@@ -232,7 +232,7 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
             case("Panic"):
                 return "Panicking about panic?";
             case("OCD"):
-                return "Compelled by compulsion?";
+                return "Compulsion?";
             case("Depression"):
                 return "Feeling down?";
         }

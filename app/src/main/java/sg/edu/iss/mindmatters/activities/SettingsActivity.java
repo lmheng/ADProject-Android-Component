@@ -76,7 +76,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             findViewById(R.id.editProfSet).setOnClickListener(this);
             findViewById(R.id.logoutSet).setOnClickListener(this);
             findViewById(R.id.generalSettings).setOnClickListener(this);
-            findViewById(R.id.notifyBtn).setOnClickListener(this);
             findViewById(R.id.deleteProfSet).setOnClickListener(this);
             findViewById(R.id.loginset).setVisibility(View.GONE);
         }
@@ -193,39 +192,4 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    public void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            channel.setDescription(CHANNEL_DESCRIPTION);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public void dailyTips(){
-        Calendar calender = Calendar.getInstance();
-
-        calender.set(Calendar.HOUR_OF_DAY,21);
-        calender.set(Calendar.MINUTE,50);
-        calender.set(Calendar.SECOND,00);
-
-        Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarm =
-                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
-    }
-
-    public void stopDailyTips(){
-        Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarm =
-                (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarm.cancel(pendingIntent);
-    }
 }

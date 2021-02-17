@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ import sg.edu.iss.mindmatters.model.User;
 public class ForgotPwdActivity extends BaseActivity implements View.OnClickListener {
     private EditText etEmail;
     String email;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class ForgotPwdActivity extends BaseActivity implements View.OnClickListe
         callCustomActionBar(ForgotPwdActivity.this, false);
         setContentView(R.layout.activity_forgot_pwd);
         findViewById(R.id.btnForgot).setOnClickListener(this);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBarFgt);
+        mProgressBar.setIndeterminate(true);
     }
 
 
@@ -68,6 +74,10 @@ public class ForgotPwdActivity extends BaseActivity implements View.OnClickListe
                 .getInstance()
                 .getAPI()
                 .resetPassword(user);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        mProgressBar.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -102,6 +112,8 @@ public class ForgotPwdActivity extends BaseActivity implements View.OnClickListe
                     }
                     Toast.makeText(ForgotPwdActivity.this, "Something went wrong!Try again later", Toast.LENGTH_LONG).show();
                 }
+                mProgressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
 
             @Override
