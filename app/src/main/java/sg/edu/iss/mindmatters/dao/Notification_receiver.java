@@ -34,7 +34,7 @@ public class Notification_receiver extends BroadcastReceiver {
 
     public void populateNotification(Context context, Intent intent) {
 
-        System.out.println("Notification set");
+        Toast.makeText(context, "Daily tip notif", Toast.LENGTH_LONG).show();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")

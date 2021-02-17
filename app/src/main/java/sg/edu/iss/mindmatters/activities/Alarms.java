@@ -22,8 +22,8 @@ public class Alarms {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 13);
-        calendar.set(Calendar.MINUTE, 50);
+        calendar.set(Calendar.HOUR_OF_DAY, 06);
+        calendar.set(Calendar.MINUTE, 13);
 
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -56,8 +56,8 @@ public class Alarms {
     public static void dailyTips(Context context){
         Calendar calender = Calendar.getInstance();
         calender.setTimeInMillis(System.currentTimeMillis());
-        calender.set(Calendar.HOUR_OF_DAY, 13);
-        calender.set(Calendar.MINUTE, 26);
+        calender.set(Calendar.HOUR_OF_DAY, 06);
+        calender.set(Calendar.MINUTE, 15);
 
         Intent intent = new Intent(context, Notification_receiver.class);
         intent.setAction("notif");

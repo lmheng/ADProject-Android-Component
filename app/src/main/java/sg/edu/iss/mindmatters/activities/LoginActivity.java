@@ -167,7 +167,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         User responseUser = null;
         try {
             responseUser = response.body();
-            System.out.println("username in response is" + responseUser.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }

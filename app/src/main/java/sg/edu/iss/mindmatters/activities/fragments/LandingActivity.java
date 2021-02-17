@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,6 +50,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     final Fragment[] fragments = {new resourceFragment(), new quizFragment(), new getHelpFragment(), new LandingFragment(), new NonLoggedUsers(), new mindfulnessFragment(), new educationFragment(), new mindfulDetailFragment()};
     final int[] views = {R.id.resources, R.id.take_quiz, R.id.get_help, R.id.home_btn, R.id.home_btn};
     BottomNavigationView nav;
+    ProgressBar prog;
 
     QuizOutcome qo;
     SharedPreferences pref;
@@ -56,6 +59,8 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         public void handleMessage(@NonNull Message msg) {
             if(msg.obj == "Done") {
                 replaceDetailFragment(3, null,true);
+                prog.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }
     };
@@ -75,6 +80,10 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         {if(pref.contains("token"))
             {
                 launchAlarm();
+                prog = findViewById(R.id.progressBarLanding);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                prog.setVisibility(View.VISIBLE);
                 new Thread(() -> {
                     qo = getOutcome(pref.getString("token", ""));
                     Message msg = new Message();
