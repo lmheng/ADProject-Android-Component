@@ -40,8 +40,8 @@ public interface API {
             @Body User user
     );
 
-    @GET("rest/profile/{uName}")
-    Call<QuizOutcome> getUserProfile(@Path("uName")String username);
+    @GET("rest/profile")
+    Call<QuizOutcome> getUserProfile(@Header("Authorization")String authorization);
 
     @GET("rest/list")
     Call<List<Resource>> getallresources();

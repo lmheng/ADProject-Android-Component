@@ -76,9 +76,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 allQuiz.add(quiz);
             } while (cursor.moveToNext());
         }
-
         db.close();
-
         return allQuiz;
     }
 
@@ -136,9 +134,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         quiz.setQ3(Integer.parseInt(cursor.getString(3)));
         quiz.setUsername(cursor.getString(4));
         quiz.setDate(LocalDate.parse(cursor.getString(5), sdf));
-
         db.close();
-
         return quiz;
     }
 
@@ -204,10 +200,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     {
         SQLiteDatabase db=this.getReadableDatabase();
         String query="SELECT * FROM DailyQuiz WHERE username = ?";
-
         Cursor cursor=db.rawQuery(query,new String[]{user});
-
         return cursor.getCount();
-    }
+}
 
 }

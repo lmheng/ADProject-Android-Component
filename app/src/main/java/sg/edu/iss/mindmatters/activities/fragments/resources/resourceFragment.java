@@ -26,6 +26,8 @@ import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
+import sg.edu.iss.mindmatters.model.User;
+
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,7 +46,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
     private String[]All=new String[]{};
     List<Resource> collect=new ArrayList<>();
     SharedPreferences pref;
-    String User="";
+    String autherization="";
     String outcome="";
 
     IResourceFragment iResourceFragment;
@@ -74,19 +76,23 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         getResourceList();
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
-        User=pref.getString("username","user");
-        if(!User.equals("user")){
-            new Thread(() -> {
-                if(getOutcome(User)==null)
-                    outcome="all";
-                else if(getOutcome(User).toLowerCase().equals("normal"))
-                    outcome = "all";
-                else
-                    outcome=getOutcome(User).toLowerCase();
+        autherization=pref.getString("token",null);
+        if(!pref.getString("username","user").equals("user")){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if(getOutcome(autherization)==null)
+                        outcome = "all";
+                    else if(getOutcome(autherization).toLowerCase().equals("normal"))
+                        outcome = "all";
+                    else
+                        outcome=getOutcome(autherization).toLowerCase();
+                }
             }).start();}
         else{
             outcome="all";
         }
+
 
         return view;
     }
@@ -105,7 +111,16 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         }
         else if(id==R.id.mindful_layout)
         {
-            iResourceFragment.resourceClicked(recommendation(outcome));
+           iResourceFragment.resourceClicked(recommendation(outcome));
+          /*Bundle bundle=new Bundle();
+            bundle.putStringArray("recommend",recommendation(outcome));
+            mindfulnessFragment fragment = new mindfulnessFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.resourcefrag, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();*/
         }
     }
     public String[] launchExternalPage(String[] externalurl1)
@@ -121,7 +136,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
                 return launchExternalPage(externalurl1);
 
             }
-            case "depressed": {
+            case "depression": {
                 String[] externalurl1 = Depression;
                 return launchExternalPage(externalurl1);
 
@@ -181,6 +196,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
                 List<Resource> allResources= response.body();
                 for(Resource r:allResources)
                 {
+                    System.out.println(r.getName());
                     collect.add(r);
                 }
                 SplitListByType();
@@ -208,12 +224,12 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public String getOutcome(String user){
+    public String getOutcome(String autherization){
 
         Call<QuizOutcome> call = RetrofitClient
                 .getInstance()
                 .getAPI()
-                .getUserProfile(user);
+                .getUserProfile(autherization);
 
         try {
             Response<QuizOutcome> qo=call.execute();

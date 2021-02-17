@@ -178,6 +178,7 @@
         android:background="@drawable/cancel"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fbLoginLayout"
         app:layout_constraintHorizontal_bias="0.5"
