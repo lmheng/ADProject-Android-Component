@@ -23,6 +23,8 @@ import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -150,10 +152,11 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
 
         public void ViewRecommended(){
             String[] resource = getArguments().getStringArray("resources");
+            Collections.shuffle(Arrays.asList(resource));
             String[] array = new String[3];
             for (int i = 0; i < array.length; i++) {
-                int random=new Random().nextInt(resource.length-1);
-                array[i] = resource[Math.abs(random)];
+                //int random=new Random().nextInt(resource.length-1);
+                array[i] = resource[i];
             }
             carousel=mView.findViewById(R.id.carousel);
             carousel.setPageCount(array.length);
