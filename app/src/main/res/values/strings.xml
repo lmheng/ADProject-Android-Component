@@ -37,4 +37,13 @@
     <string name="currentprofile">Profile</string>
     <string name="averageslp">Avg Slp/Day</string>
     <string name="avgmood">Avg Md/Day</string>
+    <string name="facebook_app_id">4194427213922309</string>
+    <string name="fb_login_protocol_scheme">fb4194427213922309</string>
+    <string name="server_client_id">219115013472-673vqc6jb2shbumc4ilqrdste402a6jj.apps.googleusercontent.com</string>
+    <string name="title_activity_delete_user">DeleteUserActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>
