@@ -42,6 +42,10 @@
             android:name=".AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".dao.Notification_receiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name=".webview.QuizActivity" />
         <activity android:name=".activities.RegisterActivity" />

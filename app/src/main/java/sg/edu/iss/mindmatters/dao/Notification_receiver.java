@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -19,18 +20,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.API;
 import sg.edu.iss.mindmatters.R;
+import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.LoginActivity;
 import sg.edu.iss.mindmatters.model.DailyTips;
 
 public class Notification_receiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "888888";
-    private static final String CHANNEL_NAME = "Message Notification Channel";
-    private static final String CHANNEL_DESCRIPTION = "This channel is for displaying messages";
-
-    private ArrayList<String>quotes;
-    String message;
-    String content;
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,6 +33,8 @@ public class Notification_receiver extends BroadcastReceiver {
     }
 
     public void populateNotification(Context context, Intent intent) {
+
+        System.out.println("Notification set");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
@@ -71,6 +68,7 @@ public class Notification_receiver extends BroadcastReceiver {
                 t.getMessage();
             }
         });
+
     }
 
     public void createNotification(Context context, Intent intent,String content)
@@ -81,7 +79,7 @@ public class Notification_receiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.mindmatters_logo)
                 .setContentTitle("DailyTips")
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -94,8 +92,5 @@ public class Notification_receiver extends BroadcastReceiver {
         Notification notification = builder.build();
         mgr.notify(notificationId, notification);
     }
-
-
-
 
 }

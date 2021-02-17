@@ -121,7 +121,7 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
                 return launchExternalPage(externalurl1);
 
             }
-            case "depressed": {
+            case "depression": {
                 String[] externalurl1 = Depression;
                 return launchExternalPage(externalurl1);
 
