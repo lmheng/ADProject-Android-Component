@@ -15,6 +15,11 @@ import sg.edu.iss.mindmatters.model.Resource;
 import sg.edu.iss.mindmatters.model.User;
 
 public interface API {
+    @GET("users/verifyUser")
+    Call<ResponseBody> verify(
+            @Header("Authorization") String authorization
+    );
+
     @POST("users/register")
     Call<ResponseBody> createUser (
             @Body User user
