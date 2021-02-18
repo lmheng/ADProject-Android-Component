@@ -10,7 +10,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import sg.edu.iss.mindmatters.activities.fragments.getHelp.GetHelpAdapter;
 import sg.edu.iss.mindmatters.R;
 
 public class GetHelpView extends AppCompatActivity {

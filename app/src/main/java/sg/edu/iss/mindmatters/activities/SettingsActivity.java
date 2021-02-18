@@ -1,49 +1,25 @@
 package sg.edu.iss.mindmatters.activities;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
 import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import org.json.JSONObject;
-
-import java.io.PipedInputStream;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.model.User;
-import androidx.appcompat.widget.SwitchCompat;
 
-import java.util.Calendar;
-
-import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.dao.Notification_receiver;
 
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
@@ -90,7 +66,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         disconnectFromGoogle();
         clearDetails();
         Intent intent =new Intent(SettingsActivity.this, LoginActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,9 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.API;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.AppPageActivity;
-import sg.edu.iss.mindmatters.activities.LoginActivity;
 import sg.edu.iss.mindmatters.model.DailyTips;
 
 public class Notification_receiver extends BroadcastReceiver {

@@ -1,24 +1,12 @@
 package sg.edu.iss.mindmatters.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Message;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import sg.edu.iss.mindmatters.R;
 

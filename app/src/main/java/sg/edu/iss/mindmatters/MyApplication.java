@@ -3,16 +3,13 @@ package sg.edu.iss.mindmatters;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks2;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 
-import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.dao.Notification_receiver;
 
 public class MyApplication extends Application implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {

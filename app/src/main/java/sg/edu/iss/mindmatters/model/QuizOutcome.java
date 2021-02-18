@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 
-import sg.edu.iss.mindmatters.model.User;
 
 public class QuizOutcome {
         @Expose
