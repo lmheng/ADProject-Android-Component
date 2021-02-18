@@ -32,7 +32,6 @@ repositories {
     maven { url "https://maven.google.com" }
 }
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -51,7 +50,7 @@ dependencies {
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
     implementation 'com.github.msayan:tutorial-view:v1.0.1'
     implementation 'com.synnapps:carouselview:0.1.5'
-
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+
 }

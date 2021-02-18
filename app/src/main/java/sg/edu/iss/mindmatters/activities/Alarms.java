@@ -56,8 +56,8 @@ public class Alarms {
     public static void dailyTips(Context context){
         Calendar calender = Calendar.getInstance();
         calender.setTimeInMillis(System.currentTimeMillis());
-        calender.set(Calendar.HOUR_OF_DAY, 02);
-        calender.set(Calendar.MINUTE, 58);
+        calender.set(Calendar.HOUR_OF_DAY, 12);
+        calender.set(Calendar.MINUTE, 36);
 
         Intent intent = new Intent(context, Notification_receiver.class);
         intent.setAction("notif");
@@ -65,7 +65,7 @@ public class Alarms {
 
         AlarmManager alarm =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), 1 * 60 * 1000, pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
         SharedPreferences sharedPref = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

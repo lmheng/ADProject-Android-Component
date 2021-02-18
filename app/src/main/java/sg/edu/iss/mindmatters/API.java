@@ -50,8 +50,6 @@ public interface API {
     Call<ResponseBody> resetPassword(
             @Body User user
     );
-
-
     @POST("users/social")
     Call<User> loginSocial(
             @Body User user

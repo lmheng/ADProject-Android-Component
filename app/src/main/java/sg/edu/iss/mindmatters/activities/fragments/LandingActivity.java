@@ -56,6 +56,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     SharedPreferences pref;
     SQLiteDatabaseHandler db = new SQLiteDatabaseHandler(this);
     Handler mainHandler = new Handler() {
+
         public void handleMessage(@NonNull Message msg) {
             if(msg.obj == "Done") {
                 replaceDetailFragment(3, null,true);
@@ -74,6 +75,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
             {
                 createNotificationChannelLogged();
                 launchAlarm();
+
                 prog = findViewById(R.id.progressBarLanding);
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -111,6 +114,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.take_quiz).setOnClickListener(this);
         findViewById(R.id.get_help).setOnClickListener(this);
         findViewById(R.id.settings).setOnClickListener(this);
+
 
     }
 
@@ -158,10 +162,15 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if(newItemId == 0 || newItemId == 3 || newItemId == 5) {
+            try{
             if(qo.getQuizOutcome() != null)
                 arguments.putStringArray("outcome", qo.quizOutcomeData());
-            else
+//            else
+//                arguments.putStringArray("outcome", null);
+                }
+            catch(NullPointerException e) {
                 arguments.putStringArray("outcome", null);
+            }
             fragment.setArguments(arguments);
         }
 
