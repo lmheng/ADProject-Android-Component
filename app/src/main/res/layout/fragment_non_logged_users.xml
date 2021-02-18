@@ -24,7 +24,7 @@
             android:layout_weight="7"
             android:fontFamily="@font/roboto_light"
             android:gravity="left|bottom"
-            android:text="Hello, User!"
+            android:text="Hello!"
             android:textSize="20dp" />
 
     </LinearLayout>

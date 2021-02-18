@@ -68,10 +68,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_resource, container, false);
         this.mView = view;
 
-        mindfulness=mView.findViewById(R.id.mindful_layout);
-        mindfulness.setOnClickListener(this);
-        education=mView.findViewById(R.id.education_layout);
-        education.setOnClickListener(this);
         getResourceList();
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
@@ -87,6 +83,10 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             outcome="all";
         }
 
+        mindfulness=mView.findViewById(R.id.mindful_layout);
+        mindfulness.setOnClickListener(this);
+        education=mView.findViewById(R.id.education_layout);
+        education.setOnClickListener(this);
 
         return view;
     }

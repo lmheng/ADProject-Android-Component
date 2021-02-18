@@ -60,6 +60,7 @@ public class AppPageActivity extends AppCompatActivity {
                     if (response.code() == 200) {
                         Intent intent = new Intent(AppPageActivity.this, LandingActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         clearDetails();
                     }
@@ -76,6 +77,7 @@ public class AppPageActivity extends AppCompatActivity {
         else{
             Intent intent = new Intent(AppPageActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }

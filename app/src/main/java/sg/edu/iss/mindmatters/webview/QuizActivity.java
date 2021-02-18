@@ -49,7 +49,7 @@ public class QuizActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        callCustomActionBar(QuizActivity.this,true);
+        callCustomActionBar(QuizActivity.this,false);
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 
