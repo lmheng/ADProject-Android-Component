@@ -61,6 +61,15 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
                 replaceDetailFragment(3, null,true);
                 prog.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                try {
+                    if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)
+                    {
+                        Intent intent = new Intent(LandingActivity.this, DailyQuizActivity.class);
+                        startActivity(intent);
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     };
@@ -79,6 +88,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         if(savedInstanceState == null)
         {if(pref.contains("token"))
             {
+                createNotificationChannelLogged();
                 launchAlarm();
                 prog = findViewById(R.id.progressBarLanding);
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -91,15 +101,6 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
                     mainHandler.sendMessage(msg);
                 }).start();
 //                db.createDummyData(pref.getString("username", "user"));
-                try {
-                    if (db.findDailyByDate(LocalDate.now(), pref.getString("username","user")) == null)
-                    {
-                        Intent intent = new Intent(LandingActivity.this, DailyQuizActivity.class);
-                        startActivity(intent);
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
             }
             else{
                 replaceDetailFragment(4, null,true);
@@ -207,7 +208,18 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
         NotificationChannel channel = new NotificationChannel("888888", "Message Notification Channel", importance);
-        channel.setDescription("This channel is for displaying messages");
+        channel.setDescription("This channel is for displaying daily tips messages");
+
+        NotificationManager notifMgr = getSystemService(NotificationManager.class);
+        notifMgr.createNotificationChannel(channel);
+    }
+
+    private void createNotificationChannelLogged(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        NotificationChannel channel = new NotificationChannel("123456", "Message Notification Channel", importance);
+        channel.setDescription("This channel is for displaying daily quiz reminder");
 
         NotificationManager notifMgr = getSystemService(NotificationManager.class);
         notifMgr.createNotificationChannel(channel);
@@ -264,7 +276,5 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
             return null;
         }
     }
-
-
 
 }

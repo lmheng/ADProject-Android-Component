@@ -40,6 +40,7 @@ public class GeneralSettings extends BaseActivity implements CompoundButton.OnCh
             aSwitch.setOnCheckedChangeListener(this);
         }
         else{
+            checkAlarmStatus(mySwitch);
             findViewById(R.id.dailyQuizAlarm).setVisibility(View.GONE);
         }
 
