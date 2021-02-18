@@ -1,7 +1,6 @@
 package sg.edu.iss.mindmatters.activities.fragments;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,10 +16,8 @@ import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -88,7 +85,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         if(savedInstanceState == null)
         {if(pref.contains("token"))
             {
-                createNotificationChannelLogged();
+                //createNotificationChannelLogged();
                 launchAlarm();
                 prog = findViewById(R.id.progressBarLanding);
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -158,8 +155,12 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
         }
 
         if(newItemId == 0 || newItemId == 3 || newItemId == 5) {
-            if(qo.getQuizOutcome() != null)
-                arguments.putStringArray("outcome", qo.quizOutcomeData());
+            if(qo != null) {
+                if (qo.getQuizOutcome() != null)
+                    arguments.putStringArray("outcome", qo.quizOutcomeData());
+                else
+                    arguments.putStringArray("outcome", null);
+            }
             else
                 arguments.putStringArray("outcome", null);
             fragment.setArguments(arguments);
@@ -228,7 +229,7 @@ public class LandingActivity extends BaseActivity implements View.OnClickListene
     public void launchAlarm(){
         try{
             if(getSharedPreferences("Settings", MODE_PRIVATE).getString("alarm", "not set").contains("not set")){
-                Alarms.startAction(this);
+                //Alarms.startAction(this);
             };
             if(getSharedPreferences("Settings", MODE_PRIVATE).getString("value", "not set").contains("not set")){
                 Alarms.dailyTips(this);

@@ -1,41 +1,23 @@
 package sg.edu.iss.mindmatters.webview;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
-import android.webkit.CookieManager;
 import android.webkit.MimeTypeMap;
-import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.BaseActivity;
-import sg.edu.iss.mindmatters.model.QuizOutcome;
-import sg.edu.iss.mindmatters.model.User;
 
 public class QuizActivity extends BaseActivity {
 
@@ -43,13 +25,11 @@ public class QuizActivity extends BaseActivity {
     private final String DONE_URL = "http://10.0.2.2:8080/resource/";
     private WebView mWebView;
 
-    LocalDate nextDate;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        callCustomActionBar(QuizActivity.this,true);
+        callCustomActionBar(QuizActivity.this,false);
         SharedPreferences pref = getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
 

@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,19 +12,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sg.edu.iss.mindmatters.R;
 import sg.edu.iss.mindmatters.RetrofitClient;
-import sg.edu.iss.mindmatters.model.QuizOutcome;
 import sg.edu.iss.mindmatters.model.Resource;
-import sg.edu.iss.mindmatters.model.User;
 
 
 import static android.content.Context.MODE_PRIVATE;
@@ -68,10 +62,6 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_resource, container, false);
         this.mView = view;
 
-        mindfulness=mView.findViewById(R.id.mindful_layout);
-        mindfulness.setOnClickListener(this);
-        education=mView.findViewById(R.id.education_layout);
-        education.setOnClickListener(this);
         getResourceList();
         pref = getActivity().getSharedPreferences(
                 "user_credentials", MODE_PRIVATE);
@@ -87,6 +77,10 @@ public class resourceFragment extends Fragment implements View.OnClickListener {
             outcome="all";
         }
 
+        mindfulness=mView.findViewById(R.id.mindful_layout);
+        mindfulness.setOnClickListener(this);
+        education=mView.findViewById(R.id.education_layout);
+        education.setOnClickListener(this);
 
         return view;
     }

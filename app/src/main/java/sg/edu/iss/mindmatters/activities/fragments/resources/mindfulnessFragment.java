@@ -13,21 +13,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageClickListener;
-import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -159,7 +155,6 @@ public class mindfulnessFragment extends Fragment implements View.OnClickListene
             Collections.shuffle(Arrays.asList(resource));
             String[] array = new String[3];
             for (int i = 0; i < array.length; i++) {
-                //int random=new Random().nextInt(resource.length-1);
                 array[i] = resource[i];
             }
             carousel=mView.findViewById(R.id.carousel);

@@ -12,15 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -30,10 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,12 +35,6 @@ import sg.edu.iss.mindmatters.RetrofitClient;
 import sg.edu.iss.mindmatters.activities.fragments.LandingActivity;
 import sg.edu.iss.mindmatters.activities.fragments.OnboardingActivity;
 import sg.edu.iss.mindmatters.model.User;
-
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 

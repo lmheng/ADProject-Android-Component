@@ -1,7 +1,5 @@
 package sg.edu.iss.mindmatters.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class DailyQuiz {

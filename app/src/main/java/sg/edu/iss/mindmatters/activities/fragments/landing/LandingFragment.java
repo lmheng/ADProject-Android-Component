@@ -1,14 +1,10 @@
 package sg.edu.iss.mindmatters.activities.fragments.landing;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,20 +28,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Response;
 import sg.edu.iss.mindmatters.MyApplication;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.RetrofitClient;
-import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.DailyQuizActivity;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
-import sg.edu.iss.mindmatters.model.QuizOutcome;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;

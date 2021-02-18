@@ -15,7 +15,6 @@ import androidx.core.app.NotificationManagerCompat;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-import sg.edu.iss.mindmatters.activities.Alarms;
 import sg.edu.iss.mindmatters.activities.LoginActivity;
 import sg.edu.iss.mindmatters.dao.SQLiteDatabaseHandler;
 

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,8 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.edu.iss.mindmatters.API;
 import sg.edu.iss.mindmatters.R;
-import sg.edu.iss.mindmatters.activities.Alarms;
-import sg.edu.iss.mindmatters.activities.LoginActivity;
+import sg.edu.iss.mindmatters.activities.AppPageActivity;
 import sg.edu.iss.mindmatters.model.DailyTips;
 
 public class Notification_receiver extends BroadcastReceiver {
@@ -73,7 +71,7 @@ public class Notification_receiver extends BroadcastReceiver {
 
     public void createNotification(Context context, Intent intent,String content)
     {
-        Intent repeating_intent = new Intent(context, LoginActivity.class);
+        Intent repeating_intent = new Intent(context, AppPageActivity.class);
         repeating_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
