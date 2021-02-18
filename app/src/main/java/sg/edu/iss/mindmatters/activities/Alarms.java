@@ -22,11 +22,11 @@ public class Alarms {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 06);
-        calendar.set(Calendar.MINUTE, 13);
+        calendar.set(Calendar.HOUR_OF_DAY, 02);
+        calendar.set(Calendar.MINUTE, 57);
 
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1 * 60 * 1000, pendingIntent);
 
         SharedPreferences sharedPref = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -38,7 +38,7 @@ public class Alarms {
     }
 
     public static void stopAction(Context context){
-        Intent intent = new Intent(context, AlarmReceiver.class);
+        Intent intent = new Intent(context, Notification_receiver.class);
         intent.setAction("alarm");
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -56,8 +56,8 @@ public class Alarms {
     public static void dailyTips(Context context){
         Calendar calender = Calendar.getInstance();
         calender.setTimeInMillis(System.currentTimeMillis());
-        calender.set(Calendar.HOUR_OF_DAY, 06);
-        calender.set(Calendar.MINUTE, 15);
+        calender.set(Calendar.HOUR_OF_DAY, 02);
+        calender.set(Calendar.MINUTE, 58);
 
         Intent intent = new Intent(context, Notification_receiver.class);
         intent.setAction("notif");
@@ -65,7 +65,7 @@ public class Alarms {
 
         AlarmManager alarm =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), 1 * 60 * 1000, pendingIntent);
 
         SharedPreferences sharedPref = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -76,7 +76,7 @@ public class Alarms {
     }
 
     public static void stopDailyTips(Context context){
-        Intent intent = new Intent(context, Notification_receiver.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction("notif");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -61,11 +61,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                 context, 0, intent, 0);
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "888888");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "123456");
         builder.setSmallIcon(R.drawable.mindmatters_logo).setContentTitle("Daily Quiz").setContentText(text).setPriority(NotificationCompat.PRIORITY_DEFAULT).setAutoCancel(true).setContentIntent(pendingIntent);
         Notification notification = builder.build();
 
         NotificationManagerCompat mgr = NotificationManagerCompat.from(context);
         mgr.notify(1, notification);
     }
+
+
 }
